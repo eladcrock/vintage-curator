@@ -42,6 +42,14 @@ export type ExperienceRequest = {
   budgetMax: number;
   restrictions: string[];
   notes: string;
+  addOns: AddOn[];
+};
+
+export type AddOn = {
+  name: string;
+  price: number;
+  /** Course the add-on rides on. "Any" displays it at the bottom of the menu. */
+  course: FoodCategory | "Any";
 };
 
 export type CourseSelection = {
@@ -56,6 +64,8 @@ export type MenuOption = {
   title: string;
   style: string;
   courses: CourseSelection[];
+  addOns: AddOn[];
+  addOnTotal: number;
   perPersonTotal: number;
   tableTotal: number;
   rationale: string;

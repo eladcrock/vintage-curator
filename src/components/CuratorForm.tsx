@@ -6,7 +6,18 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { COMMON_RESTRICTIONS, type ExperienceRequest } from "@/lib/experiences";
+import { X } from "lucide-react";
+import { COMMON_RESTRICTIONS, type AddOn, type ExperienceRequest } from "@/lib/experiences";
+import type { FoodCategory } from "@/lib/food";
+
+const ADDON_COURSES: (FoodCategory | "Any")[] = [
+  "Any",
+  "Antipasti",
+  "Pasta",
+  "Secondi",
+  "Contorni",
+  "Dolci",
+];
 
 export function CuratorForm({
   onSubmit,
@@ -20,6 +31,10 @@ export function CuratorForm({
   const [budgetMax, setBudgetMax] = useState(140);
   const [restrictions, setRestrictions] = useState<string[]>([]);
   const [notes, setNotes] = useState("");
+  const [addOns, setAddOns] = useState<AddOn[]>([]);
+  const [addName, setAddName] = useState("");
+  const [addPrice, setAddPrice] = useState<string>("");
+  const [addCourse, setAddCourse] = useState<FoodCategory | "Any">("Pasta");
 
   const min = Math.max(1, budgetMin || 0);
   const max = Math.max(min, budgetMax || min);
@@ -32,6 +47,19 @@ export function CuratorForm({
     );
   }
 
+  function addAddOn() {
+    const name = addName.trim();
+    const price = parseFloat(addPrice);
+    if (!name || !price || price <= 0) return;
+    setAddOns((cur) => [...cur, { name, price, course: addCourse }]);
+    setAddName("");
+    setAddPrice("");
+  }
+
+  function removeAddOn(idx: number) {
+    setAddOns((cur) => cur.filter((_, i) => i !== idx));
+  }
+
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (loading) return;
@@ -41,6 +69,7 @@ export function CuratorForm({
       budgetMax: max,
       restrictions,
       notes,
+      addOns,
     });
   }
 
@@ -126,6 +155,72 @@ export function CuratorForm({
             rows={3}
           />
         </label>
+      </div>
+
+      <div className="mt-4">
+        <p className="mb-1 text-xs font-medium text-muted-foreground">
+          À la carte add-ons (per person)
+        </p>
+        <p className="mb-2 text-[11px] text-muted-foreground">
+          Upgrades layered on top — courses won't be reduced to fit.
+        </p>
+        {addOns.length > 0 && (
+          <ul className="mb-2 space-y-1">
+            {addOns.map((a, i) => (
+              <li
+                key={i}
+                className="flex items-center justify-between rounded-md border border-border bg-muted/30 px-2 py-1 text-xs"
+              >
+                <span>
+                  <span className="text-[10px] uppercase tracking-wide text-muted-foreground">
+                    {a.course}
+                  </span>{" "}
+                  + {a.name}{" "}
+                  <span className="tabular-nums text-muted-foreground">
+                    (${a.price}/pp)
+                  </span>
+                </span>
+                <button
+                  type="button"
+                  onClick={() => removeAddOn(i)}
+                  className="text-muted-foreground hover:text-destructive"
+                  aria-label="Remove add-on"
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+        <div className="grid grid-cols-[1fr_80px_110px_auto] gap-2">
+          <Input
+            value={addName}
+            onChange={(e) => setAddName(e.target.value)}
+            placeholder="e.g. shaved truffles"
+            maxLength={60}
+          />
+          <Input
+            type="number"
+            min={1}
+            value={addPrice}
+            onChange={(e) => setAddPrice(e.target.value)}
+            placeholder="$"
+          />
+          <select
+            value={addCourse}
+            onChange={(e) => setAddCourse(e.target.value as FoodCategory | "Any")}
+            className="rounded-md border border-input bg-background px-2 text-xs"
+          >
+            {ADDON_COURSES.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+          <Button type="button" variant="secondary" onClick={addAddOn}>
+            Add
+          </Button>
+        </div>
       </div>
 
       <div className="mt-4 flex justify-end">
