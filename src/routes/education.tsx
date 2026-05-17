@@ -66,7 +66,7 @@ function wineName(w: Wine): string {
 function EducationPage() {
   const [country, setCountry] = useState<Country>("Italy");
   const [query, setQuery] = useState("");
-  const [openId, setOpenId] = useState<string | null>("piedmont");
+  const [openId, setOpenId] = useState<string | null>(null);
   const selectedId = openId;
 
   const toggle = (id: string) => {
