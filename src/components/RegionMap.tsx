@@ -80,10 +80,16 @@ export function RegionMap({
       {/* Map canvas */}
       <svg
         viewBox={`${vb.x} ${vb.y} ${vb.w} ${vb.h}`}
-        className="block w-full h-auto max-h-[420px] touch-none select-none cursor-grab active:cursor-grabbing"
+        className="block w-full h-auto max-h-[60vh] sm:max-h-[420px] select-none cursor-grab active:cursor-grabbing touch-pan-y"
         role="img"
         aria-label={`${country} wine regions map`}
-        onWheel={(e) => { e.preventDefault(); zoom(e.deltaY > 0 ? 1.15 : 0.87); }}
+        onWheel={(e) => {
+          // Elegant pattern (Google Maps / Figma): only zoom when the user
+          // explicitly opts in with a modifier — otherwise let the page scroll.
+          if (!(e.ctrlKey || e.metaKey)) return;
+          e.preventDefault();
+          zoom(e.deltaY > 0 ? 1.15 : 0.87);
+        }}
         onPointerDown={(e) => {
           (e.target as Element).setPointerCapture?.(e.pointerId);
           dragRef.current = { x: e.clientX, y: e.clientY, vb };
