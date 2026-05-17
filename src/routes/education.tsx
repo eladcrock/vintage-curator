@@ -11,7 +11,6 @@ import { SiteNav } from "@/components/SiteNav";
 import { RegionMap } from "@/components/RegionMap";
 import { CLASSES, REGIONS, type Country, type Region } from "@/data/education";
 import { winesForRegion, wineEmoji } from "@/lib/education";
-import { fmtPrice } from "@/lib/utils";
 
 export const Route = createFileRoute("/education")({
   head: () => ({
@@ -184,8 +183,8 @@ function EducationPage() {
                           </div>
                         </div>
                         <div className="text-right text-[11px] text-muted-foreground whitespace-nowrap">
-                          {w.priceGlass != null && <div>gl {fmtPrice(w.priceGlass)}</div>}
-                          {w.priceBottle != null && <div>btl {fmtPrice(w.priceBottle)}</div>}
+                          {w.priceGlass != null && <div>gl ${w.priceGlass}</div>}
+                          {w.priceBottle != null && <div>btl ${w.priceBottle}</div>}
                         </div>
                       </li>
                     ))}
