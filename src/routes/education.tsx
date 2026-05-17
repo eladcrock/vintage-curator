@@ -415,3 +415,70 @@ function RegionNode({
     </div>
   );
 }
+
+function ClassReadDialog({ classId, onClose }: { classId: 1 | 2 | 3 | 4 | 5 | null; onClose: () => void }) {
+  const cls = classId ? CLASSES.find((c) => c.id === classId) : null;
+  const regions = useMemo(
+    () => (classId ? REGIONS.filter((r) => r.classRef === classId) : []),
+    [classId],
+  );
+
+  return (
+    <Dialog open={classId !== null} onOpenChange={(o) => !o && onClose()}>
+      <DialogContent className="max-w-3xl max-h-[85vh] overflow-y-auto">
+        {cls && (
+          <>
+            <DialogHeader>
+              <DialogTitle className="text-base">{cls.title}</DialogTitle>
+              <DialogDescription className="text-xs">{cls.blurb}</DialogDescription>
+            </DialogHeader>
+            <div className="mt-3 space-y-6 text-sm">
+              {regions.map((r) => (
+                <article key={r.id} className="border-t border-border/60 pt-4 first:border-t-0 first:pt-0">
+                  <header className="mb-2">
+                    <h3 className="text-base font-semibold">{r.name}</h3>
+                    {r.zone && (
+                      <p className="text-[10px] uppercase tracking-wider text-muted-foreground">{r.zone}</p>
+                    )}
+                  </header>
+                  <p className="text-foreground/90">{r.summary}</p>
+                  {r.terroir && (
+                    <p className="mt-2 text-muted-foreground">
+                      <span className="font-semibold uppercase tracking-wider text-[10px] text-foreground/70">Terroir · </span>
+                      {r.terroir}
+                    </p>
+                  )}
+                  {r.wineNotes && (
+                    <div className="mt-2">
+                      <h4 className="text-[10px] font-semibold uppercase tracking-wider text-foreground/70">Wine Notes</h4>
+                      <p className="whitespace-pre-line text-foreground/90">{r.wineNotes}</p>
+                    </div>
+                  )}
+                  {r.history && (
+                    <div className="mt-2">
+                      <h4 className="text-[10px] font-semibold uppercase tracking-wider text-foreground/70">History</h4>
+                      <p className="whitespace-pre-line text-foreground/90">{r.history}</p>
+                    </div>
+                  )}
+                  {r.grapes.length > 0 && (
+                    <div className="mt-2">
+                      <h4 className="text-[10px] font-semibold uppercase tracking-wider text-foreground/70">Grapes</h4>
+                      <ul className="space-y-0.5">
+                        {r.grapes.map((g) => (
+                          <li key={g.name} className="text-foreground/90">
+                            <span className="font-semibold">{g.name}</span>
+                            <span className="text-muted-foreground"> — {g.notes}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </article>
+              ))}
+            </div>
+          </>
+        )}
+      </DialogContent>
+    </Dialog>
+  );
+}
