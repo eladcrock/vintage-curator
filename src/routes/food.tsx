@@ -64,7 +64,7 @@ function FoodPage() {
     <div className="min-h-screen bg-background text-foreground">
       <SiteNav
         title="Bottega Pro · Food"
-        subtitle={`${ALL_DISHES.length} dishes · tap a card for full spec`}
+        subtitle={`${ALL_DISHES.length} dishes`}
       />
       <main className="mx-auto max-w-3xl px-4 pb-24 pt-4">
         <div className="relative">
