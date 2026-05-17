@@ -13,7 +13,6 @@ import { Route as FoodRouteImport } from './routes/food'
 import { Route as ExperiencesRouteImport } from './routes/experiences'
 import { Route as BarRouteImport } from './routes/bar'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ApiCurateRouteImport } from './routes/api/curate'
 
 const FoodRoute = FoodRouteImport.update({
   id: '/food',
@@ -35,25 +34,18 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiCurateRoute = ApiCurateRouteImport.update({
-  id: '/api/curate',
-  path: '/api/curate',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bar': typeof BarRoute
   '/experiences': typeof ExperiencesRoute
   '/food': typeof FoodRoute
-  '/api/curate': typeof ApiCurateRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/bar': typeof BarRoute
   '/experiences': typeof ExperiencesRoute
   '/food': typeof FoodRoute
-  '/api/curate': typeof ApiCurateRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -61,14 +53,13 @@ export interface FileRoutesById {
   '/bar': typeof BarRoute
   '/experiences': typeof ExperiencesRoute
   '/food': typeof FoodRoute
-  '/api/curate': typeof ApiCurateRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/bar' | '/experiences' | '/food' | '/api/curate'
+  fullPaths: '/' | '/bar' | '/experiences' | '/food'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/bar' | '/experiences' | '/food' | '/api/curate'
-  id: '__root__' | '/' | '/bar' | '/experiences' | '/food' | '/api/curate'
+  to: '/' | '/bar' | '/experiences' | '/food'
+  id: '__root__' | '/' | '/bar' | '/experiences' | '/food'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -76,7 +67,6 @@ export interface RootRouteChildren {
   BarRoute: typeof BarRoute
   ExperiencesRoute: typeof ExperiencesRoute
   FoodRoute: typeof FoodRoute
-  ApiCurateRoute: typeof ApiCurateRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -109,13 +99,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/curate': {
-      id: '/api/curate'
-      path: '/api/curate'
-      fullPath: '/api/curate'
-      preLoaderRoute: typeof ApiCurateRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
@@ -124,7 +107,6 @@ const rootRouteChildren: RootRouteChildren = {
   BarRoute: BarRoute,
   ExperiencesRoute: ExperiencesRoute,
   FoodRoute: FoodRoute,
-  ApiCurateRoute: ApiCurateRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

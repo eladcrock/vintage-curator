@@ -1,16 +1,17 @@
 /**
- * Experiences tab — AI-curated chef's tasting menus.
+ * Experiences tab — deterministic chef's tasting menus (no AI).
  *
- * Server: src/routes/api/curate.ts
- * Domain: src/lib/experiences.ts
- * Prompt: src/data/experiences.ts
+ * Logic:     src/lib/curator.ts
+ * Tunables:  src/data/experiences.ts
+ * Types:     src/lib/experiences.ts
  */
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteNav } from "@/components/SiteNav";
 import { CuratorForm } from "@/components/CuratorForm";
 import { MenuOptionCard } from "@/components/MenuOptionCard";
-import type { CurateResponse, ExperienceRequest, MenuOption } from "@/lib/experiences";
+import { curateMenus } from "@/lib/curator";
+import type { ExperienceRequest, MenuOption } from "@/lib/experiences";
 
 export const Route = createFileRoute("/experiences")({
   head: () => ({
@@ -26,39 +27,20 @@ export const Route = createFileRoute("/experiences")({
 });
 
 function ExperiencesPage() {
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [options, setOptions] = useState<MenuOption[] | null>(null);
   const [lastReq, setLastReq] = useState<ExperienceRequest | null>(null);
 
-  async function curate(req: ExperienceRequest) {
-    setLoading(true);
+  function curate(req: ExperienceRequest) {
     setError(null);
     setLastReq(req);
-    try {
-      const res = await fetch("/api/curate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(req),
-      });
-      const json = (await res.json().catch(() => ({}))) as
-        | CurateResponse
-        | { error?: string };
-      if (!res.ok) {
-        setOptions(null);
-        setError(
-          ("error" in json && json.error) ||
-            `Request failed (${res.status}).`,
-        );
-        return;
-      }
-      setOptions(("options" in json && json.options) || []);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Network error.");
+    const result = curateMenus(req);
+    if ("error" in result) {
       setOptions(null);
-    } finally {
-      setLoading(false);
+      setError(result.error);
+      return;
     }
+    setOptions(result.options);
   }
 
   return (
@@ -72,7 +54,7 @@ function ExperiencesPage() {
           </p>
         </div>
 
-        <CuratorForm onSubmit={curate} loading={loading} />
+        <CuratorForm onSubmit={curate} loading={false} />
 
         {error && (
           <div className="mt-4 rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">
@@ -80,13 +62,7 @@ function ExperiencesPage() {
           </div>
         )}
 
-        {loading && (
-          <p className="mt-6 text-center text-sm text-muted-foreground">
-            Crafting menus…
-          </p>
-        )}
-
-        {!loading && options && options.length > 0 && lastReq && (
+        {options && options.length > 0 && lastReq && (
           <section className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
             {options.map((o, i) => (
               <MenuOptionCard key={i} option={o} guests={lastReq.guests} />
