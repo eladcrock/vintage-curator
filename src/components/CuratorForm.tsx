@@ -181,7 +181,7 @@ export function CuratorForm({
                   </span>{" "}
                   {a.kind === "course" ? "" : "+ "}{a.name}{" "}
                   <span className="tabular-nums text-muted-foreground">
-                    (${a.price}/pp)
+                    (${a.price}{a.scope === "table" ? " / table" : " / person"})
                   </span>
                 </span>
                 <button
@@ -242,6 +242,25 @@ export function CuratorForm({
                 } ${disabled ? "opacity-40" : ""}`}
               >
                 {k === "upgrade" ? "Upgrade (added on top)" : "Replace course"}
+              </button>
+            );
+          })}
+        </div>
+        <div className="mt-1.5 flex gap-1.5">
+          {(["person", "table"] as const).map((s) => {
+            const on = addScope === s;
+            return (
+              <button
+                type="button"
+                key={s}
+                onClick={() => setAddScope(s)}
+                className={`rounded-full border px-2.5 py-1 text-[11px] transition-colors ${
+                  on
+                    ? "border-primary bg-primary text-primary-foreground"
+                    : "border-border bg-background text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {s === "person" ? "Per person" : "Per table"}
               </button>
             );
           })}
