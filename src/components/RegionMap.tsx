@@ -210,8 +210,8 @@ export function RegionMap({
       </div>
 
       {/* Bottom-left hint */}
-      <div className="pointer-events-none absolute bottom-3 left-3 rounded-full bg-background/70 px-2.5 py-1 text-[10px] text-muted-foreground backdrop-blur ring-1 ring-border/40">
-        drag to pan · scroll to zoom
+      <div className="pointer-events-none absolute bottom-3 left-3 hidden sm:block rounded-full bg-background/70 px-2.5 py-1 text-[10px] text-muted-foreground backdrop-blur ring-1 ring-border/40">
+        drag to pan · ⌘/Ctrl + scroll to zoom
       </div>
     </div>
   );
