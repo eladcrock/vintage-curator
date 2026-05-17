@@ -12,25 +12,104 @@ type ShapeProps = { fill: string; stroke: string };
 function ItalyShape({ fill, stroke }: ShapeProps) {
   return (
     <>
-      {/* Mainland silhouette (very stylized) */}
+      {/*
+        Mainland — a recognizable "boot" tuned to the (0..100, 0..100) viewBox
+        used by region coords. Alpine arc up top, Apennine spine running SE,
+        Gargano spur, heel of Puglia, Gulf of Taranto, toe of Calabria.
+      */}
       <path
-        d="M18,18 Q22,16 28,17 L40,18 Q48,17 55,22 L58,28 L52,32 L48,38 L46,46 L48,52 L52,58 L52,66 L56,72 L58,80 L54,86 L48,86 L44,80 L42,72 L38,64 L36,56 L34,50 L32,42 L28,38 L22,32 L18,26 Z"
+        d="
+          M 18,22
+          C 14,18 20,14 26,15
+          L 38,16
+          C 46,14 54,15 60,19
+          L 66,22
+          C 70,24 68,28 64,28
+          L 56,28
+          C 54,30 56,34 54,36
+          L 48,40
+          C 44,44 42,50 44,54
+          L 48,60
+          C 50,64 52,66 54,66
+          L 60,64
+          C 66,62 70,64 72,68
+          L 74,72
+          C 74,74 70,74 66,72
+          L 60,70
+          C 58,72 60,76 62,78
+          L 64,82
+          C 62,84 58,82 56,80
+          L 50,76
+          C 48,80 50,84 48,86
+          L 44,88
+          C 40,86 40,82 42,78
+          L 40,72
+          C 38,68 36,64 36,58
+          L 34,52
+          C 32,46 30,42 28,38
+          L 24,32
+          C 20,30 18,26 18,22
+          Z
+        "
+        fill={fill} stroke={stroke} strokeWidth="0.6" strokeLinejoin="round"
+      />
+      {/* Sardinia — west of mainland */}
+      <path
+        d="M 20,58 C 16,58 14,62 15,66 C 15,70 17,74 21,74 C 25,74 27,70 26,66 C 26,62 24,58 20,58 Z"
         fill={fill} stroke={stroke} strokeWidth="0.6"
       />
-      {/* Sardinia */}
-      <ellipse cx="25" cy="64" rx="5" ry="7" fill={fill} stroke={stroke} strokeWidth="0.6" />
-      {/* Sicily */}
-      <path d="M36,86 L50,86 L48,92 L38,92 Z" fill={fill} stroke={stroke} strokeWidth="0.6" />
+      {/* Sicily — triangle SW of the toe, separated by the Strait of Messina */}
+      <path
+        d="M 34,86 L 50,84 L 48,92 L 36,92 Z"
+        fill={fill} stroke={stroke} strokeWidth="0.6" strokeLinejoin="round"
+      />
+      {/* Corsica hint (French, but anchors Sardinia geographically) */}
+      <path
+        d="M 20,50 C 18,50 17,53 18,56 C 19,58 22,58 23,56 C 24,53 22,50 20,50 Z"
+        fill={fill} stroke={stroke} strokeWidth="0.4" opacity="0.55"
+      />
     </>
   );
 }
 
 function FranceShape({ fill, stroke }: ShapeProps) {
   return (
-    <path
-      d="M30,20 Q42,18 56,22 L66,28 L70,40 L66,52 L60,62 L52,72 L40,76 L28,74 L20,66 L18,54 L20,42 L24,30 Z"
-      fill={fill} stroke={stroke} strokeWidth="0.6"
-    />
+    <>
+      {/*
+        France — the classic Hexagone: Channel coast top-left, Atlantic
+        bulge west, Pyrenees flat across the south, Mediterranean SE,
+        Alps and Rhine east. Brittany peninsula juts left.
+      */}
+      <path
+        d="
+          M 30,18
+          C 36,16 44,16 50,18
+          L 58,20
+          C 62,22 60,26 58,26
+          L 60,30
+          C 64,32 68,36 70,42
+          L 72,48
+          C 72,54 68,58 64,60
+          L 60,66
+          C 56,72 50,76 42,76
+          L 32,76
+          C 26,74 22,70 20,64
+          L 16,58
+          C 14,52 14,46 18,42
+          L 12,40
+          C 10,38 12,36 16,36
+          L 22,36
+          C 24,32 26,28 28,24
+          Z
+        "
+        fill={fill} stroke={stroke} strokeWidth="0.6" strokeLinejoin="round"
+      />
+      {/* Corsica */}
+      <path
+        d="M 64,66 C 62,66 61,69 62,72 C 63,75 66,75 67,72 C 68,69 67,66 64,66 Z"
+        fill={fill} stroke={stroke} strokeWidth="0.5"
+      />
+    </>
   );
 }
 
