@@ -66,21 +66,15 @@ function wineName(w: Wine): string {
 function EducationPage() {
   const [country, setCountry] = useState<Country>("Italy");
   const [query, setQuery] = useState("");
-  const [openIds, setOpenIds] = useState<Set<string>>(new Set(["piedmont"]));
-  const [selectedId, setSelectedId] = useState<string>("piedmont");
+  const [openId, setOpenId] = useState<string | null>("piedmont");
+  const selectedId = openId;
 
   const toggle = (id: string) => {
-    setOpenIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id); else next.add(id);
-      return next;
-    });
-    setSelectedId(id);
+    setOpenId((prev) => (prev === id ? null : id));
   };
 
   const onMapSelect = (id: string) => {
-    setSelectedId(id);
-    setOpenIds((prev) => new Set(prev).add(id));
+    setOpenId(id);
     // Scroll to node
     requestAnimationFrame(() => {
       const el = document.getElementById(`region-${id}`);
@@ -207,7 +201,7 @@ function EducationPage() {
                       <RegionNode
                         key={r.id}
                         region={r}
-                        open={openIds.has(r.id)}
+                        open={openId === r.id}
                         active={selectedId === r.id}
                         color={color}
                         onToggle={() => toggle(r.id)}
