@@ -56,6 +56,11 @@ export type AddOn = {
    *              item at the user-entered price. Not valid with course="Any".
    */
   kind: "upgrade" | "course";
+  /**
+   * "person" — price is per guest.
+   * "table"  — flat price for the table; per-person impact = price / guests.
+   */
+  scope: "person" | "table";
 };
 
 export type CourseSelection = {
