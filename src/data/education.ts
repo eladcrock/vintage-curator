@@ -172,5 +172,3 @@ export const REGIONS: Region[] = [
       { name: "Montepulciano", kind: "red", notes: "Full body, soft velvety tannin, ripe black fruit, violets, spice." },
     ],
     wineMatch: ["abruzzo","pecorino","trebbiano","montepulciano"],
-  },
-  {
