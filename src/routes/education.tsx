@@ -119,9 +119,9 @@ function EducationPage() {
       <SiteNav title="Bottega Pro" subtitle="Education" />
       <main className="mx-auto max-w-6xl px-4 py-5">
         <div className="mb-4">
-          <h2 className="text-lg font-semibold">Region-coded wine mindmap</h2>
+          <h2 className="text-lg font-semibold">Wine atlas &amp; study guide</h2>
           <p className="text-xs text-muted-foreground">
-            Wine Class #1–#5 distilled into a clickable map. Tap a region pin or node to expand curriculum notes and the bottles on our list.
+            Bottega Wine Class #1–#5, mapped. Tap a region on the map or in the list to read terroir, history, grapes, and the bottles we pour.
           </p>
         </div>
 
@@ -190,7 +190,7 @@ function EducationPage() {
             <div className="rounded-lg border border-border bg-card p-3">
               <RegionMap
                 country={country}
-                regions={REGIONS}
+                regions={visibleRegions}
                 selectedId={selectedId}
                 onSelect={onMapSelect}
               />
