@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as FoodRouteImport } from './routes/food'
+import { Route as ExperiencesRouteImport } from './routes/experiences'
 import { Route as BarRouteImport } from './routes/bar'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiCurateRouteImport } from './routes/api/curate'
@@ -17,6 +18,11 @@ import { Route as ApiCurateRouteImport } from './routes/api/curate'
 const FoodRoute = FoodRouteImport.update({
   id: '/food',
   path: '/food',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExperiencesRoute = ExperiencesRouteImport.update({
+  id: '/experiences',
+  path: '/experiences',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BarRoute = BarRouteImport.update({
@@ -38,12 +44,14 @@ const ApiCurateRoute = ApiCurateRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bar': typeof BarRoute
+  '/experiences': typeof ExperiencesRoute
   '/food': typeof FoodRoute
   '/api/curate': typeof ApiCurateRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/bar': typeof BarRoute
+  '/experiences': typeof ExperiencesRoute
   '/food': typeof FoodRoute
   '/api/curate': typeof ApiCurateRoute
 }
@@ -51,20 +59,22 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/bar': typeof BarRoute
+  '/experiences': typeof ExperiencesRoute
   '/food': typeof FoodRoute
   '/api/curate': typeof ApiCurateRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/bar' | '/food' | '/api/curate'
+  fullPaths: '/' | '/bar' | '/experiences' | '/food' | '/api/curate'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/bar' | '/food' | '/api/curate'
-  id: '__root__' | '/' | '/bar' | '/food' | '/api/curate'
+  to: '/' | '/bar' | '/experiences' | '/food' | '/api/curate'
+  id: '__root__' | '/' | '/bar' | '/experiences' | '/food' | '/api/curate'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BarRoute: typeof BarRoute
+  ExperiencesRoute: typeof ExperiencesRoute
   FoodRoute: typeof FoodRoute
   ApiCurateRoute: typeof ApiCurateRoute
 }
@@ -76,6 +86,13 @@ declare module '@tanstack/react-router' {
       path: '/food'
       fullPath: '/food'
       preLoaderRoute: typeof FoodRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/experiences': {
+      id: '/experiences'
+      path: '/experiences'
+      fullPath: '/experiences'
+      preLoaderRoute: typeof ExperiencesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bar': {
@@ -105,9 +122,20 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BarRoute: BarRoute,
+  ExperiencesRoute: ExperiencesRoute,
   FoodRoute: FoodRoute,
   ApiCurateRoute: ApiCurateRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
