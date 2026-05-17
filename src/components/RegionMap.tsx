@@ -4,6 +4,7 @@
  * regions geographically. Coordinates live on each Region in 0..100 / 0..140.
  */
 import type { Region, Country } from "@/data/education";
+import { zoneColor } from "@/lib/education";
 
 type ShapeProps = { fill: string; stroke: string };
 
@@ -52,6 +53,7 @@ export function RegionMap({
 
       {items.map((r) => {
         const active = r.id === selectedId;
+        const color = zoneColor(r.zone);
         return (
           <g
             key={r.id}
@@ -62,15 +64,15 @@ export function RegionMap({
           >
             <circle
               cx={r.x} cy={r.y}
-              r={active ? 2.2 : 1.6}
-              fill={active ? "hsl(var(--primary))" : "hsl(var(--foreground))"}
-              stroke="hsl(var(--background))"
-              strokeWidth="0.4"
+              r={active ? 2.6 : 1.8}
+              fill={color}
+              stroke={active ? "hsl(var(--foreground))" : "hsl(var(--background))"}
+              strokeWidth={active ? 0.7 : 0.4}
             />
             <text
               x={r.x + 2.5} y={r.y + 1}
               fontSize="2.2"
-              fill={active ? "hsl(var(--primary))" : "hsl(var(--foreground))"}
+              fill={active ? color : "hsl(var(--foreground))"}
               className="pointer-events-none select-none"
               fontWeight={active ? 700 : 500}
             >
