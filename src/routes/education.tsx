@@ -14,6 +14,7 @@ import { CLASSES, REGIONS, type Country, type Region } from "@/data/education";
 import { winesForRegion, zoneColor } from "@/lib/education";
 import type { Wine } from "@/lib/wines";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 export const Route = createFileRoute("/education")({
   head: () => ({
@@ -70,6 +71,8 @@ function EducationPage() {
   const [openId, setOpenId] = useState<string | null>(null);
   const [classFilter, setClassFilter] = useState<1 | 2 | 3 | 4 | 5 | null>(null);
   const [openClassId, setOpenClassId] = useState<number | null>(null);
+  const [readClassId, setReadClassId] = useState<1 | 2 | 3 | 4 | 5 | null>(null);
+  const [onlyOnList, setOnlyOnList] = useState(false);
   const selectedId = openId;
 
   const toggle = (id: string) => {
@@ -89,6 +92,7 @@ function EducationPage() {
     const q = query.trim().toLowerCase();
     return REGIONS.filter((r) => r.country === country).filter((r) => {
       if (classFilter && r.classRef !== classFilter) return false;
+      if (onlyOnList && winesForRegion(r).length === 0) return false;
       if (!q) return true;
       return (
         r.name.toLowerCase().includes(q) ||
@@ -97,7 +101,7 @@ function EducationPage() {
         r.grapes.some((g) => g.name.toLowerCase().includes(q) || g.notes.toLowerCase().includes(q))
       );
     });
-  }, [country, query, classFilter]);
+  }, [country, query, classFilter, onlyOnList]);
 
   // Group by zone for the mindmap.
   const zones = useMemo(() => {
@@ -143,6 +147,15 @@ function EducationPage() {
             placeholder="Search regions, zones, grapes…"
             className="flex-1 min-w-[180px] rounded-md border border-border bg-background px-3 py-1.5 text-sm placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-primary"
           />
+          <label className="flex items-center gap-1.5 rounded-md border border-border px-2 py-1.5 text-[11px] font-medium cursor-pointer select-none hover:bg-muted/40">
+            <input
+              type="checkbox"
+              checked={onlyOnList}
+              onChange={(e) => setOnlyOnList(e.target.checked)}
+              className="h-3 w-3 accent-primary"
+            />
+            On list only
+          </label>
         </div>
 
         {/* Quick class filter chips */}
@@ -213,14 +226,22 @@ function EducationPage() {
                       <span aria-hidden className="text-muted-foreground">{openClassId === c.id ? "−" : "+"}</span>
                     </button>
                     {openClassId === c.id && (
-                      <div className="px-2 pb-2 text-[11px] text-muted-foreground">
+                      <div className="px-2 pb-2 text-[11px] text-muted-foreground space-y-1.5">
                         <p>{c.blurb}</p>
-                        <button
-                          onClick={() => { setClassFilter(c.id); setOpenClassId(null); }}
-                          className="mt-1.5 inline-block rounded-full border border-border px-2 py-0.5 text-[10px] font-medium hover:bg-muted/60"
-                        >
-                          Filter regions to Class #{c.id} →
-                        </button>
+                        <div className="flex flex-wrap gap-1.5 pt-0.5">
+                          <button
+                            onClick={() => { setClassFilter(c.id); setOpenClassId(null); }}
+                            className="inline-block rounded-full border border-border px-2 py-0.5 text-[10px] font-medium hover:bg-muted/60"
+                          >
+                            Filter regions →
+                          </button>
+                          <button
+                            onClick={() => setReadClassId(c.id)}
+                            className="inline-block rounded-full bg-primary px-2 py-0.5 text-[10px] font-semibold text-primary-foreground hover:opacity-90"
+                          >
+                            Read full class
+                          </button>
+                        </div>
                       </div>
                     )}
                   </li>
@@ -261,6 +282,7 @@ function EducationPage() {
           </section>
         </div>
       </main>
+      <ClassReadDialog classId={readClassId} onClose={() => setReadClassId(null)} />
     </div>
   );
 }
@@ -391,5 +413,72 @@ function RegionNode({
         </div>
       )}
     </div>
+  );
+}
+
+function ClassReadDialog({ classId, onClose }: { classId: 1 | 2 | 3 | 4 | 5 | null; onClose: () => void }) {
+  const cls = classId ? CLASSES.find((c) => c.id === classId) : null;
+  const regions = useMemo(
+    () => (classId ? REGIONS.filter((r) => r.classRef === classId) : []),
+    [classId],
+  );
+
+  return (
+    <Dialog open={classId !== null} onOpenChange={(o) => !o && onClose()}>
+      <DialogContent className="max-w-3xl max-h-[85vh] overflow-y-auto">
+        {cls && (
+          <>
+            <DialogHeader>
+              <DialogTitle className="text-base">{cls.title}</DialogTitle>
+              <DialogDescription className="text-xs">{cls.blurb}</DialogDescription>
+            </DialogHeader>
+            <div className="mt-3 space-y-6 text-sm">
+              {regions.map((r) => (
+                <article key={r.id} className="border-t border-border/60 pt-4 first:border-t-0 first:pt-0">
+                  <header className="mb-2">
+                    <h3 className="text-base font-semibold">{r.name}</h3>
+                    {r.zone && (
+                      <p className="text-[10px] uppercase tracking-wider text-muted-foreground">{r.zone}</p>
+                    )}
+                  </header>
+                  <p className="text-foreground/90">{r.summary}</p>
+                  {r.terroir && (
+                    <p className="mt-2 text-muted-foreground">
+                      <span className="font-semibold uppercase tracking-wider text-[10px] text-foreground/70">Terroir · </span>
+                      {r.terroir}
+                    </p>
+                  )}
+                  {r.wineNotes && (
+                    <div className="mt-2">
+                      <h4 className="text-[10px] font-semibold uppercase tracking-wider text-foreground/70">Wine Notes</h4>
+                      <p className="whitespace-pre-line text-foreground/90">{r.wineNotes}</p>
+                    </div>
+                  )}
+                  {r.history && (
+                    <div className="mt-2">
+                      <h4 className="text-[10px] font-semibold uppercase tracking-wider text-foreground/70">History</h4>
+                      <p className="whitespace-pre-line text-foreground/90">{r.history}</p>
+                    </div>
+                  )}
+                  {r.grapes.length > 0 && (
+                    <div className="mt-2">
+                      <h4 className="text-[10px] font-semibold uppercase tracking-wider text-foreground/70">Grapes</h4>
+                      <ul className="space-y-0.5">
+                        {r.grapes.map((g) => (
+                          <li key={g.name} className="text-foreground/90">
+                            <span className="font-semibold">{g.name}</span>
+                            <span className="text-muted-foreground"> — {g.notes}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </article>
+              ))}
+            </div>
+          </>
+        )}
+      </DialogContent>
+    </Dialog>
   );
 }
