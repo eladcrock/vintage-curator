@@ -41,8 +41,10 @@ const DEFAULTS = {
 };
 
 function useUrlFilters() {
-  const [state, setState] = useState(() => readFromURL());
+  // Start from DEFAULTS so SSR and first client render match; sync from URL after mount.
+  const [state, setState] = useState<typeof DEFAULTS>(() => ({ ...DEFAULTS }));
   useEffect(() => {
+    setState(readFromURL());
     const onPop = () => setState(readFromURL());
     window.addEventListener("popstate", onPop);
     return () => window.removeEventListener("popstate", onPop);
@@ -120,6 +122,7 @@ function Index() {
 
   const filtered = useMemo(() => {
     const q = state.q.trim().toLowerCase();
+    const qYear = /^\d{4}$/.test(q) ? parseInt(q, 10) : null;
     const typeSet = new Set(state.types);
     const subSet = new Set(state.subs);
     const results = ALL_WINES.filter((w) => {
@@ -138,6 +141,14 @@ function Index() {
       const price = priceOf(w);
       if (price < state.priceMin || price > state.priceMax) return false;
       if (q) {
+        // Year-only query: match vintage exactly (number or "NV"/"MV" text).
+        if (qYear !== null) {
+          if (typeof w.vintage === "number") {
+            if (w.vintage !== qYear) return false;
+          } else {
+            return false;
+          }
+        } else {
         const hay = [
           w.producer,
           w.cuvee,
@@ -145,11 +156,13 @@ function Index() {
           w.region,
           w.country,
           w.code,
+          String(w.vintage),
         ]
           .filter(Boolean)
           .join(" ")
           .toLowerCase();
         if (!hay.includes(q)) return false;
+        }
       }
       return true;
     });
