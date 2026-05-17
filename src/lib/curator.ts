@@ -212,6 +212,8 @@ function picksToOption(
   const allAddOns: AddOn[] = (req.addOns ?? []).filter(
     (a) => a.name.trim().length > 0 && a.price > 0,
   );
+  const perPersonAmount = (a: AddOn) =>
+    a.scope === "table" ? a.price / Math.max(1, guests) : a.price;
   const replacementByCat = new Map<string, AddOn>();
   for (const a of allAddOns) {
     if (a.kind === "course" && a.course !== "Any") {
@@ -222,12 +224,15 @@ function picksToOption(
   const courses: CourseSelection[] = picks.map((p) => {
     const rep = replacementByCat.get(p.cat);
     if (rep) {
+      const pp = perPersonAmount(rep);
       return {
         category: p.cat,
         dishId: `addon:${rep.name}`,
-        dishName: rep.name,
-        price: rep.price,
-        reasoning: `Guest request — ${rep.name} as the ${p.cat.toLowerCase()}.`,
+        dishName: rep.scope === "table" ? `${rep.name} (table)` : rep.name,
+        price: Math.round(pp * 100) / 100,
+        reasoning: `Guest request — ${rep.name} as the ${p.cat.toLowerCase()}${
+          rep.scope === "table" ? ` ($${rep.price} for the table)` : ""
+        }.`,
       };
     }
     return {
@@ -243,8 +248,8 @@ function picksToOption(
   const upgrades: AddOn[] = allAddOns.filter(
     (a) => a.kind === "upgrade" || a.course === "Any",
   );
-  const addOnTotal = upgrades.reduce((s, a) => s + a.price, 0);
-  const perPerson = foodTotal + addOnTotal;
+  const addOnTotal = upgrades.reduce((s, a) => s + perPersonAmount(a), 0);
+  const perPerson = Math.round((foodTotal + addOnTotal) * 100) / 100;
   return {
     title,
     style,

@@ -61,8 +61,15 @@ export function MenuOptionCard({
                       key={k}
                       className="flex items-baseline justify-between gap-2 text-xs text-foreground/80"
                     >
-                      <span>+ {a.name}</span>
-                      <span className="tabular-nums text-muted-foreground">+${a.price}</span>
+                      <span>
+                        + {a.name}{" "}
+                        <span className="text-[10px] text-muted-foreground">
+                          ({a.scope === "table" ? "table" : "per person"})
+                        </span>
+                      </span>
+                      <span className="tabular-nums text-muted-foreground">
+                        +${a.price}{a.scope === "table" ? "/table" : ""}
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -81,8 +88,15 @@ export function MenuOptionCard({
                 key={k}
                 className="flex items-baseline justify-between gap-2 text-xs text-foreground/80"
               >
-                <span>+ {a.name}</span>
-                <span className="tabular-nums text-muted-foreground">+${a.price}</span>
+                <span>
+                  + {a.name}{" "}
+                  <span className="text-[10px] text-muted-foreground">
+                    ({a.scope === "table" ? "table" : "per person"})
+                  </span>
+                </span>
+                <span className="tabular-nums text-muted-foreground">
+                  +${a.price}{a.scope === "table" ? "/table" : ""}
+                </span>
               </li>
             ))}
         </ul>
