@@ -72,10 +72,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Bottega · Sommelier Quick List" },
+      { title: "Bottega Pro · Wine & Bar" },
       { name: "description", content: "Search the Bottega wine list by vintage, type, region, and price." },
       { name: "theme-color", content: "#231f1a" },
-      { property: "og:title", content: "Bottega · Sommelier Quick List" },
+      { property: "og:title", content: "Bottega Pro · Wine & Bar" },
       { property: "og:description", content: "Search the Bottega wine list by vintage, type, region, and price." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

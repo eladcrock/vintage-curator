@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { Search, X, ChevronDown } from "lucide-react";
+import { Search, X, ChevronDown, Eye, EyeOff } from "lucide-react";
 import {
   ALL_WINES,
   WINE_TYPES,
@@ -37,7 +37,8 @@ const DEFAULTS = {
   includeNV: true,
   priceMin: GLOBAL_MIN_PRICE,
   priceMax: GLOBAL_MAX_PRICE,
-  btgOnly: false,
+  /** When false (default), by-the-glass pours are hidden from results. */
+  showBTG: false,
   sort: "vintage-desc" as SortKey,
 };
 
@@ -90,7 +91,7 @@ function readFromURL(): typeof DEFAULTS {
     includeNV: p.get("nv") !== "0",
     priceMin: num("pmin", DEFAULTS.priceMin),
     priceMax: num("pmax", DEFAULTS.priceMax),
-    btgOnly: p.get("btg") === "1",
+    showBTG: p.get("btg") === "1",
     sort: ((p.get("sort") as SortKey) ?? DEFAULTS.sort),
   };
 }
@@ -107,7 +108,7 @@ function writeToURL(s: typeof DEFAULTS) {
   if (!s.includeNV) p.set("nv", "0");
   if (s.priceMin !== DEFAULTS.priceMin) p.set("pmin", String(s.priceMin));
   if (s.priceMax !== DEFAULTS.priceMax) p.set("pmax", String(s.priceMax));
-  if (s.btgOnly) p.set("btg", "1");
+  if (s.showBTG) p.set("btg", "1");
   if (s.sort !== DEFAULTS.sort) p.set("sort", s.sort);
   const qs = p.toString();
   const url = qs ? `?${qs}` : window.location.pathname;
@@ -133,7 +134,8 @@ function Index() {
         if (!sub || !subSet.has(sub)) return false;
       }
       if (state.format !== "all" && formatOf(w) !== state.format) return false;
-      if (state.btgOnly && !w.byTheGlass) return false;
+      // Hide by-the-glass pours unless explicitly toggled on.
+      if (!state.showBTG && w.byTheGlass) return false;
       if (typeof w.vintage === "number") {
         if (w.vintage < state.vintageMin || w.vintage > state.vintageMax) return false;
       } else {
@@ -194,7 +196,7 @@ function Index() {
     (state.format !== "all" ? 1 : 0) +
     (state.vintageMin !== DEFAULTS.vintageMin || state.vintageMax !== DEFAULTS.vintageMax ? 1 : 0) +
     (state.priceMin !== DEFAULTS.priceMin || state.priceMax !== DEFAULTS.priceMax ? 1 : 0) +
-    (state.btgOnly ? 1 : 0) +
+    (state.showBTG ? 1 : 0) +
     (!state.includeNV ? 1 : 0);
 
   // Available subcategories: union of SUBCATEGORIES for selected types,
@@ -214,8 +216,8 @@ function Index() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SiteNav
-        title="Bottega · Sommelier"
-        subtitle={`List 03.15.2026 · ${ALL_WINES.length} wines`}
+        title="Bottega Pro"
+        subtitle={`Wine list 03.15.2026 · ${ALL_WINES.length} wines`}
       />
 
       <main className="mx-auto max-w-3xl px-4 pb-24 pt-4">
@@ -396,15 +398,6 @@ function Index() {
               update({ priceMin: min, priceMax: max })
             }
           />
-          <label className="mt-2 flex cursor-pointer items-center gap-2 text-xs text-muted-foreground">
-            <input
-              type="checkbox"
-              checked={state.btgOnly}
-              onChange={(e) => update({ btgOnly: e.target.checked })}
-              className="h-3.5 w-3.5 accent-[color:var(--color-primary)]"
-            />
-            By-the-glass only
-          </label>
         </div>
 
         {/* Results bar */}
@@ -422,6 +415,20 @@ function Index() {
             >
               {activeFilterCount > 0 ? `Show all (${ALL_WINES.length})` : "Show all"}
             </Button>
+            <button
+              type="button"
+              onClick={() => update({ showBTG: !state.showBTG })}
+              aria-pressed={state.showBTG}
+              title={state.showBTG ? "Hide by-the-glass" : "Show by-the-glass"}
+              className={`ml-1 inline-flex items-center gap-1 rounded-md border px-2 py-1 text-xs transition-colors ${
+                state.showBTG
+                  ? "border-primary bg-primary/15 text-primary"
+                  : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-foreground"
+              }`}
+            >
+              {state.showBTG ? <Eye className="h-3.5 w-3.5" /> : <EyeOff className="h-3.5 w-3.5" />}
+              {state.showBTG ? "Hide by-the-glass" : "Show by-the-glass"}
+            </button>
           </div>
           <select
             value={state.sort}
