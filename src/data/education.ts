@@ -174,6 +174,3 @@ export const REGIONS: Region[] = [
     wineMatch: ["abruzzo","pecorino","trebbiano","montepulciano"],
   },
   {
-    id: "le-marche", name: "Le Marche", country: "Italy", classRef: 2, zone: "Central",
-    x: 47, y: 42,
-    summary: "Adriatic coast, 15 DOCs and 5 DOC
