@@ -22,6 +22,10 @@ export type Region = {
   y: number;
   summary: string;
   terroir?: string;
+  /** Extended tasting / service notes pulled from Wine Class materials. */
+  wineNotes?: string;
+  /** Historical / cultural context for the region. */
+  history?: string;
   grapes: GrapeNote[];
   // Substrings (lowercased) matched against wine.region / cuvee / varietal / producer.
   wineMatch: string[];
