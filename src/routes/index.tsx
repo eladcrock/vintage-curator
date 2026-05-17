@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { Search, X, Wine as WineIcon, ChevronDown } from "lucide-react";
+import { Search, X, ChevronDown } from "lucide-react";
 import {
   ALL_WINES,
   WINE_TYPES,
@@ -13,6 +13,7 @@ import {
   type FormatFilter,
 } from "@/lib/wines";
 import { WineCard } from "@/components/WineCard";
+import { SiteNav } from "@/components/SiteNav";
 import { Slider } from "@/components/ui/slider";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -212,26 +213,10 @@ function Index() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <header className="sticky top-0 z-20 border-b border-border bg-background/95 backdrop-blur">
-        <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-4 py-3">
-          <div className="flex items-center gap-2">
-            <WineIcon className="h-5 w-5 text-primary" />
-            <div>
-              <h1 className="text-sm font-semibold leading-tight">Bottega · Sommelier</h1>
-              <p className="text-[11px] leading-tight text-muted-foreground">
-                List 03.15.2026 · {ALL_WINES.length} wines
-              </p>
-            </div>
-          </div>
-          <nav className="flex gap-1 text-xs">
-            <span className="rounded-md bg-secondary px-2 py-1 font-medium text-secondary-foreground">
-              Wines
-            </span>
-            <span className="rounded-md px-2 py-1 text-muted-foreground">Cocktails</span>
-            <span className="rounded-md px-2 py-1 text-muted-foreground">Food</span>
-          </nav>
-        </div>
-      </header>
+      <SiteNav
+        title="Bottega · Sommelier"
+        subtitle={`List 03.15.2026 · ${ALL_WINES.length} wines`}
+      />
 
       <main className="mx-auto max-w-3xl px-4 pb-24 pt-4">
         {/* Search */}
