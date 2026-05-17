@@ -50,6 +50,12 @@ export type AddOn = {
   price: number;
   /** Course the add-on rides on. "Any" displays it at the bottom of the menu. */
   course: FoodCategory | "Any";
+  /**
+   * "upgrade"  — layered on top of an existing course (no course is dropped).
+   * "course"   — replaces (or fulfills) the course at that category with this
+   *              item at the user-entered price. Not valid with course="Any".
+   */
+  kind: "upgrade" | "course";
 };
 
 export type CourseSelection = {
