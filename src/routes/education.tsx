@@ -33,8 +33,8 @@ const KIND_EMOJI: Record<string, string> = {
 // Visual color-coding for wine types — keeps red vs white instantly scannable.
 const TYPE_STYLE: Record<string, { bar: string; chip: string; label: string }> = {
   Red:       { bar: "oklch(0.42 0.16 18)",  chip: "bg-[oklch(0.42_0.16_18)] text-white",        label: "Red" },
-  White:     { bar: "oklch(0.85 0.13 95)",  chip: "bg-[oklch(0.92_0.10_95)] text-[oklch(0.30_0.05_80)]", label: "White" },
-  Sparkling: { bar: "oklch(0.88 0.08 95)",  chip: "bg-[oklch(0.95_0.06_95)] text-[oklch(0.30_0.05_80)]", label: "Sparkling" },
+  White:     { bar: "oklch(0.80 0.12 70)",  chip: "bg-[oklch(0.92_0.09_70)] text-[oklch(0.32_0.08_55)]", label: "White" },
+  Sparkling: { bar: "oklch(0.85 0.08 70)",  chip: "bg-[oklch(0.95_0.06_70)] text-[oklch(0.32_0.08_55)]", label: "Sparkling" },
   Rosé:      { bar: "oklch(0.78 0.12 15)",  chip: "bg-[oklch(0.90_0.08_15)] text-[oklch(0.35_0.10_15)]", label: "Rosé" },
   Orange:    { bar: "oklch(0.70 0.16 60)",  chip: "bg-[oklch(0.88_0.10_60)] text-[oklch(0.35_0.10_50)]", label: "Orange" },
   Dessert:   { bar: "oklch(0.70 0.14 85)",  chip: "bg-[oklch(0.90_0.10_85)] text-[oklch(0.35_0.08_70)]", label: "Dessert" },
@@ -44,8 +44,8 @@ const DEFAULT_TYPE = { bar: "oklch(0.6 0 0)", chip: "bg-muted text-foreground", 
 // Grape-kind tinting for the Grapes drop-down.
 const KIND_TINT: Record<string, string> = {
   red:       "border-l-[3px] border-l-[oklch(0.42_0.16_18)]",
-  white:     "border-l-[3px] border-l-[oklch(0.80_0.13_95)]",
-  sparkling: "border-l-[3px] border-l-[oklch(0.88_0.08_95)]",
+  white:     "border-l-[3px] border-l-[oklch(0.78_0.12_70)]",
+  sparkling: "border-l-[3px] border-l-[oklch(0.85_0.08_70)]",
   rose:      "border-l-[3px] border-l-[oklch(0.78_0.12_15)]",
   dessert:   "border-l-[3px] border-l-[oklch(0.70_0.14_85)]",
 };
