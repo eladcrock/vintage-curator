@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { Search, X, ChevronDown, Eye, EyeOff } from "lucide-react";
+import { Search, X, Eye, EyeOff } from "lucide-react";
 import {
   ALL_WINES,
   WINE_TYPES,
@@ -274,53 +274,41 @@ function Index() {
           })}
         </div>
 
-        {/* Subcategory chips */}
-        {visibleSubs.length > 0 && (
-          <details className="group mt-3 rounded-lg border border-border bg-card/40">
-            <summary className="flex cursor-pointer list-none items-center justify-between px-3 py-2 text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground">
-              <span>
-                Styles
-                {state.subs.length > 0 && (
-                  <span className="ml-2 rounded-full bg-primary/15 px-1.5 py-0.5 text-[10px] text-primary normal-case tracking-normal">
-                    {state.subs.length} selected
-                  </span>
-                )}
-              </span>
-              <ChevronDown className="h-4 w-4 transition-transform group-open:rotate-180" />
-            </summary>
-            <div className="space-y-2 border-t border-border px-3 py-2">
-              {visibleSubs.map(({ type, subs }) => (
-                <div key={type}>
-                  <div className="mb-1 text-[10px] uppercase tracking-wider text-muted-foreground">
-                    {type}
-                  </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {subs.map((s) => {
-                      const active = state.subs.includes(s);
-                      return (
-                        <button
-                          key={s}
-                          onClick={() => {
-                            const next = active
-                              ? state.subs.filter((x) => x !== s)
-                              : [...state.subs, s];
-                            update({ subs: next });
-                          }}
-                          className={`rounded-full border px-2.5 py-1 text-xs transition-colors ${
-                            active
-                              ? "border-primary bg-primary/15 text-primary"
-                              : "border-border bg-card/60 text-muted-foreground hover:border-primary/40 hover:text-foreground"
-                          }`}
-                        >
-                          {s}
-                        </button>
-                      );
-                    })}
-                  </div>
+        {/* Subcategory chips — only shown once user taps a wine type.
+            Drops down inline (no extra click on a "Styles" header). */}
+        {state.types.length > 0 && visibleSubs.length > 0 && (
+          <div className="mt-3 space-y-2 rounded-lg border border-border bg-card/40 px-3 py-2">
+            {visibleSubs.map(({ type, subs }) => (
+              <div key={type}>
+                <div className="mb-1 text-[10px] uppercase tracking-wider text-muted-foreground">
+                  {type} styles
                 </div>
-              ))}
-            </div>
-          </details>
+                <div className="flex flex-wrap gap-1.5">
+                  {subs.map((s) => {
+                    const active = state.subs.includes(s);
+                    return (
+                      <button
+                        key={s}
+                        onClick={() => {
+                          const next = active
+                            ? state.subs.filter((x) => x !== s)
+                            : [...state.subs, s];
+                          update({ subs: next });
+                        }}
+                        className={`rounded-full border px-2.5 py-1 text-xs transition-colors ${
+                          active
+                            ? "border-primary bg-primary/15 text-primary"
+                            : "border-border bg-card/60 text-muted-foreground hover:border-primary/40 hover:text-foreground"
+                        }`}
+                      >
+                        {s}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
         )}
 
         {/* Format chips */}
