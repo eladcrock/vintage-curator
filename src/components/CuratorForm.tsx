@@ -150,7 +150,7 @@ export function CuratorForm({
       <div className="mt-4">
         <label className="text-xs">
           <span className="mb-1 block font-medium text-muted-foreground">
-            Table notes (allergies, preferences, occasion)
+            Note for kitchen (pass-through — not used to build the menu)
           </span>
           <Textarea
             value={notes}
