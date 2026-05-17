@@ -162,10 +162,10 @@ export function CuratorForm({
 
       <div className="mt-4">
         <p className="mb-1 text-xs font-medium text-muted-foreground">
-          À la carte add-ons (per person)
+          À la carte additions & requests (per person)
         </p>
         <p className="mb-2 text-[11px] text-muted-foreground">
-          Upgrades layered on top — courses won't be reduced to fit.
+          <span className="font-medium text-foreground">Upgrade</span> layers on top of a course; <span className="font-medium text-foreground">Replace course</span> uses your request as that course (e.g. they love the chicken).
         </p>
         {addOns.length > 0 && (
           <ul className="mb-2 space-y-1">
@@ -176,9 +176,9 @@ export function CuratorForm({
               >
                 <span>
                   <span className="text-[10px] uppercase tracking-wide text-muted-foreground">
-                    {a.course}
+                    {a.course} · {a.kind === "course" ? "replace" : "upgrade"}
                   </span>{" "}
-                  + {a.name}{" "}
+                  {a.kind === "course" ? "" : "+ "}{a.name}{" "}
                   <span className="tabular-nums text-muted-foreground">
                     (${a.price}/pp)
                   </span>
@@ -195,11 +195,11 @@ export function CuratorForm({
             ))}
           </ul>
         )}
-        <div className="grid grid-cols-[1fr_80px_110px_auto] gap-2">
+        <div className="grid grid-cols-[1fr_70px_100px_auto] gap-2">
           <Input
             value={addName}
             onChange={(e) => setAddName(e.target.value)}
-            placeholder="e.g. shaved truffles"
+            placeholder="e.g. shaved truffles or roasted chicken"
             maxLength={60}
           />
           <Input
@@ -223,6 +223,27 @@ export function CuratorForm({
           <Button type="button" variant="secondary" onClick={addAddOn}>
             Add
           </Button>
+        </div>
+        <div className="mt-2 flex gap-1.5">
+          {(["upgrade", "course"] as const).map((k) => {
+            const on = addKind === k;
+            const disabled = k === "course" && addCourse === "Any";
+            return (
+              <button
+                type="button"
+                key={k}
+                disabled={disabled}
+                onClick={() => setAddKind(k)}
+                className={`rounded-full border px-2.5 py-1 text-[11px] transition-colors ${
+                  on && !disabled
+                    ? "border-primary bg-primary text-primary-foreground"
+                    : "border-border bg-background text-muted-foreground hover:text-foreground"
+                } ${disabled ? "opacity-40" : ""}`}
+              >
+                {k === "upgrade" ? "Upgrade (added on top)" : "Replace course"}
+              </button>
+            );
+          })}
         </div>
       </div>
 
