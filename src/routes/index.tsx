@@ -240,7 +240,7 @@ function Index() {
           <Input
             value={state.q}
             onChange={(e) => update({ q: e.target.value })}
-            placeholder="Search producer, region, varietal, bin code…"
+            placeholder="Search vintage (e.g. 2018), producer, region, varietal, bin…"
             className="h-11 pl-10 text-base"
           />
           {state.q && (
@@ -416,16 +416,14 @@ function Index() {
               {filtered.length}
             </span>{" "}
             result{filtered.length === 1 ? "" : "s"}
-            {activeFilterCount > 0 && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={reset}
-                className="ml-2 h-7 px-2 text-xs text-muted-foreground hover:text-foreground"
-              >
-                Reset
-              </Button>
-            )}
+            <Button
+              variant={activeFilterCount > 0 ? "secondary" : "ghost"}
+              size="sm"
+              onClick={reset}
+              className="ml-2 h-7 px-2 text-xs"
+            >
+              {activeFilterCount > 0 ? `Show all (${ALL_WINES.length})` : "Show all"}
+            </Button>
           </div>
           <select
             value={state.sort}
