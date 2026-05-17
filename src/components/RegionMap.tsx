@@ -46,10 +46,12 @@ export function RegionMap({
 }) {
   const items = regions.filter((r) => r.country === country);
   return (
-    <svg viewBox="0 0 100 100" className="w-full h-auto max-h-[420px]" role="img" aria-label={`${country} wine regions map`}>
+    <svg viewBox="0 0 100 100" className="w-full h-auto max-h-[420px] rounded-md" role="img" aria-label={`${country} wine regions map`}>
+      {/* Sea / canvas — always bright so labels read in light & dark mode */}
+      <rect x="0" y="0" width="100" height="100" fill="oklch(0.97 0.015 230)" />
       {country === "Italy"
-        ? <ItalyShape fill="oklch(0.92 0.02 95)" stroke="oklch(0.35 0.04 250)" />
-        : <FranceShape fill="oklch(0.92 0.02 95)" stroke="oklch(0.35 0.04 250)" />}
+        ? <ItalyShape fill="oklch(0.985 0.01 95)" stroke="oklch(0.30 0.05 250)" />
+        : <FranceShape fill="oklch(0.985 0.01 95)" stroke="oklch(0.30 0.05 250)" />}
 
       {items.map((r) => {
         const active = r.id === selectedId;
