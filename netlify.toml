@@ -1,9 +1,9 @@
-# Static SPA deploy for this TanStack Start project.
-# The app has no server functions or API routes, so we ship the client bundle
-# only. SPA deep-link routing is handled by public/_redirects.
+# Static SPA deploy for Netlify.
+# Netlify builds from index.html + src/netlify-client.tsx so deep links can
+# fall back to the browser router instead of looking for a server entry.
 
 [build]
-  command = "npm run build"
+  command = "npm run build:netlify"
   publish = "dist/client"
 
 [[redirects]]
