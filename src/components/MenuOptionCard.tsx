@@ -70,11 +70,6 @@ export function MenuOptionCard({
           <span className="font-semibold tabular-nums">${option.tableTotal}</span>
         </div>
 
-        {option.rationale && (
-          <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-            {option.rationale}
-          </p>
-        )}
         {option.accommodations && option.accommodations.toLowerCase() !== "none required" && (
           <p className="mt-2 rounded-md bg-muted/50 p-2 text-[11px] text-foreground/80">
             <span className="font-medium">Accommodations: </span>
