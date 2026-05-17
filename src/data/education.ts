@@ -310,7 +310,3 @@ export const REGIONS: Region[] = [
       { name: "Cabernet / Merlot (Graves)", kind: "red", notes: "Earthy, smoky, complex." },
       { name: "Sauvignon Blanc / Semillon (Bordeaux Blanc)", kind: "white", notes: "80% SB / 20% Semillon. Unoaked: crisp, green apple, citrus. Oaked: lemon butter, ginger, toasted nuts." },
     ],
-    wineMatch: ["pessac","leognan","léognan","graves","haut-brion","haut brion","smith haut lafitte","domaine de chevalier"],
-  },
-  {
-    id: "sauternes", name: "Sauternes", country: "France", classRef: 4, zone: "Left Bank",
