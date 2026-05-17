@@ -20,6 +20,7 @@ export function MenuOptionCard({
       <ol className="space-y-3">
         {option.courses.map((c, i) => {
           const dish = lookupDish(c.dishId);
+          const courseAddOns = option.addOns.filter((a) => a.course === c.category);
           return (
             <li key={`${c.dishId}-${i}`} className="text-sm">
               <div className="flex items-baseline justify-between gap-2">
@@ -53,12 +54,47 @@ export function MenuOptionCard({
                   ))}
                 </div>
               )}
+              {courseAddOns.length > 0 && (
+                <ul className="mt-1.5 space-y-0.5">
+                  {courseAddOns.map((a, k) => (
+                    <li
+                      key={k}
+                      className="flex items-baseline justify-between gap-2 text-xs text-foreground/80"
+                    >
+                      <span>+ {a.name}</span>
+                      <span className="tabular-nums text-muted-foreground">+${a.price}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </li>
           );
         })}
       </ol>
 
+      {option.addOns.filter((a) => a.course === "Any").length > 0 && (
+        <ul className="mt-3 space-y-0.5 border-t border-dashed border-border pt-2">
+          {option.addOns
+            .filter((a) => a.course === "Any")
+            .map((a, k) => (
+              <li
+                key={k}
+                className="flex items-baseline justify-between gap-2 text-xs text-foreground/80"
+              >
+                <span>+ {a.name}</span>
+                <span className="tabular-nums text-muted-foreground">+${a.price}</span>
+              </li>
+            ))}
+        </ul>
+      )}
+
       <footer className="mt-4 border-t border-border pt-3 text-sm">
+        {option.addOnTotal > 0 && (
+          <div className="mb-1 flex items-baseline justify-between text-xs text-muted-foreground">
+            <span>Add-ons</span>
+            <span className="tabular-nums">+${option.addOnTotal}/pp</span>
+          </div>
+        )}
         <div className="flex items-baseline justify-between">
           <span className="text-xs text-muted-foreground">Per person</span>
           <span className="font-semibold tabular-nums">${option.perPersonTotal}</span>
