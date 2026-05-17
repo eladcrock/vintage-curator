@@ -13,6 +13,7 @@ import { RegionMap } from "@/components/RegionMap";
 import { CLASSES, REGIONS, type Country, type Region } from "@/data/education";
 import { winesForRegion, zoneColor } from "@/lib/education";
 import type { Wine } from "@/lib/wines";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 export const Route = createFileRoute("/education")({
   head: () => ({
@@ -293,82 +294,102 @@ function RegionNode({
       </button>
 
       {open && (
-        <div className="space-y-3 border-t border-border/60 px-3 py-3 text-xs">
-          <Drop label="Overview" defaultOpen>
-            <p className="text-foreground/90">{region.summary}</p>
-          </Drop>
+        <div className="border-t border-border/60 px-3 py-3 text-xs">
+          <Tabs defaultValue="overview" className="w-full">
+            <TabsList className="h-8 w-full justify-start gap-1 overflow-x-auto bg-muted/40 p-1">
+              <TabsTrigger value="overview" className="h-6 px-2 text-[10px] uppercase tracking-wider">Overview</TabsTrigger>
+              <TabsTrigger value="notes" className="h-6 px-2 text-[10px] uppercase tracking-wider">Wine Notes</TabsTrigger>
+              <TabsTrigger value="history" className="h-6 px-2 text-[10px] uppercase tracking-wider">History</TabsTrigger>
+              <TabsTrigger value="grapes" className="h-6 px-2 text-[10px] uppercase tracking-wider">Grapes · {region.grapes.length}</TabsTrigger>
+              <TabsTrigger value="list" className="h-6 px-2 text-[10px] uppercase tracking-wider">List · {wines.length}</TabsTrigger>
+            </TabsList>
 
-          {region.terroir && (
-            <Drop label="Terroir">
-              <p className="text-muted-foreground">{region.terroir}</p>
-            </Drop>
-          )}
+            <TabsContent value="overview" className="mt-3 space-y-2">
+              <p className="text-foreground/90">{region.summary}</p>
+              {region.terroir && (
+                <p className="text-muted-foreground"><span className="font-semibold uppercase tracking-wider text-[10px] text-foreground/70">Terroir · </span>{region.terroir}</p>
+              )}
+            </TabsContent>
 
-          <Drop label={`Grapes · ${region.grapes.length}`}>
-            <ul className="space-y-1.5">
-              {region.grapes.map((g) => (
-                <li key={g.name} className={`flex gap-2 rounded-r pl-2 py-1 ${KIND_TINT[g.kind] ?? ""}`}>
-                  <span aria-hidden className="text-sm leading-none">{KIND_EMOJI[g.kind] ?? "🍇"}</span>
-                  <div>
-                    <div className="font-semibold">{g.name}</div>
-                    <div className="text-muted-foreground">{g.notes}</div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </Drop>
+            <TabsContent value="notes" className="mt-3">
+              {region.wineNotes ? (
+                <p className="text-foreground/90 whitespace-pre-line">{region.wineNotes}</p>
+              ) : (
+                <div className="space-y-2">
+                  <p className="italic text-muted-foreground">
+                    Signature profile distilled from this region's grapes — extended service notes coming from Wine Class materials.
+                  </p>
+                  <ul className="space-y-1">
+                    {region.grapes.slice(0, 4).map((g) => (
+                      <li key={g.name} className="text-foreground/90">
+                        <span className="font-semibold">{g.name}:</span>{" "}
+                        <span className="text-muted-foreground">{g.notes}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </TabsContent>
 
-          <Drop label={`On our list · ${wines.length}`} defaultOpen>
-            {wines.length === 0 ? (
-              <p className="italic text-muted-foreground">No bottles from this region on the list.</p>
-            ) : (
-              <ul className="divide-y divide-border/60">
-                {wines.map((w) => {
-                  const ts = TYPE_STYLE[w.type] ?? DEFAULT_TYPE;
-                  return (
-                    <li key={w.id} className="flex items-start gap-2 py-1.5">
-                      <span
-                        aria-hidden
-                        className="mt-0.5 inline-block w-1 self-stretch rounded-sm shrink-0"
-                        style={{ background: ts.bar }}
-                      />
-                      <div className="min-w-0 flex-1">
-                        <div className="flex items-center gap-1.5">
-                          <span className={`inline-block rounded px-1.5 py-[1px] text-[9px] font-semibold uppercase tracking-wider ${ts.chip}`}>
-                            {ts.label}
-                          </span>
-                          <div className="font-medium truncate">{wineName(w)}</div>
-                        </div>
-                        <div className="text-[10px] text-muted-foreground">{w.vintage}</div>
-                      </div>
-                      <div className="text-right text-[10px] text-muted-foreground whitespace-nowrap">
-                        {priceLabel(w)}
-                      </div>
-                    </li>
-                  );
-                })}
+            <TabsContent value="history" className="mt-3">
+              {region.history ? (
+                <p className="text-foreground/90 whitespace-pre-line">{region.history}</p>
+              ) : (
+                <p className="italic text-muted-foreground">
+                  Historical context for {region.name} — to be parsed from Wine Class #{region.classRef} materials.
+                </p>
+              )}
+            </TabsContent>
+
+            <TabsContent value="grapes" className="mt-3">
+              <ul className="space-y-1.5">
+                {region.grapes.map((g) => (
+                  <li key={g.name} className={`flex gap-2 rounded-r pl-2 py-1 ${KIND_TINT[g.kind] ?? ""}`}>
+                    <span aria-hidden className="text-sm leading-none">{KIND_EMOJI[g.kind] ?? "🍇"}</span>
+                    <div>
+                      <div className="font-semibold">{g.name}</div>
+                      <div className="text-muted-foreground">{g.notes}</div>
+                    </div>
+                  </li>
+                ))}
               </ul>
-            )}
-          </Drop>
+            </TabsContent>
+
+            <TabsContent value="list" className="mt-3">
+              {wines.length === 0 ? (
+                <p className="italic text-muted-foreground">No bottles from this region on the list.</p>
+              ) : (
+                <ul className="divide-y divide-border/60">
+                  {wines.map((w) => {
+                    const ts = TYPE_STYLE[w.type] ?? DEFAULT_TYPE;
+                    return (
+                      <li key={w.id} className="flex items-start gap-2 py-1.5">
+                        <span
+                          aria-hidden
+                          className="mt-0.5 inline-block w-1 self-stretch rounded-sm shrink-0"
+                          style={{ background: ts.bar }}
+                        />
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center gap-1.5">
+                            <span className={`inline-block rounded px-1.5 py-[1px] text-[9px] font-semibold uppercase tracking-wider ${ts.chip}`}>
+                              {ts.label}
+                            </span>
+                            <div className="font-medium truncate">{wineName(w)}</div>
+                          </div>
+                          <div className="text-[10px] text-muted-foreground">{w.vintage}</div>
+                        </div>
+                        <div className="text-right text-[10px] text-muted-foreground whitespace-nowrap">
+                          {priceLabel(w)}
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </TabsContent>
+          </Tabs>
         </div>
       )}
-    </div>
-  );
-}
-
-function Drop({ label, children, defaultOpen = false }: { label: string; children: React.ReactNode; defaultOpen?: boolean }) {
-  const [open, setOpen] = useState(defaultOpen);
-  return (
-    <div className="rounded border border-border/50">
-      <button
-        onClick={() => setOpen((o) => !o)}
-        className="flex w-full items-center justify-between px-2 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground hover:text-foreground"
-        aria-expanded={open}
-      >
-        <span>{label}</span>
-        <span aria-hidden>{open ? "−" : "+"}</span>
-      </button>
-      {open && <div className="px-2 pb-2">{children}</div>}
     </div>
   );
 }
