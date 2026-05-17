@@ -10,7 +10,7 @@
  */
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { Search, X } from "lucide-react";
+import { Search, X, Eye, EyeOff } from "lucide-react";
 import { SiteNav } from "@/components/SiteNav";
 import { DishCard } from "@/components/DishCard";
 import {
@@ -52,7 +52,11 @@ function useUrlQuery() {
 
 function FoodPage() {
   const [q, setQ] = useUrlQuery();
-  const filtered = useMemo(() => filterDishes(q), [q]);
+  const [showLunch, setShowLunch] = useState(false);
+  const filtered = useMemo(() => {
+    const list = filterDishes(q);
+    return showLunch ? list : list.filter((d) => d.category !== "Lunch Only");
+  }, [q, showLunch]);
   const grouped = useMemo(() => groupByCategory(filtered), [filtered]);
   const tagSuggestions = useMemo(() => allDietaryTags(), []);
 
@@ -122,6 +126,20 @@ function FoodPage() {
                 Show all
               </button>
             )}
+            <button
+              type="button"
+              onClick={() => setShowLunch((v) => !v)}
+              aria-pressed={showLunch}
+              title={showLunch ? "Hide lunch-only dishes" : "Show lunch-only dishes"}
+              className={`ml-2 inline-flex items-center gap-1 rounded-md border px-2 py-1 text-xs transition-colors ${
+                showLunch
+                  ? "border-primary bg-primary/15 text-primary"
+                  : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-foreground"
+              }`}
+            >
+              {showLunch ? <Eye className="h-3.5 w-3.5" /> : <EyeOff className="h-3.5 w-3.5" />}
+              {showLunch ? "Hide lunch only" : "Show lunch only"}
+            </button>
           </div>
         </div>
 

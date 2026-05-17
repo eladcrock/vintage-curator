@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { Search, X, ChevronDown, Eye, EyeOff } from "lucide-react";
+import { Search, X, Eye, EyeOff } from "lucide-react";
 import {
   ALL_WINES,
   WINE_TYPES,
