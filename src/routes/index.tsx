@@ -41,8 +41,10 @@ const DEFAULTS = {
 };
 
 function useUrlFilters() {
-  const [state, setState] = useState(() => readFromURL());
+  // Start from DEFAULTS so SSR and first client render match; sync from URL after mount.
+  const [state, setState] = useState<typeof DEFAULTS>(() => ({ ...DEFAULTS }));
   useEffect(() => {
+    setState(readFromURL());
     const onPop = () => setState(readFromURL());
     window.addEventListener("popstate", onPop);
     return () => window.removeEventListener("popstate", onPop);
@@ -120,6 +122,7 @@ function Index() {
 
   const filtered = useMemo(() => {
     const q = state.q.trim().toLowerCase();
+    const qYear = /^\d{4}$/.test(q) ? parseInt(q, 10) : null;
     const typeSet = new Set(state.types);
     const subSet = new Set(state.subs);
     const results = ALL_WINES.filter((w) => {
@@ -138,6 +141,14 @@ function Index() {
       const price = priceOf(w);
       if (price < state.priceMin || price > state.priceMax) return false;
       if (q) {
+        // Year-only query: match vintage exactly (number or "NV"/"MV" text).
+        if (qYear !== null) {
+          if (typeof w.vintage === "number") {
+            if (w.vintage !== qYear) return false;
+          } else {
+            return false;
+          }
+        } else {
         const hay = [
           w.producer,
           w.cuvee,
@@ -145,11 +156,13 @@ function Index() {
           w.region,
           w.country,
           w.code,
+          String(w.vintage),
         ]
           .filter(Boolean)
           .join(" ")
           .toLowerCase();
         if (!hay.includes(q)) return false;
+        }
       }
       return true;
     });
@@ -227,7 +240,7 @@ function Index() {
           <Input
             value={state.q}
             onChange={(e) => update({ q: e.target.value })}
-            placeholder="Search producer, region, varietal, bin code…"
+            placeholder="Search vintage (e.g. 2018), producer, region, varietal, bin…"
             className="h-11 pl-10 text-base"
           />
           {state.q && (
@@ -403,16 +416,14 @@ function Index() {
               {filtered.length}
             </span>{" "}
             result{filtered.length === 1 ? "" : "s"}
-            {activeFilterCount > 0 && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={reset}
-                className="ml-2 h-7 px-2 text-xs text-muted-foreground hover:text-foreground"
-              >
-                Reset
-              </Button>
-            )}
+            <Button
+              variant={activeFilterCount > 0 ? "secondary" : "ghost"}
+              size="sm"
+              onClick={reset}
+              className="ml-2 h-7 px-2 text-xs"
+            >
+              {activeFilterCount > 0 ? `Show all (${ALL_WINES.length})` : "Show all"}
+            </Button>
           </div>
           <select
             value={state.sort}
