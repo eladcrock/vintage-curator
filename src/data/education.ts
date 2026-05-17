@@ -310,3 +310,103 @@ export const REGIONS: Region[] = [
       { name: "Cabernet / Merlot (Graves)", kind: "red", notes: "Earthy, smoky, complex." },
       { name: "Sauvignon Blanc / Semillon (Bordeaux Blanc)", kind: "white", notes: "80% SB / 20% Semillon. Unoaked: crisp, green apple, citrus. Oaked: lemon butter, ginger, toasted nuts." },
     ],
+    wineMatch: ["pessac","leognan","léognan","graves","haut-brion","haut brion","smith haut lafitte","domaine de chevalier"],
+  },
+  {
+    id: "sauternes", name: "Sauternes", country: "France", classRef: 4, zone: "Left Bank",
+    x: 28, y: 70,
+    summary: "World-renowned dessert wine made from botrytized (noble rot) grapes.",
+    grapes: [
+      { name: "Sauternes blend", kind: "dessert", notes: "80% Semillon / 20% Sauvignon Blanc + Muscadelle. Honey, apricot, peach, marmalade. Aged in new French oak." },
+    ],
+    wineMatch: ["sauternes","yquem","climens","suduiraut","rieussec","guiraud","doisy"],
+  },
+  {
+    id: "saint-emilion", name: "Saint-Emilion", country: "France", classRef: 4, zone: "Right Bank",
+    x: 33, y: 60,
+    summary: "Right Bank. Gravel, limestone, sand. Merlot-led. 2022 Grand Cru Classe A: Figeac, Pavie.",
+    grapes: [
+      { name: "Merlot blend (Saint-Emilion)", kind: "red", notes: "70% Merlot / 30% Cab Franc. Elegant, complex, balanced. Ripe red berries, black cherry, chocolate, earth, herbs." },
+    ],
+    wineMatch: ["saint emilion","saint-emilion","st emilion","st-emilion","figeac","pavie","cheval blanc","ausone","angelus","canon","troplong"],
+  },
+  {
+    id: "pomerol", name: "Pomerol", country: "France", classRef: 4, zone: "Right Bank",
+    x: 33, y: 58,
+    summary: "Right Bank. Iron-pan soil under sand and clay. No classification system. Petrus, Le Pin, Lafleur.",
+    grapes: [
+      { name: "Merlot blend (Pomerol)", kind: "red", notes: "Rich, opulent, structured. Plush velvety tannin." },
+    ],
+    wineMatch: ["pomerol","petrus","le pin","lafleur","la conseillante","l'eglise","vieux chateau certan","clinet","trotanoy"],
+  },
+  {
+    id: "entre-deux-mers", name: "Entre-Deux-Mers", country: "France", classRef: 4, zone: "Bordeaux",
+    x: 31, y: 64,
+    summary: "Between the two rivers. Sub-regional appellation for dry whites - primarily Sauvignon Blanc.",
+    grapes: [
+      { name: "Sauvignon Blanc / Semillon", kind: "white", notes: "Crisp, green apple, lemon-lime, melon, grass." },
+    ],
+    wineMatch: ["entre-deux-mers","entre deux mers"],
+  },
+
+  // ---------- Class 5 - Burgundy ----------
+  {
+    id: "chablis", name: "Chablis", country: "France", classRef: 5, zone: "Burgundy",
+    x: 56, y: 32,
+    summary: "Northernmost Burgundy. Kimmeridgian limestone (Jurassic marine fossils). Mostly stainless steel - high acid, saline minerality, citrus fruit. Seven Grand Cru climats under one umbrella.",
+    grapes: [
+      { name: "Chardonnay (Chablis)", kind: "white", notes: "Very high acidity, saline minerality, citrus fruit. Wet stone, green apple, lemon zest." },
+    ],
+    wineMatch: ["chablis"],
+  },
+  {
+    id: "cote-de-nuits", name: "Cote de Nuits", country: "France", classRef: 5, zone: "Burgundy",
+    x: 60, y: 40,
+    summary: "Northern Cote d'Or. Red Burgundy heartland. Gevrey-Chambertin, Chambolle-Musigny, Vosne-Romanee, Nuits-Saint-Georges, Flagey-Echezeaux. Home of Romanee-Conti.",
+    grapes: [
+      { name: "Pinot Noir (Gevrey-Chambertin)", kind: "red", notes: "Darker fruit, firmer tannins, more structure." },
+      { name: "Pinot Noir (Chambolle-Musigny)", kind: "red", notes: "Floral, elegant, silky." },
+      { name: "Pinot Noir (Vosne-Romanee)", kind: "red", notes: "Exotic spice, richness, layered texture." },
+      { name: "Pinot Noir (Nuits-Saint-Georges)", kind: "red", notes: "Earthy, structured, savory." },
+    ],
+    wineMatch: ["cote de nuits","côte de nuits","gevrey","chambolle","vosne","nuits","morey","flagey","echezeaux","romanee","romanée"],
+  },
+  {
+    id: "cote-de-beaune", name: "Cote de Beaune", country: "France", classRef: 5, zone: "Burgundy",
+    x: 60, y: 44,
+    summary: "Southern Cote d'Or. White Burgundy heartland (Meursault, Puligny-Montrachet, Chassagne-Montrachet, Corton-Charlemagne) plus great reds (Volnay, Pommard).",
+    grapes: [
+      { name: "Chardonnay (Meursault)", kind: "white", notes: "Richer texture, nutty aromas, broad palate." },
+      { name: "Pinot Noir (Volnay)", kind: "red", notes: "Elegant, perfumed, silky Premier Crus." },
+      { name: "Grand Cru whites", kind: "white", notes: "Montrachet, Corton-Charlemagne. Aged in oak; long-lived." },
+    ],
+    wineMatch: ["cote de beaune","côte de beaune","beaune","meursault","puligny","chassagne","montrachet","corton","volnay","pommard"],
+  },
+  {
+    id: "cote-chalonnaise", name: "Cote Chalonnaise", country: "France", classRef: 5, zone: "Burgundy",
+    x: 60, y: 50,
+    summary: "South of the Cote d'Or. Approachable Pinot Noir and Chardonnay; Bouzeron is the only village AOC for Aligote.",
+    grapes: [
+      { name: "Aligote (Bouzeron)", kind: "white", notes: "Crisp, citrus-driven." },
+    ],
+    wineMatch: ["chalonnaise","bouzeron","mercurey","rully","givry","montagny"],
+  },
+  {
+    id: "maconnais", name: "Maconnais", country: "France", classRef: 5, zone: "Burgundy",
+    x: 60, y: 56,
+    summary: "Southern Burgundy. Approachable Chardonnay - Pouilly-Fuisse is the standard-bearer.",
+    grapes: [
+      { name: "Chardonnay (Maconnais)", kind: "white", notes: "Riper, rounder Chardonnay. Pouilly-Fuisse, Saint-Veran, Macon-Villages." },
+    ],
+    wineMatch: ["macon","mâcon","pouilly-fuisse","pouilly-fuissé","saint-veran","saint-véran","maconnais"],
+  },
+  {
+    id: "beaujolais", name: "Beaujolais", country: "France", classRef: 5, zone: "Burgundy",
+    x: 60, y: 62,
+    summary: "Granite soils. Gamay (banished from the Cote d'Or by Philip the Bold in 1395). Ten Crus from Saint-Amour to Cote de Brouilly.",
+    grapes: [
+      { name: "Gamay (Beaujolais Cru)", kind: "red", notes: "Floral to structured depending on cru. Morgon = dark cherry/plum; Moulin-a-Vent = firm tannin, age-worthy." },
+    ],
+    wineMatch: ["beaujolais","gamay","morgon","fleurie","moulin-a-vent","brouilly","julienas","saint-amour","chenas","chiroubles","regnie"],
+  },
+];
