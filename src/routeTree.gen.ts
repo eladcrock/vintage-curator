@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as FoodRouteImport } from './routes/food'
 import { Route as BarRouteImport } from './routes/bar'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiCurateRouteImport } from './routes/api/curate'
 
 const FoodRoute = FoodRouteImport.update({
   id: '/food',
@@ -28,35 +29,44 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiCurateRoute = ApiCurateRouteImport.update({
+  id: '/api/curate',
+  path: '/api/curate',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bar': typeof BarRoute
   '/food': typeof FoodRoute
+  '/api/curate': typeof ApiCurateRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/bar': typeof BarRoute
   '/food': typeof FoodRoute
+  '/api/curate': typeof ApiCurateRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/bar': typeof BarRoute
   '/food': typeof FoodRoute
+  '/api/curate': typeof ApiCurateRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/bar' | '/food'
+  fullPaths: '/' | '/bar' | '/food' | '/api/curate'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/bar' | '/food'
-  id: '__root__' | '/' | '/bar' | '/food'
+  to: '/' | '/bar' | '/food' | '/api/curate'
+  id: '__root__' | '/' | '/bar' | '/food' | '/api/curate'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BarRoute: typeof BarRoute
   FoodRoute: typeof FoodRoute
+  ApiCurateRoute: typeof ApiCurateRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +92,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/curate': {
+      id: '/api/curate'
+      path: '/api/curate'
+      fullPath: '/api/curate'
+      preLoaderRoute: typeof ApiCurateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,7 +106,18 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BarRoute: BarRoute,
   FoodRoute: FoodRoute,
+  ApiCurateRoute: ApiCurateRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
