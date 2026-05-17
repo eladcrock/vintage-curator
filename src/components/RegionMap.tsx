@@ -53,20 +53,20 @@ function ItalyShape({ fill, stroke }: ShapeProps) {
         "
         fill={fill} stroke={stroke} strokeWidth="0.6" strokeLinejoin="round"
       />
-      {/* Sardinia — west of mainland */}
+      {/* Sardinia — distinct oblong island, well west of the mainland */}
       <path
-        d="M 20,58 C 16,58 14,62 15,66 C 15,70 17,74 21,74 C 25,74 27,70 26,66 C 26,62 24,58 20,58 Z"
+        d="M 22,58 C 17,58 15,62 16,68 C 16,73 18,76 22,76 C 26,76 28,72 28,67 C 28,62 26,58 22,58 Z"
         fill={fill} stroke={stroke} strokeWidth="0.6"
       />
-      {/* Sicily — triangle SW of the toe, separated by the Strait of Messina */}
+      {/* Corsica hint (French) — small, faded, clearly above Sardinia */}
       <path
-        d="M 34,86 L 50,84 L 48,92 L 36,92 Z"
-        fill={fill} stroke={stroke} strokeWidth="0.6" strokeLinejoin="round"
+        d="M 22,49 C 19,49 18,52 19,55 C 20,56 24,56 25,55 C 26,52 25,49 22,49 Z"
+        fill={fill} stroke={stroke} strokeWidth="0.4" opacity="0.45"
       />
-      {/* Corsica hint (French, but anchors Sardinia geographically) */}
+      {/* Sicily — triangle SW of the toe, clear Strait of Messina gap */}
       <path
-        d="M 20,50 C 18,50 17,53 18,56 C 19,58 22,58 23,56 C 24,53 22,50 20,50 Z"
-        fill={fill} stroke={stroke} strokeWidth="0.4" opacity="0.55"
+        d="M 36,92 L 56,90 L 52,98 L 38,98 Z"
+        fill={fill} stroke={stroke} strokeWidth="0.6" strokeLinejoin="round"
       />
     </>
   );
