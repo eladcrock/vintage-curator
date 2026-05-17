@@ -209,24 +209,47 @@ function picksToOption(
   guests: number,
   req: ExperienceRequest,
 ): MenuOption {
-  const courses: CourseSelection[] = picks.map((p) => ({
-    category: p.cat,
-    dishId: p.dish.id,
-    dishName: p.dish.name,
-    price: p.dish._price,
-    reasoning: p.reasoning,
-  }));
-  const foodTotal = courses.reduce((s, c) => s + c.price, 0);
-  const addOns: AddOn[] = (req.addOns ?? []).filter(
+  const allAddOns: AddOn[] = (req.addOns ?? []).filter(
     (a) => a.name.trim().length > 0 && a.price > 0,
   );
-  const addOnTotal = addOns.reduce((s, a) => s + a.price, 0);
+  const replacementByCat = new Map<string, AddOn>();
+  for (const a of allAddOns) {
+    if (a.kind === "course" && a.course !== "Any") {
+      replacementByCat.set(a.course, a);
+    }
+  }
+
+  const courses: CourseSelection[] = picks.map((p) => {
+    const rep = replacementByCat.get(p.cat);
+    if (rep) {
+      return {
+        category: p.cat,
+        dishId: `addon:${rep.name}`,
+        dishName: rep.name,
+        price: rep.price,
+        reasoning: `Guest request — ${rep.name} as the ${p.cat.toLowerCase()}.`,
+      };
+    }
+    return {
+      category: p.cat,
+      dishId: p.dish.id,
+      dishName: p.dish.name,
+      price: p.dish._price,
+      reasoning: p.reasoning,
+    };
+  });
+  const foodTotal = courses.reduce((s, c) => s + c.price, 0);
+  // Only "upgrade" add-ons (and "Any"-course add-ons) layer on top.
+  const upgrades: AddOn[] = allAddOns.filter(
+    (a) => a.kind === "upgrade" || a.course === "Any",
+  );
+  const addOnTotal = upgrades.reduce((s, a) => s + a.price, 0);
   const perPerson = foodTotal + addOnTotal;
   return {
     title,
     style,
     courses,
-    addOns,
+    addOns: upgrades,
     addOnTotal,
     perPersonTotal: perPerson,
     tableTotal: perPerson * guests,
