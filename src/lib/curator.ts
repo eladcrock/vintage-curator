@@ -18,6 +18,7 @@ import {
 } from "@/data/experiences";
 import {
   priceToNumber,
+  type AddOn,
   type CourseSelection,
   type ExperienceRequest,
   type MenuOption,
@@ -215,11 +216,18 @@ function picksToOption(
     price: p.dish._price,
     reasoning: p.reasoning,
   }));
-  const perPerson = courses.reduce((s, c) => s + c.price, 0);
+  const foodTotal = courses.reduce((s, c) => s + c.price, 0);
+  const addOns: AddOn[] = (req.addOns ?? []).filter(
+    (a) => a.name.trim().length > 0 && a.price > 0,
+  );
+  const addOnTotal = addOns.reduce((s, a) => s + a.price, 0);
+  const perPerson = foodTotal + addOnTotal;
   return {
     title,
     style,
     courses,
+    addOns,
+    addOnTotal,
     perPersonTotal: perPerson,
     tableTotal: perPerson * guests,
     rationale: buildRationale(perPerson, req, picks),
