@@ -30,6 +30,26 @@ const KIND_EMOJI: Record<string, string> = {
   red: "🍷", white: "🥂", sparkling: "🍾", dessert: "🍯", rose: "🌸",
 };
 
+// Visual color-coding for wine types — keeps red vs white instantly scannable.
+const TYPE_STYLE: Record<string, { bar: string; chip: string; label: string }> = {
+  Red:       { bar: "oklch(0.42 0.16 18)",  chip: "bg-[oklch(0.42_0.16_18)] text-white",        label: "Red" },
+  White:     { bar: "oklch(0.85 0.13 95)",  chip: "bg-[oklch(0.92_0.10_95)] text-[oklch(0.30_0.05_80)]", label: "White" },
+  Sparkling: { bar: "oklch(0.88 0.08 95)",  chip: "bg-[oklch(0.95_0.06_95)] text-[oklch(0.30_0.05_80)]", label: "Sparkling" },
+  Rosé:      { bar: "oklch(0.78 0.12 15)",  chip: "bg-[oklch(0.90_0.08_15)] text-[oklch(0.35_0.10_15)]", label: "Rosé" },
+  Orange:    { bar: "oklch(0.70 0.16 60)",  chip: "bg-[oklch(0.88_0.10_60)] text-[oklch(0.35_0.10_50)]", label: "Orange" },
+  Dessert:   { bar: "oklch(0.70 0.14 85)",  chip: "bg-[oklch(0.90_0.10_85)] text-[oklch(0.35_0.08_70)]", label: "Dessert" },
+};
+const DEFAULT_TYPE = { bar: "oklch(0.6 0 0)", chip: "bg-muted text-foreground", label: "—" };
+
+// Grape-kind tinting for the Grapes drop-down.
+const KIND_TINT: Record<string, string> = {
+  red:       "border-l-[3px] border-l-[oklch(0.42_0.16_18)]",
+  white:     "border-l-[3px] border-l-[oklch(0.80_0.13_95)]",
+  sparkling: "border-l-[3px] border-l-[oklch(0.88_0.08_95)]",
+  rose:      "border-l-[3px] border-l-[oklch(0.78_0.12_15)]",
+  dessert:   "border-l-[3px] border-l-[oklch(0.70_0.14_85)]",
+};
+
 function priceLabel(w: Wine): string {
   const parts: string[] = [];
   if (w.priceGlass != null) parts.push(`gl $${w.priceGlass}`);
@@ -247,7 +267,7 @@ function RegionNode({
           <Drop label={`Grapes · ${region.grapes.length}`}>
             <ul className="space-y-1.5">
               {region.grapes.map((g) => (
-                <li key={g.name} className="flex gap-2">
+                <li key={g.name} className={`flex gap-2 rounded-r pl-2 py-1 ${KIND_TINT[g.kind] ?? ""}`}>
                   <span aria-hidden className="text-sm leading-none">{KIND_EMOJI[g.kind] ?? "🍇"}</span>
                   <div>
                     <div className="font-semibold">{g.name}</div>
@@ -263,17 +283,30 @@ function RegionNode({
               <p className="italic text-muted-foreground">No bottles from this region on the list.</p>
             ) : (
               <ul className="divide-y divide-border/60">
-                {wines.map((w) => (
-                  <li key={w.id} className="flex items-start justify-between gap-2 py-1.5">
-                    <div className="min-w-0">
-                      <div className="font-medium truncate">{wineName(w)}</div>
-                      <div className="text-[10px] text-muted-foreground">{w.vintage}</div>
-                    </div>
-                    <div className="text-right text-[10px] text-muted-foreground whitespace-nowrap">
-                      {priceLabel(w)}
-                    </div>
-                  </li>
-                ))}
+                {wines.map((w) => {
+                  const ts = TYPE_STYLE[w.type] ?? DEFAULT_TYPE;
+                  return (
+                    <li key={w.id} className="flex items-start gap-2 py-1.5">
+                      <span
+                        aria-hidden
+                        className="mt-0.5 inline-block w-1 self-stretch rounded-sm shrink-0"
+                        style={{ background: ts.bar }}
+                      />
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-1.5">
+                          <span className={`inline-block rounded px-1.5 py-[1px] text-[9px] font-semibold uppercase tracking-wider ${ts.chip}`}>
+                            {ts.label}
+                          </span>
+                          <div className="font-medium truncate">{wineName(w)}</div>
+                        </div>
+                        <div className="text-[10px] text-muted-foreground">{w.vintage}</div>
+                      </div>
+                      <div className="text-right text-[10px] text-muted-foreground whitespace-nowrap">
+                        {priceLabel(w)}
+                      </div>
+                    </li>
+                  );
+                })}
               </ul>
             )}
           </Drop>
