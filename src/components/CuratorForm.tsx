@@ -3,7 +3,6 @@
  * Hand-edit COMMON_RESTRICTIONS in src/lib/experiences.ts to add new chips.
  */
 import { useState } from "react";
-import { Sparkles } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -131,7 +130,6 @@ export function CuratorForm({
 
       <div className="mt-4 flex justify-end">
         <Button type="submit" disabled={loading}>
-          <Sparkles className="mr-1.5 h-4 w-4" />
           {loading ? "Curating…" : "Curate menus"}
         </Button>
       </div>
