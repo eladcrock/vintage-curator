@@ -1,26 +1,351 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useMemo, useState } from "react";
+import { Search, X, Wine as WineIcon } from "lucide-react";
+import {
+  ALL_WINES,
+  WINE_TYPES,
+  type WineTypeFilter,
+  vintageRange,
+  bottlePriceRange,
+} from "@/lib/wines";
+import { WineCard } from "@/components/WineCard";
+import { Slider } from "@/components/ui/slider";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
+const [GLOBAL_MIN_YEAR, GLOBAL_MAX_YEAR] = vintageRange(ALL_WINES);
+const [GLOBAL_MIN_PRICE, GLOBAL_MAX_PRICE] = bottlePriceRange(ALL_WINES);
+
+type SortKey = "vintage-desc" | "vintage-asc" | "price-asc" | "price-desc" | "producer";
+
+const DEFAULTS = {
+  q: "",
+  types: [] as WineTypeFilter[],
+  vintageMin: GLOBAL_MIN_YEAR,
+  vintageMax: GLOBAL_MAX_YEAR,
+  includeNV: true,
+  priceMin: GLOBAL_MIN_PRICE,
+  priceMax: GLOBAL_MAX_PRICE,
+  btgOnly: false,
+  sort: "vintage-desc" as SortKey,
+};
+
+function useUrlFilters() {
+  const [state, setState] = useState(() => readFromURL());
+  useEffect(() => {
+    const onPop = () => setState(readFromURL());
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
+
+  function update(patch: Partial<typeof DEFAULTS>) {
+    const next = { ...state, ...patch };
+    setState(next);
+    writeToURL(next);
+  }
+  function reset() {
+    setState({ ...DEFAULTS });
+    writeToURL({ ...DEFAULTS });
+  }
+  return { state, update, reset };
+}
+
+function readFromURL(): typeof DEFAULTS {
+  if (typeof window === "undefined") return { ...DEFAULTS };
+  const p = new URLSearchParams(window.location.search);
+  const num = (k: string, d: number) => {
+    const v = p.get(k);
+    if (v === null) return d;
+    const n = Number(v);
+    return Number.isFinite(n) ? n : d;
+  };
+  const types = (p.get("types") ?? "")
+    .split(",")
+    .filter(Boolean)
+    .filter((t): t is WineTypeFilter => (WINE_TYPES as readonly string[]).includes(t));
+  return {
+    q: p.get("q") ?? "",
+    types,
+    vintageMin: num("vmin", DEFAULTS.vintageMin),
+    vintageMax: num("vmax", DEFAULTS.vintageMax),
+    includeNV: p.get("nv") !== "0",
+    priceMin: num("pmin", DEFAULTS.priceMin),
+    priceMax: num("pmax", DEFAULTS.priceMax),
+    btgOnly: p.get("btg") === "1",
+    sort: ((p.get("sort") as SortKey) ?? DEFAULTS.sort),
+  };
+}
+
+function writeToURL(s: typeof DEFAULTS) {
+  if (typeof window === "undefined") return;
+  const p = new URLSearchParams();
+  if (s.q) p.set("q", s.q);
+  if (s.types.length) p.set("types", s.types.join(","));
+  if (s.vintageMin !== DEFAULTS.vintageMin) p.set("vmin", String(s.vintageMin));
+  if (s.vintageMax !== DEFAULTS.vintageMax) p.set("vmax", String(s.vintageMax));
+  if (!s.includeNV) p.set("nv", "0");
+  if (s.priceMin !== DEFAULTS.priceMin) p.set("pmin", String(s.priceMin));
+  if (s.priceMax !== DEFAULTS.priceMax) p.set("pmax", String(s.priceMax));
+  if (s.btgOnly) p.set("btg", "1");
+  if (s.sort !== DEFAULTS.sort) p.set("sort", s.sort);
+  const qs = p.toString();
+  const url = qs ? `?${qs}` : window.location.pathname;
+  window.history.replaceState({}, "", url);
+}
+
+function priceOf(w: (typeof ALL_WINES)[number]): number {
+  return w.priceBottle ?? w.priceGlass ?? 0;
+}
+
+function Index() {
+  const { state, update, reset } = useUrlFilters();
+
+  const filtered = useMemo(() => {
+    const q = state.q.trim().toLowerCase();
+    const typeSet = new Set(state.types);
+    const results = ALL_WINES.filter((w) => {
+      if (typeSet.size && !typeSet.has(w.type as WineTypeFilter)) return false;
+      if (state.btgOnly && !w.byTheGlass) return false;
+      if (typeof w.vintage === "number") {
+        if (w.vintage < state.vintageMin || w.vintage > state.vintageMax) return false;
+      } else {
+        if (!state.includeNV) return false;
+      }
+      const price = priceOf(w);
+      if (price < state.priceMin || price > state.priceMax) return false;
+      if (q) {
+        const hay = [
+          w.producer,
+          w.cuvee,
+          w.varietal,
+          w.region,
+          w.country,
+          w.code,
+        ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    });
+    const sorted = [...results].sort((a, b) => {
+      switch (state.sort) {
+        case "vintage-asc":
+          return vintageNum(a) - vintageNum(b);
+        case "vintage-desc":
+          return vintageNum(b) - vintageNum(a);
+        case "price-asc":
+          return priceOf(a) - priceOf(b);
+        case "price-desc":
+          return priceOf(b) - priceOf(a);
+        case "producer":
+          return a.producer.localeCompare(b.producer);
+      }
+    });
+    return sorted;
+  }, [state]);
+
+  const [visibleCount, setVisibleCount] = useState(60);
+  useEffect(() => setVisibleCount(60), [state]);
+
+  const activeFilterCount =
+    (state.q ? 1 : 0) +
+    (state.types.length ? 1 : 0) +
+    (state.vintageMin !== DEFAULTS.vintageMin || state.vintageMax !== DEFAULTS.vintageMax ? 1 : 0) +
+    (state.priceMin !== DEFAULTS.priceMin || state.priceMax !== DEFAULTS.priceMax ? 1 : 0) +
+    (state.btgOnly ? 1 : 0) +
+    (!state.includeNV ? 1 : 0);
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen bg-background text-foreground">
+      <header className="sticky top-0 z-20 border-b border-border bg-background/95 backdrop-blur">
+        <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-4 py-3">
+          <div className="flex items-center gap-2">
+            <WineIcon className="h-5 w-5 text-primary" />
+            <div>
+              <h1 className="text-sm font-semibold leading-tight">Bottega · Sommelier</h1>
+              <p className="text-[11px] leading-tight text-muted-foreground">
+                List 03.15.2026 · {ALL_WINES.length} wines
+              </p>
+            </div>
+          </div>
+          <nav className="flex gap-1 text-xs">
+            <span className="rounded-md bg-secondary px-2 py-1 font-medium text-secondary-foreground">
+              Wines
+            </span>
+            <span className="rounded-md px-2 py-1 text-muted-foreground">Cocktails</span>
+            <span className="rounded-md px-2 py-1 text-muted-foreground">Food</span>
+          </nav>
+        </div>
+      </header>
+
+      <main className="mx-auto max-w-3xl px-4 pb-24 pt-4">
+        {/* Search */}
+        <div className="relative">
+          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            value={state.q}
+            onChange={(e) => update({ q: e.target.value })}
+            placeholder="Search producer, region, varietal, bin code…"
+            className="h-11 pl-10 text-base"
+          />
+          {state.q && (
+            <button
+              onClick={() => update({ q: "" })}
+              className="absolute right-2 top-1/2 -translate-y-1/2 rounded p-1 text-muted-foreground hover:text-foreground"
+              aria-label="Clear search"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          )}
+        </div>
+
+        {/* Type chips */}
+        <div className="mt-3 flex flex-wrap gap-2">
+          {WINE_TYPES.map((t) => {
+            const active = state.types.includes(t);
+            return (
+              <button
+                key={t}
+                onClick={() => {
+                  const next = active
+                    ? state.types.filter((x) => x !== t)
+                    : [...state.types, t];
+                  update({ types: next });
+                }}
+                className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
+                  active
+                    ? "border-primary bg-primary text-primary-foreground"
+                    : "border-border bg-card text-foreground hover:border-primary/50"
+                }`}
+              >
+                {t}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Vintage slider */}
+        <div className="mt-5">
+          <div className="mb-1.5 flex items-center justify-between text-xs uppercase tracking-wide text-muted-foreground">
+            <span>Vintage</span>
+            <span className="tabular-nums text-primary">
+              {state.vintageMin} – {state.vintageMax}
+            </span>
+          </div>
+          <Slider
+            min={GLOBAL_MIN_YEAR}
+            max={GLOBAL_MAX_YEAR}
+            step={1}
+            value={[state.vintageMin, state.vintageMax]}
+            onValueChange={([min, max]) =>
+              update({ vintageMin: min, vintageMax: max })
+            }
+          />
+          <label className="mt-2 flex cursor-pointer items-center gap-2 text-xs text-muted-foreground">
+            <input
+              type="checkbox"
+              checked={state.includeNV}
+              onChange={(e) => update({ includeNV: e.target.checked })}
+              className="h-3.5 w-3.5 accent-[color:var(--color-primary)]"
+            />
+            Include non-vintage (NV/MV)
+          </label>
+        </div>
+
+        {/* Price slider */}
+        <div className="mt-5">
+          <div className="mb-1.5 flex items-center justify-between text-xs uppercase tracking-wide text-muted-foreground">
+            <span>Price</span>
+            <span className="tabular-nums text-primary">
+              ${state.priceMin} – ${state.priceMax}
+            </span>
+          </div>
+          <Slider
+            min={GLOBAL_MIN_PRICE}
+            max={GLOBAL_MAX_PRICE}
+            step={25}
+            value={[state.priceMin, state.priceMax]}
+            onValueChange={([min, max]) =>
+              update({ priceMin: min, priceMax: max })
+            }
+          />
+          <label className="mt-2 flex cursor-pointer items-center gap-2 text-xs text-muted-foreground">
+            <input
+              type="checkbox"
+              checked={state.btgOnly}
+              onChange={(e) => update({ btgOnly: e.target.checked })}
+              className="h-3.5 w-3.5 accent-[color:var(--color-primary)]"
+            />
+            By-the-glass only
+          </label>
+        </div>
+
+        {/* Results bar */}
+        <div className="mt-5 flex items-center justify-between border-b border-border pb-2">
+          <div className="text-sm text-muted-foreground">
+            <span className="font-semibold text-foreground tabular-nums">
+              {filtered.length}
+            </span>{" "}
+            result{filtered.length === 1 ? "" : "s"}
+            {activeFilterCount > 0 && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={reset}
+                className="ml-2 h-7 px-2 text-xs text-muted-foreground hover:text-foreground"
+              >
+                Reset
+              </Button>
+            )}
+          </div>
+          <select
+            value={state.sort}
+            onChange={(e) => update({ sort: e.target.value as SortKey })}
+            className="rounded-md border border-border bg-card px-2 py-1 text-sm text-foreground"
+          >
+            <option value="vintage-desc">Vintage ↓ newest</option>
+            <option value="vintage-asc">Vintage ↑ oldest</option>
+            <option value="price-asc">Price ↑ low</option>
+            <option value="price-desc">Price ↓ high</option>
+            <option value="producer">Producer A–Z</option>
+          </select>
+        </div>
+
+        {/* Results */}
+        <div className="mt-3 grid gap-2">
+          {filtered.length === 0 && (
+            <div className="rounded-lg border border-dashed border-border bg-card/50 px-4 py-10 text-center text-sm text-muted-foreground">
+              No wines match these filters.
+              <br />
+              Try widening the vintage or price range.
+            </div>
+          )}
+          {filtered.slice(0, visibleCount).map((w) => (
+            <WineCard key={w.id} wine={w} />
+          ))}
+          {visibleCount < filtered.length && (
+            <button
+              onClick={() => setVisibleCount((c) => c + 60)}
+              className="mt-2 rounded-lg border border-border bg-card px-4 py-3 text-sm text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground"
+            >
+              Show {Math.min(60, filtered.length - visibleCount)} more
+              <span className="ml-1 text-xs">
+                ({filtered.length - visibleCount} remaining)
+              </span>
+            </button>
+          )}
+        </div>
+      </main>
     </div>
   );
 }
 
-function Index() {
-  return <PlaceholderIndex />;
+function vintageNum(w: (typeof ALL_WINES)[number]): number {
+  return typeof w.vintage === "number" ? w.vintage : 0;
 }
