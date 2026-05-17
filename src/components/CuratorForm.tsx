@@ -35,6 +35,7 @@ export function CuratorForm({
   const [addName, setAddName] = useState("");
   const [addPrice, setAddPrice] = useState<string>("");
   const [addCourse, setAddCourse] = useState<FoodCategory | "Any">("Pasta");
+  const [addKind, setAddKind] = useState<"upgrade" | "course">("upgrade");
 
   const min = Math.max(1, budgetMin || 0);
   const max = Math.max(min, budgetMax || min);
@@ -51,7 +52,9 @@ export function CuratorForm({
     const name = addName.trim();
     const price = parseFloat(addPrice);
     if (!name || !price || price <= 0) return;
-    setAddOns((cur) => [...cur, { name, price, course: addCourse }]);
+    // "course" replacement requires a specific category, not "Any".
+    const kind = addCourse === "Any" ? "upgrade" : addKind;
+    setAddOns((cur) => [...cur, { name, price, course: addCourse, kind }]);
     setAddName("");
     setAddPrice("");
   }
