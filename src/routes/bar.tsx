@@ -53,7 +53,7 @@ function BarProgramPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SiteNav
-        title="Bottega · Bar Program"
+        title="Bottega Pro · Bar"
         subtitle={`${ALL_COCKTAILS.length} cocktails · tap a card for full spec`}
       />
       <main className="mx-auto max-w-3xl px-4 pb-24 pt-4">
