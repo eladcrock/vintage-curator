@@ -3,6 +3,26 @@ import { ALL_WINES } from "@/lib/wines";
 import type { Region } from "@/data/education";
 
 /**
+ * Mindmap zone color tokens. Each value is an oklch CSS color used both
+ * for the region pin on the map and the accent stripe on the expanded card.
+ */
+export const ZONE_COLORS: Record<string, string> = {
+  // Italy
+  "North":            "oklch(0.62 0.18 145)",  // green – Alpine north
+  "Central":          "oklch(0.66 0.17 55)",   // amber – Tuscan sun
+  "South & Islands":  "oklch(0.62 0.20 30)",   // terracotta – Mezzogiorno
+  // France
+  "Left Bank":        "oklch(0.55 0.18 260)",  // indigo – Atlantic
+  "Right Bank":       "oklch(0.55 0.20 350)",  // claret
+  "Bordeaux":         "oklch(0.55 0.18 320)",  // bordeaux pink
+  "Burgundy":         "oklch(0.50 0.18 20)",   // burgundy red
+};
+
+export function zoneColor(zone?: string): string {
+  return (zone && ZONE_COLORS[zone]) || "oklch(0.6 0.05 250)";
+}
+
+/**
  * Find wines from the imported wine list that match a region's hay-substrings.
  * Matches against region, cuvee, varietal, producer (all lowercased).
  */
