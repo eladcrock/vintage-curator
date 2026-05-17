@@ -314,7 +314,3 @@ export const REGIONS: Region[] = [
   },
   {
     id: "sauternes", name: "Sauternes", country: "France", classRef: 4, zone: "Left Bank",
-    x: 28, y: 70,
-    summary: "World-renowned dessert wine made from botrytized (noble rot) grapes.",
-    grapes: [
-      { name: "Sauternes blend", kind: "dessert", notes: "80% Semillon / 20% Sauvignon Blanc + a touch of Muscadelle. Honey, ap
