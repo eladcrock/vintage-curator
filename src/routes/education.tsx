@@ -67,6 +67,8 @@ function EducationPage() {
   const [country, setCountry] = useState<Country>("Italy");
   const [query, setQuery] = useState("");
   const [openId, setOpenId] = useState<string | null>(null);
+  const [classFilter, setClassFilter] = useState<1 | 2 | 3 | 4 | 5 | null>(null);
+  const [openClassId, setOpenClassId] = useState<number | null>(null);
   const selectedId = openId;
 
   const toggle = (id: string) => {
@@ -85,6 +87,7 @@ function EducationPage() {
   const visibleRegions = useMemo(() => {
     const q = query.trim().toLowerCase();
     return REGIONS.filter((r) => r.country === country).filter((r) => {
+      if (classFilter && r.classRef !== classFilter) return false;
       if (!q) return true;
       return (
         r.name.toLowerCase().includes(q) ||
@@ -93,7 +96,7 @@ function EducationPage() {
         r.grapes.some((g) => g.name.toLowerCase().includes(q) || g.notes.toLowerCase().includes(q))
       );
     });
-  }, [country, query]);
+  }, [country, query, classFilter]);
 
   // Group by zone for the mindmap.
   const zones = useMemo(() => {
@@ -141,6 +144,32 @@ function EducationPage() {
           />
         </div>
 
+        {/* Quick class filter chips */}
+        <div className="mb-4 -mx-4 overflow-x-auto px-4 pb-1">
+          <div className="flex items-center gap-1.5 whitespace-nowrap">
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mr-1">Class</span>
+            <button
+              onClick={() => setClassFilter(null)}
+              className={`rounded-full border px-2.5 py-1 text-[11px] font-medium transition-colors ${
+                classFilter === null ? "bg-primary text-primary-foreground border-primary" : "border-border text-muted-foreground hover:text-foreground"
+              }`}
+            >All</button>
+            {CLASSES.map((c) => {
+              const active = classFilter === c.id;
+              return (
+                <button
+                  key={c.id}
+                  onClick={() => setClassFilter(active ? null : c.id)}
+                  title={c.blurb}
+                  className={`rounded-full border px-2.5 py-1 text-[11px] font-medium transition-colors ${
+                    active ? "bg-primary text-primary-foreground border-primary" : "border-border text-muted-foreground hover:text-foreground"
+                  }`}
+                >#{c.id}</button>
+              );
+            })}
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)]">
           {/* Map + legend (sticky on desktop) */}
           <aside className="space-y-3 lg:sticky lg:top-4 lg:self-start">
@@ -171,11 +200,28 @@ function EducationPage() {
 
             <div className="rounded-lg border border-border bg-card p-3">
               <h3 className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Wine classes</h3>
-              <ul className="space-y-1.5">
+              <ul className="space-y-1">
                 {CLASSES.map((c) => (
-                  <li key={c.id} className="text-[11px]">
-                    <div className="font-medium">{c.title}</div>
-                    <div className="text-muted-foreground">{c.blurb}</div>
+                  <li key={c.id}>
+                    <button
+                      onClick={() => setOpenClassId((p) => (p === c.id ? null : c.id))}
+                      className="flex w-full items-center justify-between gap-2 rounded px-2 py-1.5 text-left text-[11px] hover:bg-muted/40 transition-colors"
+                      aria-expanded={openClassId === c.id}
+                    >
+                      <span className="font-medium">{c.title}</span>
+                      <span aria-hidden className="text-muted-foreground">{openClassId === c.id ? "−" : "+"}</span>
+                    </button>
+                    {openClassId === c.id && (
+                      <div className="px-2 pb-2 text-[11px] text-muted-foreground">
+                        <p>{c.blurb}</p>
+                        <button
+                          onClick={() => { setClassFilter(c.id); setOpenClassId(null); }}
+                          className="mt-1.5 inline-block rounded-full border border-border px-2 py-0.5 text-[10px] font-medium hover:bg-muted/60"
+                        >
+                          Filter regions to Class #{c.id} →
+                        </button>
+                      </div>
+                    )}
                   </li>
                 ))}
               </ul>

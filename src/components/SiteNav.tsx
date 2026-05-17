@@ -30,8 +30,8 @@ export function SiteNav({
   const { pathname } = useLocation();
   return (
     <header className="sticky top-0 z-20 border-b border-border bg-background/95 backdrop-blur">
-      <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-4 py-3">
-        <div className="flex items-center gap-2">
+      <div className="mx-auto flex max-w-3xl flex-col gap-2 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
+        <div className="flex items-center gap-2 shrink-0">
           <WineIcon className="h-5 w-5 text-primary" />
           <div>
             <h1 className="text-sm font-semibold leading-tight">{title}</h1>
@@ -40,7 +40,7 @@ export function SiteNav({
             )}
           </div>
         </div>
-        <nav className="flex gap-1 text-xs">
+        <nav className="-mx-4 flex gap-1 overflow-x-auto px-4 text-xs scrollbar-none sm:mx-0 sm:px-0">
           {TABS.map((t) => {
             const active =
               t.to === "/" ? pathname === "/" : pathname.startsWith(t.to);
@@ -48,7 +48,7 @@ export function SiteNav({
               return (
                 <span
                   key={t.to}
-                  className="rounded-md px-2 py-1 text-muted-foreground/60"
+                  className="shrink-0 rounded-md px-2 py-1 text-muted-foreground/60"
                   title="Coming soon"
                 >
                   {t.label}
@@ -59,7 +59,7 @@ export function SiteNav({
               <Link
                 key={t.to}
                 to={t.to}
-                className={`rounded-md px-2 py-1 font-medium transition-colors ${
+                className={`shrink-0 rounded-md px-2 py-1 font-medium transition-colors ${
                   active
                     ? "bg-secondary text-secondary-foreground"
                     : "text-muted-foreground hover:text-foreground"
