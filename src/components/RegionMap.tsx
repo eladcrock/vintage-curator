@@ -48,8 +48,8 @@ export function RegionMap({
   return (
     <svg viewBox="0 0 100 100" className="w-full h-auto max-h-[420px]" role="img" aria-label={`${country} wine regions map`}>
       {country === "Italy"
-        ? <ItalyShape fill="hsl(var(--muted))" stroke="hsl(var(--border))" />
-        : <FranceShape fill="hsl(var(--muted))" stroke="hsl(var(--border))" />}
+        ? <ItalyShape fill="oklch(0.92 0.02 95)" stroke="oklch(0.35 0.04 250)" />
+        : <FranceShape fill="oklch(0.92 0.02 95)" stroke="oklch(0.35 0.04 250)" />}
 
       {items.map((r) => {
         const active = r.id === selectedId;
@@ -66,13 +66,16 @@ export function RegionMap({
               cx={r.x} cy={r.y}
               r={active ? 2.6 : 1.8}
               fill={color}
-              stroke={active ? "hsl(var(--foreground))" : "hsl(var(--background))"}
-              strokeWidth={active ? 0.7 : 0.4}
+              stroke={active ? "oklch(0.15 0 0)" : "oklch(1 0 0)"}
+              strokeWidth={active ? 0.8 : 0.5}
             />
             <text
               x={r.x + 2.5} y={r.y + 1}
               fontSize="2.2"
-              fill={active ? color : "hsl(var(--foreground))"}
+              fill="oklch(0.15 0 0)"
+              stroke="oklch(1 0 0)"
+              strokeWidth="0.5"
+              paintOrder="stroke"
               className="pointer-events-none select-none"
               fontWeight={active ? 700 : 500}
             >
