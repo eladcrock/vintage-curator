@@ -7,6 +7,10 @@ import {
   type WineTypeFilter,
   vintageRange,
   bottlePriceRange,
+  SUBCATEGORIES,
+  subcategoryOf,
+  formatOf,
+  type FormatFilter,
 } from "@/lib/wines";
 import { WineCard } from "@/components/WineCard";
 import { Slider } from "@/components/ui/slider";
@@ -25,6 +29,8 @@ type SortKey = "vintage-desc" | "vintage-asc" | "price-asc" | "price-desc" | "pr
 const DEFAULTS = {
   q: "",
   types: [] as WineTypeFilter[],
+  subs: [] as string[],
+  format: "all" as FormatFilter,
   vintageMin: GLOBAL_MIN_YEAR,
   vintageMax: GLOBAL_MAX_YEAR,
   includeNV: true,
@@ -67,9 +73,15 @@ function readFromURL(): typeof DEFAULTS {
     .split(",")
     .filter(Boolean)
     .filter((t): t is WineTypeFilter => (WINE_TYPES as readonly string[]).includes(t));
+  const subs = (p.get("subs") ?? "").split(",").filter(Boolean);
+  const fmtRaw = p.get("fmt");
+  const format: FormatFilter =
+    fmtRaw === "standard" || fmtRaw === "large" || fmtRaw === "half" ? fmtRaw : "all";
   return {
     q: p.get("q") ?? "",
     types,
+    subs,
+    format,
     vintageMin: num("vmin", DEFAULTS.vintageMin),
     vintageMax: num("vmax", DEFAULTS.vintageMax),
     includeNV: p.get("nv") !== "0",
@@ -85,6 +97,8 @@ function writeToURL(s: typeof DEFAULTS) {
   const p = new URLSearchParams();
   if (s.q) p.set("q", s.q);
   if (s.types.length) p.set("types", s.types.join(","));
+  if (s.subs.length) p.set("subs", s.subs.join(","));
+  if (s.format !== "all") p.set("fmt", s.format);
   if (s.vintageMin !== DEFAULTS.vintageMin) p.set("vmin", String(s.vintageMin));
   if (s.vintageMax !== DEFAULTS.vintageMax) p.set("vmax", String(s.vintageMax));
   if (!s.includeNV) p.set("nv", "0");
@@ -107,8 +121,14 @@ function Index() {
   const filtered = useMemo(() => {
     const q = state.q.trim().toLowerCase();
     const typeSet = new Set(state.types);
+    const subSet = new Set(state.subs);
     const results = ALL_WINES.filter((w) => {
       if (typeSet.size && !typeSet.has(w.type as WineTypeFilter)) return false;
+      if (subSet.size) {
+        const sub = subcategoryOf(w);
+        if (!sub || !subSet.has(sub)) return false;
+      }
+      if (state.format !== "all" && formatOf(w) !== state.format) return false;
       if (state.btgOnly && !w.byTheGlass) return false;
       if (typeof w.vintage === "number") {
         if (w.vintage < state.vintageMin || w.vintage > state.vintageMax) return false;
@@ -156,10 +176,26 @@ function Index() {
   const activeFilterCount =
     (state.q ? 1 : 0) +
     (state.types.length ? 1 : 0) +
+    (state.subs.length ? 1 : 0) +
+    (state.format !== "all" ? 1 : 0) +
     (state.vintageMin !== DEFAULTS.vintageMin || state.vintageMax !== DEFAULTS.vintageMax ? 1 : 0) +
     (state.priceMin !== DEFAULTS.priceMin || state.priceMax !== DEFAULTS.priceMax ? 1 : 0) +
     (state.btgOnly ? 1 : 0) +
     (!state.includeNV ? 1 : 0);
+
+  // Available subcategories: union of SUBCATEGORIES for selected types,
+  // or for all of Sparkling/White/Red when no type is selected.
+  const visibleSubs = useMemo(() => {
+    const activeTypes = state.types.length
+      ? state.types
+      : (["Sparkling", "White", "Red"] as WineTypeFilter[]);
+    const groups: { type: string; subs: string[] }[] = [];
+    for (const t of activeTypes) {
+      const list = SUBCATEGORIES[t];
+      if (list) groups.push({ type: t, subs: list });
+    }
+    return groups;
+  }, [state.types]);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -216,7 +252,15 @@ function Index() {
                   const next = active
                     ? state.types.filter((x) => x !== t)
                     : [...state.types, t];
-                  update({ types: next });
+                  // when toggling types, drop subs that no longer belong
+                  const allowed = new Set(
+                    (next.length ? next : (["Sparkling", "White", "Red"] as WineTypeFilter[]))
+                      .flatMap((tt) => SUBCATEGORIES[tt] ?? []),
+                  );
+                  update({
+                    types: next,
+                    subs: state.subs.filter((s) => allowed.has(s)),
+                  });
                 }}
                 className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
                   active
@@ -228,6 +272,72 @@ function Index() {
               </button>
             );
           })}
+        </div>
+
+        {/* Subcategory chips */}
+        {visibleSubs.length > 0 && (
+          <div className="mt-3 space-y-2">
+            {visibleSubs.map(({ type, subs }) => (
+              <div key={type}>
+                <div className="mb-1 text-[10px] uppercase tracking-wider text-muted-foreground">
+                  {type} styles
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {subs.map((s) => {
+                    const active = state.subs.includes(s);
+                    return (
+                      <button
+                        key={s}
+                        onClick={() => {
+                          const next = active
+                            ? state.subs.filter((x) => x !== s)
+                            : [...state.subs, s];
+                          update({ subs: next });
+                        }}
+                        className={`rounded-full border px-2.5 py-1 text-xs transition-colors ${
+                          active
+                            ? "border-primary bg-primary/15 text-primary"
+                            : "border-border bg-card/60 text-muted-foreground hover:border-primary/40 hover:text-foreground"
+                        }`}
+                      >
+                        {s}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Format chips */}
+        <div className="mt-4">
+          <div className="mb-1 text-[10px] uppercase tracking-wider text-muted-foreground">
+            Bottle format
+          </div>
+          <div className="flex flex-wrap gap-1.5">
+            {([
+              ["all", "All sizes"],
+              ["standard", "Standard 750mL"],
+              ["large", "Large format 1.5L+"],
+              ["half", "Half 375mL"],
+            ] as [FormatFilter, string][]).map(([key, label]) => {
+              const active = state.format === key;
+              return (
+                <button
+                  key={key}
+                  onClick={() => update({ format: key })}
+                  className={`rounded-full border px-2.5 py-1 text-xs transition-colors ${
+                    active
+                      ? "border-primary bg-primary text-primary-foreground"
+                      : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-foreground"
+                  }`}
+                >
+                  {label}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* Vintage slider */}
