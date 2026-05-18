@@ -1,3 +1,4 @@
+import { memo } from "react";
 import type { Wine } from "@/lib/wines";
 import { displayPrice, wineSubtitle } from "@/lib/wines";
 import { GlossaryText } from "@/components/GlossaryText";
@@ -19,7 +20,7 @@ const TYPE_COLORS: Record<Wine["type"], string> = {
   Other: "bg-muted text-muted-foreground",
 };
 
-export function WineCard({ wine }: { wine: Wine }) {
+function WineCardImpl({ wine }: { wine: Wine }) {
   const vintageNote = WINE_VINTAGE_LOOKUP.get(`${wine.producer}|${wine.vintage}`);
   return (
     <article className="rounded-lg border border-border bg-card px-4 py-3 transition-colors hover:border-primary/40">
@@ -81,3 +82,5 @@ export function WineCard({ wine }: { wine: Wine }) {
     </article>
   );
 }
+
+export const WineCard = memo(WineCardImpl);
