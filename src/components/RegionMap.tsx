@@ -88,15 +88,15 @@ function ItalyShape({ fill, stroke }: ShapeProps) {
         {/* Plain */}
         <text x="34" y="24" fontSize="1.8" opacity="0.75">Po Valley</text>
         {/* Seas */}
-        <text x="3"  y="50" fontSize="2.2">Tyrrhenian</text>
-        <text x="6"  y="53.5" fontSize="2.2">Sea</text>
+        <text x="11" y="40" fontSize="2.2">Tyrrhenian</text>
+        <text x="14" y="43.5" fontSize="2.2">Sea</text>
         <text x="72" y="40" fontSize="2.2">Adriatic</text>
         <text x="74" y="43.5" fontSize="2.2">Sea</text>
         <text x="74" y="74" fontSize="2.2">Ionian</text>
         <text x="76" y="77.5" fontSize="2.2">Sea</text>
-        <text x="3"  y="80" fontSize="2" opacity="0.85">Mediterranean</text>
+        <text x="11" y="88" fontSize="2" opacity="0.85">Mediterranean Sea</text>
         {/* Strait */}
-        <text x="32" y="87" fontSize="1.6" opacity="0.85">Strait of Messina</text>
+        <text x="56" y="89" fontSize="1.6" opacity="0.85">Strait of Messina</text>
       </g>
     </>
   );
@@ -157,17 +157,17 @@ function FranceShape({ fill, stroke }: ShapeProps) {
         className="pointer-events-none select-none"
       >
         {/* Water bodies */}
-        <text x="36" y="12" fontSize="1.8">English Channel</text>
-        <text x="6"  y="50" fontSize="1.8">Bay of</text>
-        <text x="6"  y="53" fontSize="1.8">Biscay</text>
-        <text x="44" y="71" fontSize="1.8">Mediterranean Sea</text>
+        <text x="36" y="16" fontSize="1.8">English Channel</text>
+        <text x="15" y="46" fontSize="1.8">Bay of</text>
+        <text x="15" y="49" fontSize="1.8">Biscay</text>
+        <text x="44" y="72" fontSize="1.8">Mediterranean Sea</text>
         {/* Mountains */}
         <text
           x="62" y="44" fontSize="1.8" letterSpacing="0.2"
           fill="oklch(0.45 0.05 60)"
         >ALPS</text>
         <text
-          x="30" y="67" fontSize="1.8" letterSpacing="0.2"
+          x="32" y="72" fontSize="1.8" letterSpacing="0.2"
           fill="oklch(0.45 0.05 60)"
         >PYRENEES</text>
         <text
