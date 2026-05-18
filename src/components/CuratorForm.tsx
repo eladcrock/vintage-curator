@@ -234,6 +234,25 @@ export function CuratorForm({
       </div>
 
       <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
+        <label className="col-span-1 flex items-start gap-2 rounded-md border border-primary/50 bg-primary/10 p-2 text-xs sm:col-span-2">
+          <input
+            type="checkbox"
+            checked={pastaDuo && duoEligible && pushSteaks && pushCrudo}
+            onChange={(e) => {
+              const on = e.target.checked;
+              setPastaDuo(on);
+              setPushSteaks(on);
+              setPushCrudo(on);
+            }}
+            className="mt-0.5"
+          />
+          <span>
+            <span className="block font-medium text-foreground">Put on a show</span>
+            <span className="block text-[11px] text-muted-foreground">
+              Flips on pasta duo, steaks, and crudo together. Caviar stays separate.
+            </span>
+          </span>
+        </label>
         <label
           className={`flex items-start gap-2 rounded-md border p-2 text-xs ${
             duoEligible ? "border-border bg-background" : "border-border bg-muted/30 opacity-60"
