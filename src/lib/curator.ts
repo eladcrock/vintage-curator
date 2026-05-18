@@ -123,6 +123,7 @@ function chooseCourses(
 }
 
 type Pick = { cat: FoodCategory; dish: Candidate; reasoning: string };
+type FinalPick = Pick & { duo?: Candidate };
 
 /**
  * Greedy menu builder. Walks each course, picks the dish closest to a
@@ -231,7 +232,7 @@ function reasoningFor(cat: FoodCategory, dish: Candidate, style: "classica" | "i
 function picksToOption(
   title: string,
   style: string,
-  picks: Pick[],
+  picks: FinalPick[],
   guests: number,
   req: ExperienceRequest,
 ): MenuOption {
@@ -259,6 +260,29 @@ function picksToOption(
         reasoning: `Guest request — ${rep.name} as the ${p.cat.toLowerCase()}${
           rep.scope === "table" ? ` ($${rep.price} for the table)` : ""
         }.`,
+      };
+    }
+    // Pasta duo — average the two pasta prices, name both dishes.
+    if (p.duo) {
+      const avg = Math.round(((p.dish._price + p.duo._price) / 2) * 100) / 100;
+      return {
+        category: p.cat,
+        dishId: p.dish.id,
+        dishName: p.dish.name,
+        price: avg,
+        reasoning: `Pasta duo — served half/half across the table (${guests} guests). Cost averaged.`,
+        duo: { dishId: p.duo.id, dishName: p.duo.name },
+      };
+    }
+    // Shared centerpiece — base price total / guests; UI shows the split.
+    if (p.dish._shareable && req.pushSteaks && guests >= 2) {
+      return {
+        category: p.cat,
+        dishId: p.dish.id,
+        dishName: p.dish.name,
+        price: p.dish._price,
+        reasoning: `Shared centerpiece — one $${p.dish._basePrice} for the table ($${Math.round(p.dish._price)}/pp). Slower service, more wine.`,
+        shared: { dishTotal: p.dish._basePrice, guests },
       };
     }
     return {
@@ -318,7 +342,9 @@ export function curateMenus(
     return { error: "Minimum budget must be less than or equal to maximum." };
   }
 
-  const candidates = buildCandidates(req.restrictions);
+  const overrides = req.priceOverrides ?? {};
+  const pushSteaks = !!req.pushSteaks;
+  const candidates = buildCandidates(req.restrictions, overrides, req.guests, pushSteaks);
   if (candidates.length === 0) {
     return { error: "No dishes match those restrictions." };
   }
@@ -342,32 +368,50 @@ export function curateMenus(
   }
 
   // Classica first.
-  const classica = buildMenu(flow, byCat, req.budgetMin, req.budgetMax, "classica", new Set());
+  const classica = buildMenu(flow, byCat, req.budgetMin, req.budgetMax, "classica", new Set(), pushSteaks);
   if (!classica) return { error: "Could not assemble a Classica menu within budget." };
 
   // Indulgente — exclude classica's picks so the two menus differ.
   const excludeForDiff = new Set(classica.map((p) => p.dish.id));
   let indulgente =
-    buildMenu(flow, byCat, req.budgetMin, req.budgetMax, "indulgente", excludeForDiff) ??
-    buildMenu(flow, byCat, req.budgetMin, req.budgetMax, "indulgente", new Set());
+    buildMenu(flow, byCat, req.budgetMin, req.budgetMax, "indulgente", excludeForDiff, pushSteaks) ??
+    buildMenu(flow, byCat, req.budgetMin, req.budgetMax, "indulgente", new Set(), pushSteaks);
 
   if (!indulgente) {
     return { error: "Could not assemble a second distinct menu within budget." };
   }
+
+  // Pasta duo — applied to both menus when guests is even.
+  const wantDuo = !!req.pastaDuo && req.guests % 2 === 0 && req.guests >= 2;
+  const applyDuo = (picks: Pick[]): FinalPick[] => {
+    if (!wantDuo) return picks;
+    const out: FinalPick[] = picks.map((p) => ({ ...p }));
+    const pastaIdx = out.findIndex((p) => p.cat === "Pasta");
+    if (pastaIdx < 0) return out;
+    const first = out[pastaIdx].dish;
+    const pastas = (byCat.get("Pasta") ?? []).filter((d) => d.id !== first.id);
+    if (!pastas.length) return out;
+    // Closest second pasta in price keeps the build on budget.
+    const second = [...pastas].sort(
+      (a, b) => Math.abs(a._price - first._price) - Math.abs(b._price - first._price),
+    )[0];
+    out[pastaIdx] = { ...out[pastaIdx], duo: second };
+    return out;
+  };
 
   return {
     options: [
       picksToOption(
         "Trattoria Classica",
         "Traditional Italian comfort — balanced and crowd-pleasing.",
-        classica,
+        applyDuo(classica),
         req.guests,
         req,
       ),
       picksToOption(
         "Indulgente",
         "Premium proteins and richer flavors — a celebratory build.",
-        indulgente,
+        applyDuo(indulgente),
         req.guests,
         req,
       ),
