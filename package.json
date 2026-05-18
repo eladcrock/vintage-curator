@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
-    "build:netlify": "vite build --config vite.netlify.config.ts",
+    "build:netlify": "vite build --config vite.netlify.config.ts && node scripts/prerender-netlify.mjs",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
