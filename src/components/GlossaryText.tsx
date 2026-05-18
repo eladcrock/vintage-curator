@@ -5,7 +5,7 @@
  *
  * Matching is case-insensitive, longest-first, non-overlapping.
  */
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { GLOSSARY_LOOKUP as COCKTAIL_LOOKUP } from "@/data/cocktail-glossary";
 import {
   Popover,
@@ -99,28 +99,40 @@ export function GlossaryText({
         s.kind === "text" ? (
           <span key={i}>{s.text}</span>
         ) : (
-          <Popover key={i}>
-            <PopoverTrigger asChild>
-              <button
-                type="button"
-                onClick={(e) => e.stopPropagation()}
-                className="inline text-left text-foreground decoration-primary/40 decoration-dotted underline underline-offset-4 transition-colors hover:text-primary focus:outline-none focus-visible:ring-1 focus-visible:ring-primary"
-              >
-                {s.text}
-              </button>
-            </PopoverTrigger>
-            <PopoverContent
-              side="top"
-              align="center"
-              collisionPadding={12}
-              className="w-64 max-w-[min(16rem,calc(100vw-2rem))] border border-border bg-popover p-3 text-sm leading-snug text-popover-foreground shadow-md"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {s.blurb}
-            </PopoverContent>
-          </Popover>
+          <GlossaryTerm key={i} text={s.text} blurb={s.blurb} />
         ),
       )}
     </>
+  );
+}
+
+function GlossaryTerm({ text, blurb }: { text: string; blurb: string }) {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+    const timeout = window.setTimeout(() => setOpen(false), 3000);
+    return () => window.clearTimeout(timeout);
+  }, [open]);
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <button
+          type="button"
+          className="inline text-left text-foreground decoration-primary/40 decoration-dotted underline underline-offset-4 transition-colors hover:text-primary focus:outline-none focus-visible:ring-1 focus-visible:ring-primary"
+        >
+          {text}
+        </button>
+      </PopoverTrigger>
+      <PopoverContent
+        side="top"
+        align="center"
+        collisionPadding={12}
+        className="w-64 max-w-[min(16rem,calc(100vw-2rem))] border border-border bg-popover p-3 text-sm leading-snug text-popover-foreground shadow-md"
+      >
+        {blurb}
+      </PopoverContent>
+    </Popover>
   );
 }
