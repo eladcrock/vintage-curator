@@ -7,11 +7,10 @@
  */
 import { GLOSSARY_LOOKUP as COCKTAIL_LOOKUP } from "@/data/cocktail-glossary";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 type Segment =
   | { kind: "text"; text: string }
@@ -75,13 +74,13 @@ export function GlossaryText({
   if (segs.every((s) => s.kind === "text")) return <>{text}</>;
 
   return (
-    <TooltipProvider delayDuration={120}>
+    <>
       {segs.map((s, i) =>
         s.kind === "text" ? (
           <span key={i}>{s.text}</span>
         ) : (
-          <Tooltip key={i}>
-            <TooltipTrigger asChild>
+          <Popover key={i}>
+            <PopoverTrigger asChild>
               <span
                 tabIndex={0}
                 onClick={(e) => e.stopPropagation()}
@@ -89,16 +88,19 @@ export function GlossaryText({
               >
                 {s.text}
               </span>
-            </TooltipTrigger>
-            <TooltipContent
+            </PopoverTrigger>
+            <PopoverContent
               side="top"
-              className="max-w-xs border border-border bg-popover text-popover-foreground shadow-md"
+              align="center"
+              collisionPadding={12}
+              className="w-64 max-w-[min(16rem,calc(100vw-2rem))] border border-border bg-popover p-3 text-sm leading-snug text-popover-foreground shadow-md"
+              onClick={(e) => e.stopPropagation()}
             >
               {s.blurb}
-            </TooltipContent>
-          </Tooltip>
+            </PopoverContent>
+          </Popover>
         ),
       )}
-    </TooltipProvider>
+    </>
   );
 }
