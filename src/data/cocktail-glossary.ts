@@ -74,6 +74,11 @@ export const COCKTAIL_GLOSSARY: GlossaryEntry[] = [
       "Softer, honeyed sibling of Green Chartreuse — still made by Carthusian monks from 130 herbs. Lower proof, sweeter, more saffron.",
   },
   {
+    term: "2023 MOF Yellow Chartreuse",
+    blurb:
+      "A 2023-release Yellow Chartreuse selected by a Meilleur Ouvrier de France (MOF) — France's top craft distinction. Tighter, more vivid herbs than the standard bottling; a collector's pour.",
+  },
+  {
     term: "Chartreuse",
     blurb:
       "Centuries-old French herbal liqueur made by Carthusian monks. Green is bold and dry; Yellow is gentler and honeyed.",
@@ -82,6 +87,11 @@ export const COCKTAIL_GLOSSARY: GlossaryEntry[] = [
     term: "Martini & Rossi Rosso",
     blurb:
       "Classic Italian sweet vermouth (Turin, 1863). Vintage bottles develop oxidative tertiary notes you can't get from modern stock.",
+  },
+  {
+    term: "1960s Martini & Rossi Rosso",
+    blurb:
+      "A vintage 1960s bottle of Martini & Rossi Rosso vermouth — six decades of slow oxidation in glass yield deep nutty, dried-fig, and rancio notes that modern production simply can't replicate. Irreplaceable.",
   },
   {
     term: "Rosso Vermouth",

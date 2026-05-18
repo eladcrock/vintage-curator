@@ -10,7 +10,7 @@
  */
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { Search, X } from "lucide-react";
+import { Search, X, Check, Ban } from "lucide-react";
 import { SiteNav } from "@/components/SiteNav";
 import { CocktailCard } from "@/components/CocktailCard";
 import { ALL_COCKTAILS, filterCocktails, allDietaryTags } from "@/lib/cocktails";
@@ -47,7 +47,34 @@ function useUrlQuery() {
 
 function BarProgramPage() {
   const [q, setQ] = useUrlQuery();
-  const filtered = useMemo(() => filterCocktails(q), [q]);
+  // Per-allergen tri-state: undefined = neutral, "in" = must have,
+  // "out" = must not have. Layered ON TOP of the free-text search.
+  const [tagStates, setTagStates] = useState<Record<string, "in" | "out">>({});
+  const cycle = (t: string) =>
+    setTagStates((s) => {
+      const next = { ...s };
+      const cur = next[t];
+      if (!cur) next[t] = "in";
+      else if (cur === "in") next[t] = "out";
+      else delete next[t];
+      return next;
+    });
+  const filtered = useMemo(() => {
+    const list = filterCocktails(q);
+    const ins = Object.entries(tagStates)
+      .filter(([, s]) => s === "in")
+      .map(([t]) => t.toLowerCase());
+    const outs = Object.entries(tagStates)
+      .filter(([, s]) => s === "out")
+      .map(([t]) => t.toLowerCase());
+    if (!ins.length && !outs.length) return list;
+    return list.filter((c) => {
+      const tags = c.dietaryRestrictions.map((t) => t.toLowerCase());
+      if (ins.some((t) => !tags.includes(t))) return false;
+      if (outs.some((t) => tags.includes(t))) return false;
+      return true;
+    });
+  }, [q, tagStates]);
   const tagSuggestions = useMemo(() => allDietaryTags(), []);
 
   return (
@@ -78,22 +105,42 @@ function BarProgramPage() {
 
         {tagSuggestions.length > 0 && (
           <div className="mt-3">
-            <div className="mb-1 text-[10px] uppercase tracking-wider text-muted-foreground">
-              Quick allergen filters
+            <div className="mb-1 flex items-center justify-between gap-2 text-[10px] uppercase tracking-wider text-muted-foreground">
+              <span>Allergens — tap to require, tap again to exclude</span>
+              {Object.keys(tagStates).length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setTagStates({})}
+                  className="rounded px-1.5 py-0.5 normal-case tracking-normal text-muted-foreground hover:bg-secondary hover:text-foreground"
+                >
+                  Reset
+                </button>
+              )}
             </div>
             <div className="flex flex-wrap gap-1.5">
               {tagSuggestions.map((tag) => {
-                const active = q.toLowerCase() === tag.toLowerCase();
+                const st = tagStates[tag];
+                const cls =
+                  st === "in"
+                    ? "border-primary bg-primary text-primary-foreground"
+                    : st === "out"
+                    ? "border-destructive bg-destructive/15 text-destructive line-through"
+                    : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-foreground";
                 return (
                   <button
                     key={tag}
-                    onClick={() => setQ(active ? "" : tag)}
-                    className={`rounded-full border px-2.5 py-1 text-xs transition-colors ${
-                      active
-                        ? "border-primary bg-primary text-primary-foreground"
-                        : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-foreground"
-                    }`}
+                    onClick={() => cycle(tag)}
+                    title={
+                      st === "in"
+                        ? "Only cocktails with this tag"
+                        : st === "out"
+                        ? "Hide cocktails with this tag"
+                        : "Click to require, click again to exclude"
+                    }
+                    className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs transition-colors ${cls}`}
                   >
+                    {st === "in" && <Check className="h-3 w-3" />}
+                    {st === "out" && <Ban className="h-3 w-3" />}
                     {tag}
                   </button>
                 );
