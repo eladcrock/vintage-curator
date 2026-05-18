@@ -254,6 +254,10 @@ export function CuratorForm({
               setPastaDuo(on);
               setPushSteaks(on);
               setPushCrudo(on);
+              if (on) {
+                setBudgetMin(185);
+                setBudgetMax(185);
+              }
             }}
             className="mt-0.5"
           />
