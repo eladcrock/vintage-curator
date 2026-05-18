@@ -53,6 +53,7 @@ function useUrlQuery() {
 function FoodPage() {
   const [q, setQ] = useUrlQuery();
   const [showLunch, setShowLunch] = useState(false);
+  const [openId, setOpenId] = useState<string | null>(null);
   // Per-allergen tri-state: undefined = neutral, "in" = must have,
   // "out" = must not have. Layered ON TOP of the free-text search.
   const [tagStates, setTagStates] = useState<Record<string, "in" | "out">>({});
@@ -206,7 +207,15 @@ function FoodPage() {
                 </h2>
                 <div className="grid gap-2">
                   {dishes.map((d) => (
-                    <DishCard key={d.id} dish={d} highlight={q} />
+                    <DishCard
+                      key={d.id}
+                      dish={d}
+                      highlight={q}
+                      open={openId === d.id}
+                      onToggle={() =>
+                        setOpenId((cur) => (cur === d.id ? null : d.id))
+                      }
+                    />
                   ))}
                 </div>
               </section>
