@@ -31,6 +31,26 @@ export const PREMIUM_DISH_IDS: string[] = [
 ];
 
 /**
+ * Centerpiece dishes that can be shared across the whole table — the
+ * "push steaks" toggle prefers these for the Secondo. Per-person cost
+ * becomes dish total / guests.
+ */
+export const SHAREABLE_DISH_IDS: string[] = [
+  "bistecca-fiorentina", // 40oz Porterhouse
+  "wagyu-tomahawk",      // 42oz Wagyu Tomahawk
+];
+
+/**
+ * Default override prices for A.Q. ("ask quote") items. The curator UI
+ * surfaces these as editable inputs so the pro can set the night's price
+ * before building the menu.
+ */
+export const AQ_PRICE_DEFAULTS: Record<string, number> = {
+  "risotto-giorno": 55, // Risotto del Giorno
+  "tagliere": 33,       // Tagliere di Formaggi e Salumi (crudi board)
+};
+
+/**
  * Keyword rules for ingredient/notes-based restrictions. Each rule maps a
  * restriction label to substrings checked against the dish's
  * description / dietaryRestrictions / name (case-insensitive).

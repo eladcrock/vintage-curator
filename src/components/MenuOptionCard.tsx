@@ -27,11 +27,27 @@ export function MenuOptionCard({
                 <div>
                   <p className="text-[10px] uppercase tracking-wide text-muted-foreground">
                     {c.category}
+                    {c.duo && <span className="ml-1 text-primary">· duo</span>}
+                    {c.shared && <span className="ml-1 text-primary">· shared</span>}
                   </p>
-                  <p className="font-medium">{dish?.name ?? c.dishName}</p>
+                  <p className="font-medium">
+                    {dish?.name ?? c.dishName}
+                    {c.duo && (
+                      <>
+                        {" "}
+                        <span className="text-muted-foreground">/</span>{" "}
+                        {c.duo.dishName}
+                      </>
+                    )}
+                  </p>
                 </div>
                 <span className="shrink-0 text-xs tabular-nums text-muted-foreground">
                   ${c.price}
+                  {c.shared && (
+                    <span className="ml-1 text-[10px] text-muted-foreground/70">
+                      (${c.shared.dishTotal} ÷ {c.shared.guests})
+                    </span>
+                  )}
                 </span>
               </div>
               {dish?.description && (

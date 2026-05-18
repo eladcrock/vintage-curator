@@ -8,6 +8,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { COMMON_RESTRICTIONS, type AddOn, type ExperienceRequest } from "@/lib/experiences";
+import { AQ_PRICE_DEFAULTS } from "@/data/experiences";
+import { ALL_DISHES } from "@/lib/food";
 import type { FoodCategory } from "@/lib/food";
 
 const ADDON_COURSES: (FoodCategory | "Any")[] = [
@@ -37,11 +39,16 @@ export function CuratorForm({
   const [addCourse, setAddCourse] = useState<FoodCategory | "Any">("Pasta");
   const [addKind, setAddKind] = useState<"upgrade" | "course">("upgrade");
   const [addScope, setAddScope] = useState<"person" | "table">("person");
+  const [priceOverrides, setPriceOverrides] =
+    useState<Record<string, number>>({ ...AQ_PRICE_DEFAULTS });
+  const [pastaDuo, setPastaDuo] = useState(false);
+  const [pushSteaks, setPushSteaks] = useState(false);
 
   const min = Math.max(1, budgetMin || 0);
   const max = Math.max(min, budgetMax || min);
   const tableMin = min * guests;
   const tableMax = max * guests;
+  const duoEligible = guests >= 2 && guests % 2 === 0;
 
   function toggle(r: string) {
     setRestrictions((cur) =>
@@ -74,8 +81,16 @@ export function CuratorForm({
       restrictions,
       notes,
       addOns,
+      priceOverrides,
+      pastaDuo: pastaDuo && duoEligible,
+      pushSteaks,
     });
   }
+
+  const aqDishes = Object.keys(AQ_PRICE_DEFAULTS).map((id) => {
+    const d = ALL_DISHES.find((x) => x.id === id);
+    return { id, name: d?.name ?? id };
+  });
 
   return (
     <form
@@ -145,6 +160,72 @@ export function CuratorForm({
             );
           })}
         </div>
+      </div>
+
+      <div className="mt-4">
+        <p className="mb-2 text-xs font-medium text-muted-foreground">
+          Tonight's open prices (A.Q.)
+        </p>
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+          {aqDishes.map((d) => (
+            <label key={d.id} className="flex items-center gap-2 text-xs">
+              <span className="flex-1 truncate text-muted-foreground">{d.name}</span>
+              <span className="text-muted-foreground">$</span>
+              <Input
+                type="number"
+                min={0}
+                value={priceOverrides[d.id] ?? ""}
+                onChange={(e) =>
+                  setPriceOverrides((cur) => ({
+                    ...cur,
+                    [d.id]: parseFloat(e.target.value) || 0,
+                  }))
+                }
+                className="h-8 w-20"
+              />
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
+        <label
+          className={`flex items-start gap-2 rounded-md border p-2 text-xs ${
+            duoEligible ? "border-border bg-background" : "border-border bg-muted/30 opacity-60"
+          }`}
+        >
+          <input
+            type="checkbox"
+            checked={pastaDuo && duoEligible}
+            disabled={!duoEligible}
+            onChange={(e) => setPastaDuo(e.target.checked)}
+            className="mt-0.5"
+          />
+          <span>
+            <span className="block font-medium text-foreground">Pasta duo (half / half)</span>
+            <span className="block text-[11px] text-muted-foreground">
+              {duoEligible
+                ? "Two pastas split across the table. Price = average of both."
+                : "Available only with an even number of guests (2, 4, 6…)."}
+            </span>
+          </span>
+        </label>
+        <label className="flex items-start gap-2 rounded-md border border-border bg-background p-2 text-xs">
+          <input
+            type="checkbox"
+            checked={pushSteaks}
+            onChange={(e) => setPushSteaks(e.target.checked)}
+            className="mt-0.5"
+          />
+          <span>
+            <span className="block font-medium text-foreground">
+              Guests are drinking good wine — push the steaks
+            </span>
+            <span className="block text-[11px] text-muted-foreground">
+              Prefers Porterhouse / Tomahawk shared across the table. Longer service = more wine.
+            </span>
+          </span>
+        </label>
       </div>
 
       <div className="mt-4">

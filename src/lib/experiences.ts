@@ -43,6 +43,23 @@ export type ExperienceRequest = {
   restrictions: string[];
   notes: string;
   addOns: AddOn[];
+  /**
+   * Per-dish price overrides (by dish id). Used for A.Q. items
+   * (Risotto del Giorno, Tagliere/crudi) so the curator can score them.
+   * Empty object = use the menu price as-is.
+   */
+  priceOverrides?: Record<string, number>;
+  /**
+   * Even guest counts only: pick TWO pastas served half-and-half across
+   * the table. Price per person = average of the two.
+   */
+  pastaDuo?: boolean;
+  /**
+   * "Guests are drinking premium wine" — push the curator toward shareable
+   * centerpiece steaks (Porterhouse, Tomahawk) over plated mains. Longer
+   * service = more wine sold.
+   */
+  pushSteaks?: boolean;
 };
 
 export type AddOn = {
@@ -69,6 +86,10 @@ export type CourseSelection = {
   dishName: string;
   price: number;
   reasoning: string;
+  /** Set when this course is a pasta duo (half/half of two dishes). */
+  duo?: { dishId: string; dishName: string };
+  /** Set when this course is shared across the table (e.g. Bistecca). */
+  shared?: { dishTotal: number; guests: number };
 };
 
 export type MenuOption = {
