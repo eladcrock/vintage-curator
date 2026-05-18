@@ -15,6 +15,7 @@ import {
   DROP_ORDER,
   PREMIUM_DISH_IDS,
   RESTRICTION_RULES,
+  SHAREABLE_DISH_IDS,
 } from "@/data/experiences";
 import {
   priceToNumber,
@@ -40,9 +41,21 @@ function dishAllowed(dish: Dish, restrictions: string[]): boolean {
   return true;
 }
 
-type Candidate = Dish & { _price: number; _premium: boolean };
+type Candidate = Dish & {
+  /** Effective per-person price after overrides + sharing. */
+  _price: number;
+  /** True total dish price (used for shared-cost display). */
+  _basePrice: number;
+  _premium: boolean;
+  _shareable: boolean;
+};
 
-function buildCandidates(restrictions: string[]): Candidate[] {
+function buildCandidates(
+  restrictions: string[],
+  overrides: Record<string, number>,
+  guests: number,
+  pushSteaks: boolean,
+): Candidate[] {
   // Exclude lunch-only dishes from tasting menus.
   const base = ALL_DISHES.filter((d) => d.category !== "Lunch Only" && dishAllowed(d, restrictions));
 
@@ -60,11 +73,21 @@ function buildCandidates(restrictions: string[]): Candidate[] {
     for (const d of arr) if (priceToNumber(d.price) >= cutoff) premiumSet.add(d.id);
   }
 
-  return base.map((d) => ({
-    ...d,
-    _price: priceToNumber(d.price),
-    _premium: premiumSet.has(d.id),
-  }));
+  const shareSet = new Set<string>(SHAREABLE_DISH_IDS);
+  return base.map((d) => {
+    const overridden = overrides[d.id];
+    const base = overridden ?? priceToNumber(d.price);
+    const shareable = shareSet.has(d.id);
+    // Shareable centerpieces split across the table when "push steaks" is on.
+    const effective = shareable && pushSteaks && guests >= 2 ? base / guests : base;
+    return {
+      ...d,
+      _basePrice: base,
+      _price: effective,
+      _premium: premiumSet.has(d.id) || shareable,
+      _shareable: shareable,
+    };
+  });
 }
 
 function groupByCat(cands: Candidate[]): Map<FoodCategory, Candidate[]> {
@@ -116,6 +139,7 @@ function buildMenu(
   budgetMax: number,
   style: "classica" | "indulgente",
   exclude: Set<string>,
+  pushSteaks: boolean,
 ): Pick[] | null {
   // Aim near the upper portion of the range — give the guest value.
   const target = style === "indulgente"
@@ -150,9 +174,11 @@ function buildMenu(
       .filter((d) => d._price <= maxAllowedHere)
       .map((d) => {
         const dist = Math.abs(d._price - perCourseTarget);
-        const styleBonus = style === "indulgente"
+        let styleBonus = style === "indulgente"
           ? (d._premium ? -3 : 0)
           : (d._premium ? +2 : 0);
+        // "Push steaks" — heavily prefer shareable centerpieces for Secondi.
+        if (pushSteaks && cat === "Secondi" && d._shareable) styleBonus -= 12;
         return { d, score: dist + styleBonus };
       })
       .sort((a, b) => a.score - b.score);
