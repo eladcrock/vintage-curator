@@ -47,6 +47,7 @@ function useUrlQuery() {
 
 function BarProgramPage() {
   const [q, setQ] = useUrlQuery();
+  const [openId, setOpenId] = useState<string | null>(null);
   // Per-allergen tri-state: undefined = neutral, "in" = must have,
   // "out" = must not have. Layered ON TOP of the free-text search.
   const [tagStates, setTagStates] = useState<Record<string, "in" | "out">>({});
@@ -175,7 +176,15 @@ function BarProgramPage() {
             </div>
           ) : (
             filtered.map((c) => (
-              <CocktailCard key={c.id} cocktail={c} highlight={q} />
+              <CocktailCard
+                key={c.id}
+                cocktail={c}
+                highlight={q}
+                open={openId === c.id}
+                onToggle={() =>
+                  setOpenId((cur) => (cur === c.id ? null : c.id))
+                }
+              />
             ))
           )}
         </div>

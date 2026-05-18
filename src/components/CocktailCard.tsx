@@ -6,7 +6,6 @@
  *
  * State is local - each card manages its own open/closed flag.
  */
-import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import type { Cocktail } from "@/lib/cocktails";
 import { formatCocktailPrice } from "@/lib/cocktails";
@@ -15,12 +14,15 @@ import { GlossaryText } from "@/components/GlossaryText";
 export function CocktailCard({
   cocktail,
   highlight,
+  open,
+  onToggle,
 }: {
   cocktail: Cocktail;
   /** Optional search query to highlight matched substrings. */
   highlight?: string;
+  open: boolean;
+  onToggle: () => void;
 }) {
-  const [open, setOpen] = useState(false);
   const c = cocktail;
 
   return (
@@ -33,7 +35,7 @@ export function CocktailCard({
         <div className="min-w-0 flex-1">
           <button
             type="button"
-            onClick={() => setOpen((v) => !v)}
+            onClick={onToggle}
             aria-expanded={open}
             className="flex w-full items-baseline justify-between gap-3 text-left"
           >
@@ -70,7 +72,7 @@ export function CocktailCard({
         </div>
         <button
           type="button"
-          onClick={() => setOpen((v) => !v)}
+          onClick={onToggle}
           aria-expanded={open}
           aria-label={open ? "Collapse" : "Expand"}
           className="shrink-0 rounded p-1 text-muted-foreground hover:text-foreground"
