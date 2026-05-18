@@ -31,13 +31,13 @@ export function WineCard({ wine }: { wine: Wine }) {
           {vintageNote ? (
             <Popover>
               <PopoverTrigger asChild>
-                <span
-                  tabIndex={0}
+                <button
+                  type="button"
                   onClick={(e) => e.stopPropagation()}
-                  className="cursor-help tabular-nums text-primary decoration-primary/40 decoration-dotted underline-offset-4 hover:underline focus:underline focus:outline-none"
+                  className="tabular-nums text-primary decoration-primary/40 decoration-dotted underline underline-offset-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-primary"
                 >
                   {wine.vintage}
-                </span>
+                </button>
               </PopoverTrigger>
               <PopoverContent
                 side="top"
