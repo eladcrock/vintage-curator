@@ -367,7 +367,7 @@ export function curateMenus(
       name: "Chef's crudo plate",
       price: req.crudoPrice!,
       course: "Antipasti",
-      kind: "upgrade",
+      kind: "course",
       scope: "person",
     });
   }
