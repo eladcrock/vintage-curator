@@ -10,6 +10,7 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import type { Cocktail } from "@/lib/cocktails";
 import { formatCocktailPrice } from "@/lib/cocktails";
+import { GlossaryText } from "@/components/GlossaryText";
 
 export function CocktailCard({
   cocktail,
@@ -28,23 +29,23 @@ export function CocktailCard({
         open ? "border-primary/50" : "border-border hover:border-primary/40"
       }`}
     >
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        aria-expanded={open}
-        className="flex w-full items-start gap-3 px-4 py-3 text-left"
-      >
+      <div className="flex w-full items-start gap-3 px-4 py-3 text-left">
         <div className="min-w-0 flex-1">
-          <div className="flex items-baseline justify-between gap-3">
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            className="flex w-full items-baseline justify-between gap-3 text-left"
+          >
             <h3 className="text-base font-semibold leading-snug text-foreground">
               <Highlight text={c.name} query={highlight} />
             </h3>
             <span className="shrink-0 text-sm tabular-nums text-primary">
               {formatCocktailPrice(c)}
             </span>
-          </div>
+          </button>
           <p className="mt-1 text-sm leading-snug text-muted-foreground">
-            <Highlight text={c.menuDescription} query={highlight} />
+            <GlossaryText text={c.menuDescription} />
           </p>
           {(c.dietaryRestrictions.length > 0 || (c.tags && c.tags.length > 0)) && (
             <div className="mt-2 flex flex-wrap gap-1">
@@ -67,12 +68,18 @@ export function CocktailCard({
             </div>
           )}
         </div>
-        <ChevronDown
-          className={`mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-transform ${
-            open ? "rotate-180" : ""
-          }`}
-        />
-      </button>
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          aria-label={open ? "Collapse" : "Expand"}
+          className="shrink-0 rounded p-1 text-muted-foreground hover:text-foreground"
+        >
+          <ChevronDown
+            className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`}
+          />
+        </button>
+      </div>
 
       {open && (
         <div className="space-y-4 border-t border-border px-4 py-3 text-sm">
