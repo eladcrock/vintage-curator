@@ -9,8 +9,7 @@ import { useEffect, useMemo, useState } from "react";
 import { GLOSSARY_LOOKUP as COCKTAIL_LOOKUP } from "@/data/cocktail-glossary";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
-type Segment = { kind: "text"; text: string }
-  | { kind: "term"; text: string; blurb: string };
+type Segment = { kind: "text"; text: string } | { kind: "term"; text: string; blurb: string };
 
 function escapeRe(s: string) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
