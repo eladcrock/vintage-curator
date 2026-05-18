@@ -237,11 +237,6 @@ export const COCKTAIL_GLOSSARY: GlossaryEntry[] = [
     blurb:
       "House blend of Green and Yellow Chartreuse — bold monastic herbs from the Green softened by Yellow's honeyed saffron sweetness.",
   },
-  {
-    term: "Tarragon",
-    blurb:
-      "Soft anise-licorice herb. Adds a sweet green perfume that mellows the rye's spice and lifts the citrus.",
-  },
 ];
 
 /** Sorted longest-first so multi-word terms win over substrings. */
