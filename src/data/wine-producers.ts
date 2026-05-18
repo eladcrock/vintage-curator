@@ -567,6 +567,11 @@ export const WINE_PRODUCERS: ProducerEntry[] = [
       "Grower-Champagne micro-cult based in Gueux. Jérôme Prévost makes a single wine, La Closerie, from his 2.2-hectare parcel of mostly Pinot Meunier, vinified in old barrels with minimal intervention.",
   },
   {
+    match: "La Closerie",
+    blurb:
+      "Jérôme Prévost's single wine, from his 2.2-hectare Les Béguines parcel in Gueux (Petite Montagne de Reims) — almost entirely old-vine Pinot Meunier on sandy soils. Mentored by Anselme Selosse, who pushed him to bottle his own fruit starting with the 1998 vintage. Vinified in old Burgundy barrels, single vintage but undeclared, very low dosage. Hand-numbered cases, a few hundred made; one of the most allocation-only labels in grower Champagne.",
+  },
+  {
     match: "Krug",
     blurb:
       "Reims Champagne house founded 1843 by Joseph Krug. Owned by LVMH since 1999; sixth-generation Krug family member Olivier Krug remains as director of the house. Grande Cuvée is blended from 120+ reserve wines spanning a decade or more.",
