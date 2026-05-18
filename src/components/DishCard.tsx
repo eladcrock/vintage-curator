@@ -5,19 +5,21 @@
  *
  * State is local - each card manages its own open/closed flag.
  */
-import { useState } from "react";
 import { ChevronDown, Flame } from "lucide-react";
 import type { Dish } from "@/lib/food";
 
 export function DishCard({
   dish,
   highlight,
+  open,
+  onToggle,
 }: {
   dish: Dish;
   /** Optional search query to highlight matched substrings. */
   highlight?: string;
+  open: boolean;
+  onToggle: () => void;
 }) {
-  const [open, setOpen] = useState(false);
   const d = dish;
 
   return (
@@ -28,7 +30,7 @@ export function DishCard({
     >
       <button
         type="button"
-        onClick={() => setOpen((v) => !v)}
+        onClick={onToggle}
         aria-expanded={open}
         className="flex w-full items-start gap-3 px-4 py-3 text-left"
       >
