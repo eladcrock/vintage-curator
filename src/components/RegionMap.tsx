@@ -21,44 +21,48 @@ function ItalyShape({ fill, stroke }: ShapeProps) {
       */}
       <path
         d="
-          M 12,22
-          C 14,16 22,14 30,15
-          C 36,13 44,14 50,16
-          C 58,15 66,17 70,22
-          C 72,26 68,30 62,29
-          L 54,30
-          C 50,32 50,36 52,40
-          C 54,44 56,48 56,52
-          L 56,56
-          C 58,58 60,58 62,58
-          C 64,58 66,60 66,63
-          C 66,67 62,69 58,68
-          L 54,67
-          C 52,67 50,66 48,67
-          C 46,69 45,73 46,76
-          C 47,79 44,79 43,76
-          L 42,72
-          C 41,69 39,67 37,66
-          C 35,68 35,72 36,75
-          C 37,78 35,80 34,77
-          L 33,72
-          C 32,68 30,64 28,60
-          L 26,53
-          C 24,46 21,40 17,34
-          L 14,28
-          C 12,25 11,23 12,22
+          M 18,22
+          C 14,18 20,14 26,15
+          L 38,16
+          C 46,14 54,15 60,19
+          L 66,22
+          C 70,24 68,28 64,28
+          L 56,28
+          C 54,30 56,34 54,36
+          L 48,40
+          C 44,44 42,50 44,54
+          L 48,60
+          C 50,64 52,66 54,66
+          L 60,64
+          C 66,62 70,64 72,68
+          L 74,72
+          C 74,74 70,74 66,72
+          L 60,70
+          C 58,72 60,76 62,78
+          L 64,82
+          C 62,84 58,82 56,80
+          L 50,76
+          C 48,80 50,84 48,86
+          L 44,88
+          C 40,86 40,82 42,78
+          L 40,72
+          C 38,68 36,64 36,58
+          L 34,52
+          C 32,46 30,42 28,38
+          L 24,32
+          C 20,30 18,26 18,22
           Z
         "
         fill={fill} stroke={stroke} strokeWidth="0.6" strokeLinejoin="round"
       />
-      {/* Sardinia - large oblong island west of the mainland, pin (25,64) */}
+      {/* Sardinia - distinct oblong island, well west of the mainland */}
       <path
-        d="M 24,54 C 18,55 15,60 16,66 C 16,72 18,76 22,77 C 27,78 31,74 32,68 C 33,62 32,57 28,55 C 27,54 25,54 24,54 Z"
+        d="M 22,58 C 17,58 15,62 16,68 C 16,73 18,76 22,76 C 26,76 28,72 28,67 C 28,62 26,58 22,58 Z"
         fill={fill} stroke={stroke} strokeWidth="0.6"
       />
       {/* Corsica hint (French) - small, faded, clearly above Sardinia */}
       <path
-        d="M 23,45 C 20,46 18,49 19,52 C 20,53 24,53 25,51 C 26,48 26,45 23,45 Z"
+        d="M 22,49 C 19,49 18,52 19,55 C 20,56 24,56 25,55 C 26,52 25,49 22,49 Z"
         fill={fill} stroke={stroke} strokeWidth="0.4" opacity="0.45"
       />
       {/*
@@ -67,7 +71,7 @@ function ItalyShape({ fill, stroke }: ShapeProps) {
         Capo Passero (SE, x~50). Pin at (44,94).
       */}
       <path
-        d="M 30,92 L 56,90 L 50,99 Z"
+        d="M 36,92 L 56,90 L 52,98 L 38,98 Z"
         fill={fill} stroke={stroke} strokeWidth="0.6" strokeLinejoin="round"
       />
 
@@ -113,39 +117,31 @@ function FranceShape({ fill, stroke }: ShapeProps) {
       */}
       <path
         d="
-          M 28,18
-          C 36,15 46,14 54,15
-          C 60,16 64,19 66,22
-          L 69,27
-          C 71,32 71,37 69,42
-          L 70,48
-          C 70,52 68,56 64,58
-          L 58,62
-          C 52,65 46,67 40,67
-          L 32,68
-          C 28,68 26,65 28,61
-          C 28,58 26,55 25,52
-          L 24,46
-          C 22,42 20,39 18,36
-          L 22,34
-          C 24,30 26,26 28,22
+          M 30,18
+          C 36,16 44,16 50,18
+          L 58,20
+          C 62,22 60,26 58,26
+          L 60,30
+          C 64,32 68,36 70,42
+          L 72,48
+          C 72,54 68,58 64,60
+          L 60,66
+          C 56,72 50,76 42,76
+          L 32,76
+          C 26,74 22,70 20,64
+          L 16,58
+          C 14,52 14,46 18,42
+          L 12,40
+          C 10,38 12,36 16,36
+          L 22,36
+          C 24,32 26,28 28,24
           Z
         "
         fill={fill} stroke={stroke} strokeWidth="0.6" strokeLinejoin="round"
       />
-      {/* Brittany peninsula - jutting clearly west off the NW coast */}
+      {/* Corsica */}
       <path
-        d="M 22,32 C 16,32 10,33 6,35 C 4,36 4,38 7,39 C 12,40 18,39 22,38 C 24,37 24,33 22,32 Z"
-        fill={fill} stroke={stroke} strokeWidth="0.5" strokeLinejoin="round"
-      />
-      {/* Cotentin peninsula - the small Normandy thumb on the Channel coast */}
-      <path
-        d="M 30,18 C 30,14 33,13 34,15 C 35,17 34,19 33,20 C 31,21 30,20 30,18 Z"
-        fill={fill} stroke={stroke} strokeWidth="0.4"
-      />
-      {/* Corsica - separate island in the Mediterranean SE */}
-      <path
-        d="M 66,66 C 63,66 61,69 62,72 C 63,75 66,76 68,73 C 70,70 69,66 66,66 Z"
+        d="M 64,66 C 62,66 61,69 62,72 C 63,75 66,75 67,72 C 68,69 67,66 64,66 Z"
         fill={fill} stroke={stroke} strokeWidth="0.5"
       />
 
