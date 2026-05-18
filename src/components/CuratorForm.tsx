@@ -137,6 +137,7 @@ export function CuratorForm({
             max={40}
             value={guests}
             onChange={(e) => setGuests(Math.max(1, parseInt(e.target.value) || 1))}
+            onFocus={(e) => e.target.select()}
           />
         </label>
         <label className="text-xs">
@@ -146,8 +147,9 @@ export function CuratorForm({
           <Input
             type="number"
             min={1}
-            value={budgetMin}
+            value={budgetMin || ""}
             onChange={(e) => setBudgetMin(parseInt(e.target.value) || 0)}
+            onFocus={(e) => e.target.select()}
           />
         </label>
         <label className="text-xs">
@@ -157,8 +159,9 @@ export function CuratorForm({
           <Input
             type="number"
             min={1}
-            value={budgetMax}
+            value={budgetMax || ""}
             onChange={(e) => setBudgetMax(parseInt(e.target.value) || 0)}
+            onFocus={(e) => e.target.select()}
           />
         </label>
       </div>
