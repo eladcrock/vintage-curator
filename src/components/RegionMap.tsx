@@ -14,50 +14,90 @@ function ItalyShape({ fill, stroke }: ShapeProps) {
     <>
       {/*
         Mainland boot tuned to the (0..100, 0..100) viewBox used by region
-        coords. Wide Alpine arc up top, body tapering SE down the Adriatic,
-        Gargano spur on the east, heel of Puglia jutting east, concave Gulf
-        of Taranto, and a clear toe of Calabria at the bottom.
+        coords, traced from a real map of Italy. Alpine arc up top, Po
+        valley below, body running SE down the Apennine spine, Gargano
+        spur, heel of Puglia jutting east, concave Gulf of Taranto, and a
+        clear toe of Calabria above the Strait of Messina.
       */}
       <path
         d="
-          M 14,20
-          C 20,14 30,12 40,15
-          C 50,13 60,14 66,20
-          C 70,24 66,29 60,28
-          L 52,30
-          C 50,34 52,38 54,42
-          C 56,46 58,50 58,55
-          C 60,58 64,60 64,64
-          C 64,69 58,71 52,69
-          C 49,68 46,67 44,68
-          C 42,71 41,76 41,80
-          L 39,84
-          C 36,86 34,83 35,79
-          L 37,73
-          C 37,69 35,65 33,61
-          L 31,54
-          C 29,47 25,41 21,35
-          L 17,28
-          C 14,25 13,22 14,20
+          M 12,22
+          C 14,16 22,14 30,15
+          C 36,13 44,14 50,16
+          C 58,15 66,17 70,22
+          C 72,26 68,30 62,29
+          L 54,30
+          C 50,32 50,36 52,40
+          C 54,44 56,48 56,52
+          L 56,56
+          C 58,58 60,58 62,58
+          C 64,58 66,60 66,63
+          C 66,67 62,69 58,68
+          L 54,67
+          C 52,67 50,66 48,67
+          C 46,69 45,73 46,76
+          C 47,79 44,79 43,76
+          L 42,72
+          C 41,69 39,67 37,66
+          C 35,68 35,72 36,75
+          C 37,78 35,80 34,77
+          L 33,72
+          C 32,68 30,64 28,60
+          L 26,53
+          C 24,46 21,40 17,34
+          L 14,28
+          C 12,25 11,23 12,22
           Z
         "
         fill={fill} stroke={stroke} strokeWidth="0.6" strokeLinejoin="round"
       />
-      {/* Sardinia - distinct island west of the mainland, around pin (25,64) */}
+      {/* Sardinia - large oblong island west of the mainland, pin (25,64) */}
       <path
-        d="M 22,56 C 16,57 14,63 16,70 C 17,76 22,79 26,77 C 30,75 31,68 30,62 C 29,57 26,55 22,56 Z"
+        d="M 24,54 C 18,55 15,60 16,66 C 16,72 18,76 22,77 C 27,78 31,74 32,68 C 33,62 32,57 28,55 C 27,54 25,54 24,54 Z"
         fill={fill} stroke={stroke} strokeWidth="0.6"
       />
       {/* Corsica hint (French) - small, faded, clearly above Sardinia */}
       <path
-        d="M 22,48 C 19,48 17,51 18,54 C 19,55 24,55 25,53 C 26,50 25,48 22,48 Z"
+        d="M 23,45 C 20,46 18,49 19,52 C 20,53 24,53 25,51 C 26,48 26,45 23,45 Z"
         fill={fill} stroke={stroke} strokeWidth="0.4" opacity="0.45"
       />
-      {/* Sicily - triangular island SW of the toe, around pin (44,94) */}
+      {/*
+        Sicily - the Trinacria. Triangular island with three corners:
+        Trapani (NW, x~30), Messina (NE near the toe, x~54), and
+        Capo Passero (SE, x~50). Pin at (44,94).
+      */}
       <path
-        d="M 30,90 C 38,87 50,87 56,91 C 58,94 54,98 48,98 L 34,98 C 30,97 28,93 30,90 Z"
+        d="M 30,92 L 56,90 L 50,99 Z"
         fill={fill} stroke={stroke} strokeWidth="0.6" strokeLinejoin="round"
       />
+
+      {/* ===== Topography labels (italic, low contrast so pins stay primary) ===== */}
+      <g
+        fill="oklch(0.45 0.07 235)"
+        fontStyle="italic"
+        fontWeight={500}
+        className="pointer-events-none select-none"
+      >
+        {/* Mountains */}
+        <text x="32" y="13" fontSize="2.6" letterSpacing="0.3">ALPS</text>
+        <text
+          x="44" y="48" fontSize="2.2" letterSpacing="0.3"
+          transform="rotate(58 44 48)"
+          fill="oklch(0.45 0.05 60)"
+        >APENNINES</text>
+        {/* Plain */}
+        <text x="34" y="24" fontSize="1.8" opacity="0.75">Po Valley</text>
+        {/* Seas */}
+        <text x="11" y="40" fontSize="2.2">Tyrrhenian</text>
+        <text x="14" y="43.5" fontSize="2.2">Sea</text>
+        <text x="72" y="40" fontSize="2.2">Adriatic</text>
+        <text x="74" y="43.5" fontSize="2.2">Sea</text>
+        <text x="74" y="74" fontSize="2.2">Ionian</text>
+        <text x="76" y="77.5" fontSize="2.2">Sea</text>
+        <text x="11" y="88" fontSize="2" opacity="0.85">Mediterranean Sea</text>
+        {/* Strait */}
+        <text x="56" y="89" fontSize="1.6" opacity="0.85">Strait of Messina</text>
+      </g>
     </>
   );
 }
@@ -66,47 +106,78 @@ function FranceShape({ fill, stroke }: ShapeProps) {
   return (
     <>
       {/*
-        France - the classic Hexagone. Channel coast top, Brittany peninsula
-        jutting west, Atlantic / Bay of Biscay on the west, flat Pyrenees
-        across the south, Mediterranean SE, Alps and Rhine on the east.
+        France - the classic Hexagone, traced from a real map. Channel
+        coast top with the Cotentin bump, Brittany peninsula jutting clearly
+        west, Atlantic / Bay of Biscay on the west, flat Pyrenees across
+        the south, Mediterranean SE, Alps and Rhine on the east.
       */}
       <path
         d="
           M 28,18
-          C 36,15 48,14 58,17
-          C 64,18 67,21 68,24
-          L 70,30
-          C 72,36 72,42 70,46
-          L 70,52
-          C 68,57 64,60 58,62
-          L 50,65
-          C 42,68 34,70 30,70
-          C 24,70 22,66 24,60
-          L 22,52
-          C 20,46 18,42 16,38
-          L 14,34
-          C 13,32 14,30 16,30
-          L 22,30
-          C 24,26 26,22 28,20
+          C 36,15 46,14 54,15
+          C 60,16 64,19 66,22
+          L 69,27
+          C 71,32 71,37 69,42
+          L 70,48
+          C 70,52 68,56 64,58
+          L 58,62
+          C 52,65 46,67 40,67
+          L 32,68
+          C 28,68 26,65 28,61
+          C 28,58 26,55 25,52
+          L 24,46
+          C 22,42 20,39 18,36
+          L 22,34
+          C 24,30 26,26 28,22
           Z
         "
         fill={fill} stroke={stroke} strokeWidth="0.6" strokeLinejoin="round"
       />
-      {/* Brittany peninsula - jutting west off the NW coast */}
+      {/* Brittany peninsula - jutting clearly west off the NW coast */}
       <path
-        d="M 16,30 C 12,30 8,31 6,33 C 5,35 7,36 10,36 L 16,36 C 18,35 18,32 16,30 Z"
+        d="M 22,32 C 16,32 10,33 6,35 C 4,36 4,38 7,39 C 12,40 18,39 22,38 C 24,37 24,33 22,32 Z"
         fill={fill} stroke={stroke} strokeWidth="0.5" strokeLinejoin="round"
       />
-      {/* Cotentin peninsula - small bump on the Channel coast */}
+      {/* Cotentin peninsula - the small Normandy thumb on the Channel coast */}
       <path
-        d="M 30,18 C 30,15 32,14 33,15 C 34,16 34,18 33,19 C 32,20 30,20 30,18 Z"
+        d="M 30,18 C 30,14 33,13 34,15 C 35,17 34,19 33,20 C 31,21 30,20 30,18 Z"
         fill={fill} stroke={stroke} strokeWidth="0.4"
       />
       {/* Corsica - separate island in the Mediterranean SE */}
       <path
-        d="M 66,66 C 63,66 62,70 63,74 C 64,77 67,77 68,73 C 69,70 68,66 66,66 Z"
+        d="M 66,66 C 63,66 61,69 62,72 C 63,75 66,76 68,73 C 70,70 69,66 66,66 Z"
         fill={fill} stroke={stroke} strokeWidth="0.5"
       />
+
+      {/* ===== Topography labels ===== */}
+      <g
+        fill="oklch(0.45 0.07 235)"
+        fontStyle="italic"
+        fontWeight={500}
+        className="pointer-events-none select-none"
+      >
+        {/* Water bodies */}
+        <text x="36" y="16" fontSize="1.8">English Channel</text>
+        <text x="15" y="46" fontSize="1.8">Bay of</text>
+        <text x="15" y="49" fontSize="1.8">Biscay</text>
+        <text x="44" y="72" fontSize="1.8">Mediterranean Sea</text>
+        {/* Mountains */}
+        <text
+          x="62" y="44" fontSize="1.8" letterSpacing="0.2"
+          fill="oklch(0.45 0.05 60)"
+        >ALPS</text>
+        <text
+          x="32" y="72" fontSize="1.8" letterSpacing="0.2"
+          fill="oklch(0.45 0.05 60)"
+        >PYRENEES</text>
+        <text
+          x="42" y="48" fontSize="1.6" letterSpacing="0.2"
+          fill="oklch(0.50 0.04 60)" opacity="0.85"
+        >Massif Central</text>
+        {/* Rivers (hint labels - no drawn river paths) */}
+        <text x="58" y="34" fontSize="1.4" opacity="0.7">Rhine</text>
+        <text x="56" y="52" fontSize="1.4" opacity="0.7">Rhône</text>
+      </g>
     </>
   );
 }
