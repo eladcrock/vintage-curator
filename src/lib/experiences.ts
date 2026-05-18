@@ -60,6 +60,18 @@ export type ExperienceRequest = {
    * service = more wine sold.
    */
   pushSteaks?: boolean;
+  /**
+   * Push a crudo plate as an antipasti upsell when the table can take it.
+   * Adds a per-person crudo add-on at the configured price.
+   */
+  pushCrudo?: boolean;
+  crudoPrice?: number;
+  /**
+   * Push a caviar service add-on for the table.
+   * Adds a table-scope caviar add-on at the configured price.
+   */
+  pushCaviar?: boolean;
+  caviarPrice?: number;
 };
 
 export type AddOn = {

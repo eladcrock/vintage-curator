@@ -344,6 +344,30 @@ export function curateMenus(
     return { error: "Minimum budget must be less than or equal to maximum." };
   }
 
+  // Inject upsell add-ons from the quick toggles (Crudo / Caviar).
+  const injected: AddOn[] = [];
+  if (req.pushCrudo && (req.crudoPrice ?? 0) > 0) {
+    injected.push({
+      name: "Chef's crudo plate",
+      price: req.crudoPrice!,
+      course: "Antipasti",
+      kind: "upgrade",
+      scope: "person",
+    });
+  }
+  if (req.pushCaviar && (req.caviarPrice ?? 0) > 0) {
+    injected.push({
+      name: "Caviar service",
+      price: req.caviarPrice!,
+      course: "Any",
+      kind: "upgrade",
+      scope: "table",
+    });
+  }
+  if (injected.length) {
+    req = { ...req, addOns: [...(req.addOns ?? []), ...injected] };
+  }
+
   const overrides = req.priceOverrides ?? {};
   const pushSteaks = !!req.pushSteaks;
   const candidates = buildCandidates(req.restrictions, overrides, req.guests, pushSteaks);

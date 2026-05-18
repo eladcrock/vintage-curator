@@ -2,13 +2,13 @@
  * Input form for the Experience Curator.
  * Hand-edit COMMON_RESTRICTIONS in src/lib/experiences.ts to add new chips.
  */
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { COMMON_RESTRICTIONS, type AddOn, type ExperienceRequest } from "@/lib/experiences";
-import { AQ_PRICE_DEFAULTS } from "@/data/experiences";
+import { AQ_PRICE_DEFAULTS, CAVIAR_DEFAULT_PRICE, CRUDO_DEFAULT_PRICE } from "@/data/experiences";
 import { ALL_DISHES } from "@/lib/food";
 import type { FoodCategory } from "@/lib/food";
 
@@ -43,6 +43,11 @@ export function CuratorForm({
     useState<Record<string, number>>({ ...AQ_PRICE_DEFAULTS });
   const [pastaDuo, setPastaDuo] = useState(false);
   const [pushSteaks, setPushSteaks] = useState(false);
+  const [pushCrudo, setPushCrudo] = useState(false);
+  const [crudoPrice, setCrudoPrice] = useState<number>(CRUDO_DEFAULT_PRICE);
+  const [pushCaviar, setPushCaviar] = useState(false);
+  const [caviarPrice, setCaviarPrice] = useState<number>(CAVIAR_DEFAULT_PRICE);
+  const hasCuratedRef = useRef(false);
 
   const min = Math.max(1, budgetMin || 0);
   const max = Math.max(min, budgetMax || min);
@@ -74,6 +79,7 @@ export function CuratorForm({
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (loading) return;
+    hasCuratedRef.current = true;
     onSubmit({
       guests,
       budgetMin: min,
@@ -84,8 +90,33 @@ export function CuratorForm({
       priceOverrides,
       pastaDuo: pastaDuo && duoEligible,
       pushSteaks,
+      pushCrudo,
+      crudoPrice,
+      pushCaviar,
+      caviarPrice,
     });
   }
+
+  // After the first curate, re-curate live whenever a quick toggle changes.
+  useEffect(() => {
+    if (!hasCuratedRef.current) return;
+    onSubmit({
+      guests,
+      budgetMin: min,
+      budgetMax: max,
+      restrictions,
+      notes,
+      addOns,
+      priceOverrides,
+      pastaDuo: pastaDuo && duoEligible,
+      pushSteaks,
+      pushCrudo,
+      crudoPrice,
+      pushCaviar,
+      caviarPrice,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pastaDuo, pushSteaks, pushCrudo, pushCaviar, crudoPrice, caviarPrice]);
 
   const aqDishes = Object.keys(AQ_PRICE_DEFAULTS).map((id) => {
     const d = ALL_DISHES.find((x) => x.id === id);
@@ -223,6 +254,65 @@ export function CuratorForm({
             </span>
             <span className="block text-[11px] text-muted-foreground">
               Prefers Porterhouse / Tomahawk shared across the table. Longer service = more wine.
+            </span>
+          </span>
+        </label>
+      </div>
+
+      <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
+        <label className="flex items-start gap-2 rounded-md border border-border bg-background p-2 text-xs">
+          <input
+            type="checkbox"
+            checked={pushCrudo}
+            onChange={(e) => setPushCrudo(e.target.checked)}
+            className="mt-0.5"
+          />
+          <span className="flex-1">
+            <span className="flex items-center justify-between gap-2">
+              <span className="font-medium text-foreground">Sell the crudo</span>
+              <span className="flex items-center gap-1 text-muted-foreground">
+                $
+                <Input
+                  type="number"
+                  min={0}
+                  value={crudoPrice}
+                  onChange={(e) => setCrudoPrice(parseFloat(e.target.value) || 0)}
+                  onClick={(e) => e.stopPropagation()}
+                  className="h-6 w-16"
+                />
+                <span className="text-[10px]">/pp</span>
+              </span>
+            </span>
+            <span className="block text-[11px] text-muted-foreground">
+              Adds the chef's crudo plate as an antipasti upsell.
+            </span>
+          </span>
+        </label>
+        <label className="flex items-start gap-2 rounded-md border border-border bg-background p-2 text-xs">
+          <input
+            type="checkbox"
+            checked={pushCaviar}
+            onChange={(e) => setPushCaviar(e.target.checked)}
+            className="mt-0.5"
+          />
+          <span className="flex-1">
+            <span className="flex items-center justify-between gap-2">
+              <span className="font-medium text-foreground">Caviar service</span>
+              <span className="flex items-center gap-1 text-muted-foreground">
+                $
+                <Input
+                  type="number"
+                  min={0}
+                  value={caviarPrice}
+                  onChange={(e) => setCaviarPrice(parseFloat(e.target.value) || 0)}
+                  onClick={(e) => e.stopPropagation()}
+                  className="h-6 w-20"
+                />
+                <span className="text-[10px]">/table</span>
+              </span>
+            </span>
+            <span className="block text-[11px] text-muted-foreground">
+              Adds a shared caviar service for the table.
             </span>
           </span>
         </label>

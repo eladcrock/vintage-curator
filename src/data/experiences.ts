@@ -51,6 +51,13 @@ export const AQ_PRICE_DEFAULTS: Record<string, number> = {
 };
 
 /**
+ * Default prices for upsell toggles (Crudo plate, Caviar service).
+ * Editable from the curator form.
+ */
+export const CRUDO_DEFAULT_PRICE = 32;     // per person
+export const CAVIAR_DEFAULT_PRICE = 145;   // per table service
+
+/**
  * Keyword rules for ingredient/notes-based restrictions. Each rule maps a
  * restriction label to substrings checked against the dish's
  * description / dietaryRestrictions / name (case-insensitive).
