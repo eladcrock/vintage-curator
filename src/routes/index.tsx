@@ -394,7 +394,7 @@ function Index() {
           <Slider
             min={GLOBAL_MIN_PRICE}
             max={GLOBAL_MAX_PRICE}
-            step={25}
+            step={5}
             value={[state.priceMin, state.priceMax]}
             onValueChange={([min, max]) =>
               update({ priceMin: min, priceMax: max })
