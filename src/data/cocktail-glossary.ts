@@ -22,11 +22,6 @@ export const COCKTAIL_GLOSSARY: GlossaryEntry[] = [
       "Heaven Hill's small-batch Kentucky bourbon, named for the Baptist preacher credited (apocryphally) with charring barrels in 1789. Bold caramel and toasted oak.",
   },
   {
-    term: "St. George Basil Eau de Vie",
-    blurb:
-      "St. George Spirits (Alameda, CA) — pioneers of American craft distilling since 1982. Clear, unaged brandy distilled from fresh basil — pure herbal essence, no sugar.",
-  },
-  {
     term: "St. George Valley Gin",
     blurb:
       "St. George Spirits (Alameda, CA) — flagship Bay-Area-grown gin, juniper-forward with sage and bay laurel.",
