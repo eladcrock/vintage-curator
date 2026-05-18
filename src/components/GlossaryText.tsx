@@ -81,13 +81,13 @@ export function GlossaryText({
         ) : (
           <Popover key={i}>
             <PopoverTrigger asChild>
-              <span
-                tabIndex={0}
+              <button
+                type="button"
                 onClick={(e) => e.stopPropagation()}
-                className="cursor-help text-foreground decoration-primary/40 decoration-dotted underline-offset-4 transition-colors hover:underline focus:underline focus:outline-none"
+                className="inline text-left text-foreground decoration-primary/40 decoration-dotted underline underline-offset-4 transition-colors hover:text-primary focus:outline-none focus-visible:ring-1 focus-visible:ring-primary"
               >
                 {s.text}
-              </span>
+              </button>
             </PopoverTrigger>
             <PopoverContent
               side="top"
