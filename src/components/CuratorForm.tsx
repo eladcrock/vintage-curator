@@ -50,9 +50,10 @@ export function CuratorForm({
   const hasCuratedRef = useRef(false);
 
   const min = Math.max(1, budgetMin || 0);
-  const max = Math.max(min, budgetMax || min);
+  // budgetMax = 0/empty means "no cap".
+  const max = budgetMax > 0 ? Math.max(min, budgetMax) : Number.POSITIVE_INFINITY;
   const tableMin = min * guests;
-  const tableMax = max * guests;
+  const tableMax = Number.isFinite(max) ? max * guests : null;
   const duoEligible = guests >= 2 && guests % 2 === 0;
 
   function toggle(r: string) {
@@ -167,7 +168,10 @@ export function CuratorForm({
       </div>
 
       <p className="mt-2 text-[11px] text-muted-foreground">
-        Table total: <span className="font-medium text-foreground">${tableMin}–${tableMax}</span>
+        Table total:{" "}
+        <span className="font-medium text-foreground">
+          ${tableMin}{tableMax !== null ? `–$${tableMax}` : "+ (no cap)"}
+        </span>
         {" "}({guests} {guests === 1 ? "guest" : "guests"}, food only)
       </p>
 
