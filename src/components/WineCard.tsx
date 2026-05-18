@@ -2,6 +2,7 @@ import type { Wine } from "@/lib/wines";
 import { displayPrice, wineSubtitle } from "@/lib/wines";
 import { GlossaryText } from "@/components/GlossaryText";
 import { WINE_LOOKUP } from "@/data/wine-glossary";
+import { WINE_PRODUCER_LOOKUP } from "@/data/wine-producers";
 
 const TYPE_COLORS: Record<Wine["type"], string> = {
   Red: "bg-[oklch(0.32_0.08_25)] text-[oklch(0.95_0.02_30)]",
@@ -38,7 +39,7 @@ export function WineCard({ wine }: { wine: Wine }) {
         </div>
       </div>
       <h3 className="mt-1 text-base font-semibold leading-snug text-foreground">
-        {wine.producer}
+        <GlossaryText text={wine.producer} lookup={WINE_PRODUCER_LOOKUP} />
       </h3>
       <p className="mt-0.5 text-sm leading-snug text-muted-foreground">
         <GlossaryText text={wineSubtitle(wine)} lookup={WINE_LOOKUP} />
