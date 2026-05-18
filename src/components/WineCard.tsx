@@ -71,7 +71,7 @@ function VintagePopover({ vintage, note }: { vintage: number | string; note: str
 
   useEffect(() => {
     if (!open) return;
-    const timeout = window.setTimeout(() => setOpen(false), 3000);
+    const timeout = window.setTimeout(() => setOpen(false), 6000);
     return () => window.clearTimeout(timeout);
   }, [open]);
 
