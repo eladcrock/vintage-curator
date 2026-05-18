@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
 import type { Wine } from "@/lib/wines";
 import { displayPrice, wineSubtitle } from "@/lib/wines";
 import { GlossaryText } from "@/components/GlossaryText";
@@ -7,7 +7,7 @@ import { WINE_VINTAGE_LOOKUP } from "@/data/wine-vintages";
 import {
   Popover,
   PopoverContent,
-  PopoverTrigger,
+  PopoverAnchor,
 } from "@/components/ui/popover";
 
 const TYPE_COLORS: Record<Wine["type"], string> = {
@@ -30,26 +30,7 @@ function WineCardImpl({ wine }: { wine: Wine }) {
             {wine.type}
           </span>
           {vintageNote ? (
-            <Popover>
-              <PopoverTrigger asChild>
-                <button
-                  type="button"
-                  onClick={(e) => e.stopPropagation()}
-                  className="tabular-nums text-primary decoration-primary/40 decoration-dotted underline underline-offset-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-primary"
-                >
-                  {wine.vintage}
-                </button>
-              </PopoverTrigger>
-              <PopoverContent
-                side="top"
-                align="start"
-                collisionPadding={12}
-                className="w-72 max-w-[min(18rem,calc(100vw-2rem))] border border-border bg-popover p-3 text-sm leading-snug text-popover-foreground shadow-md"
-                onClick={(e) => e.stopPropagation()}
-              >
-                {vintageNote}
-              </PopoverContent>
-            </Popover>
+            <VintagePopover vintage={wine.vintage} note={vintageNote} />
           ) : (
             <span className="tabular-nums text-primary">{wine.vintage}</span>
           )}
@@ -84,3 +65,37 @@ function WineCardImpl({ wine }: { wine: Wine }) {
 }
 
 export const WineCard = memo(WineCardImpl);
+
+function VintagePopover({ vintage, note }: { vintage: number | string; note: string }) {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+    const timeout = window.setTimeout(() => setOpen(false), 3000);
+    return () => window.clearTimeout(timeout);
+  }, [open]);
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverAnchor asChild>
+        <button
+          type="button"
+          onClick={() => setOpen((current) => !current)}
+          onFocus={() => setOpen(true)}
+          onPointerEnter={() => setOpen(true)}
+          className="tabular-nums text-primary decoration-primary/40 decoration-dotted underline underline-offset-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-primary"
+        >
+          {vintage}
+        </button>
+      </PopoverAnchor>
+      <PopoverContent
+        side="top"
+        align="start"
+        collisionPadding={12}
+        className="w-72 max-w-[min(18rem,calc(100vw-2rem))] border border-border bg-popover p-3 text-sm leading-snug text-popover-foreground shadow-md"
+      >
+        {note}
+      </PopoverContent>
+    </Popover>
+  );
+}
