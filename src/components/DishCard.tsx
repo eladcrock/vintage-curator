@@ -3,7 +3,7 @@
  * Collapsed: name, price, menu description, dietary tag chips.
  * Expanded: preparation, ingredient sub-recipes, info, modifications, mark.
  *
- * State is local — each card manages its own open/closed flag.
+ * State is local - each card manages its own open/closed flag.
  */
 import { useState } from "react";
 import { ChevronDown, Flame } from "lucide-react";

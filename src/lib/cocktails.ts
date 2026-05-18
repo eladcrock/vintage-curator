@@ -92,7 +92,7 @@ export function filterCocktails(query: string, list: Cocktail[] = ALL_COCKTAILS)
 
 /** Format a price as "$19" or em-dash if null. */
 export function formatCocktailPrice(c: Cocktail): string {
-  return c.price == null ? "—" : `$${c.price}`;
+  return c.price == null ? "-" : `$${c.price}`;
 }
 
 /** All unique dietary tags across the menu (for future chip filters). */

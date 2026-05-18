@@ -274,7 +274,7 @@ function Index() {
           })}
         </div>
 
-        {/* Subcategory chips — only shown once user taps a wine type.
+        {/* Subcategory chips - only shown once user taps a wine type.
             Drops down inline (no extra click on a "Styles" header). */}
         {state.types.length > 0 && visibleSubs.length > 0 && (
           <div className="mt-3 space-y-2 rounded-lg border border-border bg-card/40 px-3 py-2">

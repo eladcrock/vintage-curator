@@ -55,7 +55,7 @@ export function MenuOptionCard({
               )}
               {c.reasoning && (
                 <p className="mt-1 text-[11px] italic text-foreground/70">
-                  — {c.reasoning}
+                  - {c.reasoning}
                 </p>
               )}
               {dish && dish.dietaryRestrictions.length > 0 && (

@@ -1,5 +1,5 @@
 /**
- * Curator tunables — deterministic algorithm. No AI.
+ * Curator tunables - deterministic algorithm. No AI.
  *
  * Edit these to change how the Experience Curator builds menus.
  * Logic lives in src/lib/curator.ts.
@@ -22,7 +22,7 @@ export const COURSE_FLOW: FoodCategory[] = [
 export const DROP_ORDER: FoodCategory[] = ["Contorni", "Secondi", "Antipasti"];
 
 /**
- * Dish ids tagged "premium" — reserved for the upper half of the budget
+ * Dish ids tagged "premium" - reserved for the upper half of the budget
  * range, and preferred by the Indulgente menu.
  */
 export const PREMIUM_DISH_IDS: string[] = [
@@ -31,7 +31,7 @@ export const PREMIUM_DISH_IDS: string[] = [
 ];
 
 /**
- * Centerpiece dishes that can be shared across the whole table — the
+ * Centerpiece dishes that can be shared across the whole table - the
  * "push steaks" toggle prefers these for the Secondo. Per-person cost
  * becomes dish total / guests.
  */

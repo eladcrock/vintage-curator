@@ -1,5 +1,5 @@
 /**
- * Bottega Napa Valley — Food menu data.
+ * Bottega Napa Valley - Food menu data.
  *
  * Edit this file to add/change dishes. The Food page picks up changes
  * automatically. Categories must match the FoodCategory union in
@@ -65,7 +65,7 @@ export const DISHES: Dish[] = [
       { name: "Meyer Lemon Dressing", note: "Whole meyer lemon juiced, mixed with shallot and olive oil." },
       { name: "Sieved Egg", note: "Whole hardboiled egg is sieved to grate it." },
     ],
-    info: "Marcona Almonds are grown in Spain — short, round, sweet, and delicate in texture.",
+    info: "Marcona Almonds are grown in Spain - short, round, sweet, and delicate in texture.",
     fireTime: "5 Minutes",
     dietaryRestrictions: ["Allium", "Dairy", "Egg", "Nuts"],
     modifications: "Dairy Free (no cheese), No Dressing, Egg Free, Nut Free, Vegan.",
@@ -165,7 +165,7 @@ export const DISHES: Dish[] = [
       { name: "Basil Pesto", note: "Basil, Pine Nuts, EVOO." },
       {
         name: "Nonna Sauce",
-        note: "Mirepoix (Onion, Celery, Carrot), Garlic, Rosemary, Tomato, Roasted and Steeped Hen. Hen is pulled after cooking — an homage to old Italian frugality.",
+        note: "Mirepoix (Onion, Celery, Carrot), Garlic, Rosemary, Tomato, Roasted and Steeped Hen. Hen is pulled after cooking - an homage to old Italian frugality.",
       },
     ],
     fireTime: "5 Minutes",
@@ -237,7 +237,7 @@ export const DISHES: Dish[] = [
         note: "Round crisp created by molding and baking parmesan cheese.",
       },
     ],
-    info: "Anson Mills heirloom polenta from North Carolina — special-ordered, unmodified, unpreserved. Chef Chiarello verified the preparation personally.",
+    info: "Anson Mills heirloom polenta from North Carolina - special-ordered, unmodified, unpreserved. Chef Chiarello verified the preparation personally.",
     fireTime: "3 Minutes",
     dietaryRestrictions: ["Dairy", "Alcohol", "Allium", "Meat"],
     modifications: "No Mushrooms, No Sauce.",
@@ -250,7 +250,7 @@ export const DISHES: Dish[] = [
     name: "Risotto del Giorno",
     category: "Pasta",
     description: "Chef’s seasonal risotto. A.Q.",
-    preparation: "Composition changes daily — confirm with the kitchen before describing to the guest.",
+    preparation: "Composition changes daily - confirm with the kitchen before describing to the guest.",
     ingredients: [],
     fireTime: "5–10 Minutes",
     dietaryRestrictions: [],
@@ -289,7 +289,7 @@ export const DISHES: Dish[] = [
         note: "Old Hen Sauce. Mirepoix (Onion, Celery, Carrot), Garlic, Rosemary, Tomato, Roasted and Steeped Hen.",
       },
     ],
-    info: "Made with ricotta, flour, and egg — unlike traditional potato gnocchi.",
+    info: "Made with ricotta, flour, and egg - unlike traditional potato gnocchi.",
     fireTime: "5 Minutes",
     dietaryRestrictions: ["Allium", "Dairy", "Egg", "Gluten", "Nightshade"],
     modifications: "Allium Free (Tomato Passata), Vegetarian (Sub Pomodoro Sauce).",
@@ -333,7 +333,7 @@ export const DISHES: Dish[] = [
         note: "Rabbit + chicken feet roasted, mirepoix sautéed in, water, juniper, red wine, balsamic reduction. Reduced overnight to a thick texture.",
       },
     ],
-    info: "Omitting mushrooms/pork can leave the plate looking sparse — ask the kitchen to bump another component.",
+    info: "Omitting mushrooms/pork can leave the plate looking sparse - ask the kitchen to bump another component.",
     fireTime: "12 Minutes",
     dietaryRestrictions: ["Allium", "Dairy", "Gluten", "Meat", "Pork"],
     modifications: "Gluten Free, Pork Free.",
@@ -380,7 +380,7 @@ export const DISHES: Dish[] = [
       { name: "Aromatic Oil", note: "Rosemary, Black Garlic, Calabrian Chile, Basil Stems." },
       { name: "Pomodoro", note: "Whole cluster tomatoes, garlic, onion, simmered for 3 hours." },
     ],
-    info: "Named for Sophia Loren — created by Chef Chiarello for her 80th birthday. Pasta is imported from her hometown of Gragnano, Italy.",
+    info: "Named for Sophia Loren - created by Chef Chiarello for her 80th birthday. Pasta is imported from her hometown of Gragnano, Italy.",
     fireTime: "12 Minutes",
     dietaryRestrictions: ["Allium", "Gluten", "Nightshade", "Peanut"],
     modifications: "Allium Free, Gluten Free, Peanut Free.",
@@ -518,7 +518,7 @@ export const DISHES: Dish[] = [
         note: "Calabrian Chili, White Wine, Rosemary, Whole Eggs, S&P.",
       },
     ],
-    info: "‘Mattone’ = cooking under tile / brick, a Tuscan technique. ‘Alla Diavola’ refers to the heat — devil-style chicken.",
+    info: "‘Mattone’ = cooking under tile / brick, a Tuscan technique. ‘Alla Diavola’ refers to the heat - devil-style chicken.",
     fireTime: "8 Minutes",
     dietaryRestrictions: ["Allium", "Nightshade", "Egg"],
     modifications: "No Peppers, No Tomatoes, No Onion.",
@@ -565,7 +565,7 @@ export const DISHES: Dish[] = [
     ingredients: [
       { name: "Agrodolce", note: "Coffee beans, honey, ketchup, soy sauce, balsamic." },
     ],
-    info: "Creekstone Farms open-choice Black Angus short ribs — a Chef Chiarello signature since Tra Vigne days.",
+    info: "Creekstone Farms open-choice Black Angus short ribs - a Chef Chiarello signature since Tra Vigne days.",
     fireTime: "< 3 Minutes (pickup)",
     dietaryRestrictions: ["Allium", "Dairy", "Gluten", "Soybean", "Nightshade"],
     modifications: "Sub/No Polenta (Dairy). No Agrodolce (Gluten, Soybean).",
@@ -846,7 +846,7 @@ export const DISHES: Dish[] = [
       },
       { name: "Truffle Conserva", note: "Truffles preserved in OO & truffle oil, frozen." },
     ],
-    info: "Singular form of Ravioli. Cut tableside like a pie so the yolk runs into the butter — describe the show when dropping the plate.",
+    info: "Singular form of Ravioli. Cut tableside like a pie so the yolk runs into the butter - describe the show when dropping the plate.",
     fireTime: "5 Minutes",
     dietaryRestrictions: ["Dairy", "Egg", "Gluten", "Peanut"],
     modifications: "Toppings.",

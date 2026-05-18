@@ -1,6 +1,6 @@
 /**
  * Stylized country map with clickable region pins.
- * Not a topographically accurate map — a schematic to help users browse
+ * Not a topographically accurate map - a schematic to help users browse
  * regions geographically. Coordinates live on each Region in 0..100 / 0..140.
  */
 import type { Region, Country } from "@/data/education";
@@ -13,7 +13,7 @@ function ItalyShape({ fill, stroke }: ShapeProps) {
   return (
     <>
       {/*
-        Mainland — a recognizable "boot" tuned to the (0..100, 0..100) viewBox
+        Mainland - a recognizable "boot" tuned to the (0..100, 0..100) viewBox
         used by region coords. Alpine arc up top, Apennine spine running SE,
         Gargano spur, heel of Puglia, Gulf of Taranto, toe of Calabria.
       */}
@@ -53,17 +53,17 @@ function ItalyShape({ fill, stroke }: ShapeProps) {
         "
         fill={fill} stroke={stroke} strokeWidth="0.6" strokeLinejoin="round"
       />
-      {/* Sardinia — distinct oblong island, well west of the mainland */}
+      {/* Sardinia - distinct oblong island, well west of the mainland */}
       <path
         d="M 22,58 C 17,58 15,62 16,68 C 16,73 18,76 22,76 C 26,76 28,72 28,67 C 28,62 26,58 22,58 Z"
         fill={fill} stroke={stroke} strokeWidth="0.6"
       />
-      {/* Corsica hint (French) — small, faded, clearly above Sardinia */}
+      {/* Corsica hint (French) - small, faded, clearly above Sardinia */}
       <path
         d="M 22,49 C 19,49 18,52 19,55 C 20,56 24,56 25,55 C 26,52 25,49 22,49 Z"
         fill={fill} stroke={stroke} strokeWidth="0.4" opacity="0.45"
       />
-      {/* Sicily — triangle SW of the toe, clear Strait of Messina gap */}
+      {/* Sicily - triangle SW of the toe, clear Strait of Messina gap */}
       <path
         d="M 36,92 L 56,90 L 52,98 L 38,98 Z"
         fill={fill} stroke={stroke} strokeWidth="0.6" strokeLinejoin="round"
@@ -76,7 +76,7 @@ function FranceShape({ fill, stroke }: ShapeProps) {
   return (
     <>
       {/*
-        France — the classic Hexagone: Channel coast top-left, Atlantic
+        France - the classic Hexagone: Channel coast top-left, Atlantic
         bulge west, Pyrenees flat across the south, Mediterranean SE,
         Alps and Rhine east. Brittany peninsula juts left.
       */}
@@ -126,7 +126,7 @@ export function RegionMap({
 }) {
   const items = regions.filter((r) => r.country === country);
 
-  // Default viewBox per country — France is small/clustered, so we crop in.
+  // Default viewBox per country - France is small/clustered, so we crop in.
   const DEFAULTS: Record<Country, { x: number; y: number; w: number; h: number }> = {
     Italy:  { x: 10, y: 10, w: 80, h: 90 },
     France: { x: 14, y: 14, w: 60, h: 60 },
@@ -164,7 +164,7 @@ export function RegionMap({
         aria-label={`${country} wine regions map`}
         onWheel={(e) => {
           // Elegant pattern (Google Maps / Figma): only zoom when the user
-          // explicitly opts in with a modifier — otherwise let the page scroll.
+          // explicitly opts in with a modifier - otherwise let the page scroll.
           if (!(e.ctrlKey || e.metaKey)) return;
           e.preventDefault();
           zoom(e.deltaY > 0 ? 1.15 : 0.87);
@@ -207,7 +207,7 @@ export function RegionMap({
           </filter>
         </defs>
 
-      {/* Sea / canvas — always bright so labels read in light & dark mode */}
+      {/* Sea / canvas - always bright so labels read in light & dark mode */}
         <rect x="-10" y="-10" width="120" height="120" fill="url(#seaGrad)" />
       {country === "Italy"
         ? <ItalyShape fill="oklch(0.985 0.01 95)" stroke="oklch(0.30 0.05 250)" />
