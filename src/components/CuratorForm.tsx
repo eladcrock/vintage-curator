@@ -181,9 +181,20 @@ export function CuratorForm({
       </p>
 
       <div className="mt-4">
-        <p className="mb-2 text-xs font-medium text-muted-foreground">
-          Dietary restrictions
-        </p>
+        <div className="mb-2 flex items-center justify-between">
+          <p className="text-xs font-medium text-muted-foreground">
+            Dietary restrictions
+          </p>
+          {restrictions.length > 0 && (
+            <button
+              type="button"
+              onClick={() => setRestrictions([])}
+              className="text-[11px] text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
+            >
+              Clear ({restrictions.length})
+            </button>
+          )}
+        </div>
         <div className="flex flex-wrap gap-1.5">
           {COMMON_RESTRICTIONS.map((r) => {
             const on = restrictions.includes(r);
