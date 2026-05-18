@@ -80,9 +80,9 @@ function VintagePopover({ vintage, note }: { vintage: number | string; note: str
       <PopoverAnchor asChild>
         <button
           type="button"
-          onClick={() => setOpen((current) => !current)}
+          onClick={() => setOpen(true)}
           onFocus={() => setOpen(true)}
-          onPointerEnter={() => setOpen(true)}
+          onMouseEnter={() => setOpen(true)}
           className="tabular-nums text-primary decoration-primary/40 decoration-dotted underline underline-offset-4 focus:outline-none focus-visible:ring-1 focus-visible:ring-primary"
         >
           {vintage}
