@@ -54,7 +54,15 @@ function ExperiencesPage() {
           </p>
         </div>
 
-        <CuratorForm onSubmit={curate} loading={false} />
+        <CuratorForm
+          onSubmit={curate}
+          onReset={() => {
+            setOptions(null);
+            setError(null);
+            setLastReq(null);
+          }}
+          loading={false}
+        />
 
         {error && (
           <div className="mt-4 rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">
