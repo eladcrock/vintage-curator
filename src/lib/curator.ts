@@ -264,13 +264,15 @@ function picksToOption(
     }
     // Pasta duo — average the two pasta prices, name both dishes.
     if (p.duo) {
-      const avg = Math.round(((p.dish._price + p.duo._price) / 2) * 100) / 100;
+      const pairs = guests / 2;
+      const tableTotal = (p.dish._price + p.duo._price) * pairs;
+      const pp = Math.round((tableTotal / guests) * 100) / 100;
       return {
         category: p.cat,
         dishId: p.dish.id,
         dishName: p.dish.name,
-        price: avg,
-        reasoning: `Pasta duo — served half/half across the table (${guests} guests). Cost averaged.`,
+        price: pp,
+        reasoning: `Pasta duo — ${pairs} of each pasta for ${guests} guests ($${p.dish._price} + $${p.duo._price} per pair).`,
         duo: { dishId: p.duo.id, dishName: p.duo.name },
       };
     }
