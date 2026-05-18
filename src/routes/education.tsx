@@ -342,11 +342,7 @@ function RegionNode({
 
       {open && (
         <div className="border-t border-border/60 px-3 py-3 text-xs">
-          <Accordion
-            type="multiple"
-            defaultValue={["overview", "notes", "history", "grapes", "list"]}
-            className="w-full"
-          >
+          <Accordion type="multiple" className="w-full">
             <AccordionItem value="overview" className="border-border/60">
               <AccordionTrigger className="py-2 text-[10px] uppercase tracking-wider">Overview</AccordionTrigger>
               <AccordionContent className="space-y-2 pb-3">
