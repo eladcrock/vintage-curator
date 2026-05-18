@@ -216,7 +216,14 @@ function EducationPage() {
             </div>
 
             <div className="rounded-lg border border-border bg-card p-3">
-              <h3 className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Wine classes</h3>
+              <h3 className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                Wine classes
+                {openClassId !== null && (
+                  <span className="ml-1 normal-case tracking-normal text-muted-foreground/70">
+                    <span className="opacity-60">›</span> #{openClassId}
+                  </span>
+                )}
+              </h3>
               <ul className="space-y-1">
                 {CLASSES.map((c) => (
                   <li key={c.id}>
