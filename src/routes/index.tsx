@@ -415,7 +415,7 @@ function Index() {
               onClick={reset}
               className="ml-2 h-7 px-2 text-xs"
             >
-              {activeFilterCount > 0 ? `Show all (${ALL_WINES.length})` : "Show all"}
+              {activeFilterCount > 0 ? `Reset filters (${ALL_WINES.length})` : "Reset filters"}
             </Button>
             <button
               type="button"
