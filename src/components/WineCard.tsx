@@ -2,6 +2,13 @@ import type { Wine } from "@/lib/wines";
 import { displayPrice, wineSubtitle } from "@/lib/wines";
 import { GlossaryText } from "@/components/GlossaryText";
 import { WINE_PRODUCER_LOOKUP } from "@/data/wine-producers";
+import { WINE_VINTAGE_LOOKUP } from "@/data/wine-vintages";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const TYPE_COLORS: Record<Wine["type"], string> = {
   Red: "bg-[oklch(0.32_0.08_25)] text-[oklch(0.95_0.02_30)]",
@@ -14,6 +21,7 @@ const TYPE_COLORS: Record<Wine["type"], string> = {
 };
 
 export function WineCard({ wine }: { wine: Wine }) {
+  const vintageNote = WINE_VINTAGE_LOOKUP.get(`${wine.producer}|${wine.vintage}`);
   return (
     <article className="rounded-lg border border-border bg-card px-4 py-3 transition-colors hover:border-primary/40">
       <div className="flex items-baseline justify-between gap-3">
@@ -21,7 +29,29 @@ export function WineCard({ wine }: { wine: Wine }) {
           <span className={`rounded px-1.5 py-0.5 text-[10px] font-semibold ${TYPE_COLORS[wine.type] ?? TYPE_COLORS.Other}`}>
             {wine.type}
           </span>
-          <span className="tabular-nums text-primary">{wine.vintage}</span>
+          {vintageNote ? (
+            <TooltipProvider delayDuration={120}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <span
+                    tabIndex={0}
+                    onClick={(e) => e.stopPropagation()}
+                    className="cursor-help tabular-nums text-primary decoration-primary/40 decoration-dotted underline-offset-4 hover:underline focus:underline focus:outline-none"
+                  >
+                    {wine.vintage}
+                  </span>
+                </TooltipTrigger>
+                <TooltipContent
+                  side="top"
+                  className="max-w-xs border border-border bg-popover text-popover-foreground shadow-md"
+                >
+                  {vintageNote}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          ) : (
+            <span className="tabular-nums text-primary">{wine.vintage}</span>
+          )}
           {wine.largeFormat && wine.size && wine.size !== "750mL" && (
             <span className="rounded border border-border px-1.5 py-0.5 text-[10px] tabular-nums">
               {wine.size}
