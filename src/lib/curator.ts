@@ -164,6 +164,20 @@ function buildMenu(
     const available = (byCat.get(cat) ?? []).filter((d) => !exclude.has(d.id));
     if (available.length === 0) return null;
 
+    // "Push steaks" is a hard intent: force a shareable centerpiece for Secondi,
+    // even if it pushes the table over budget.
+    if (pushSteaks && cat === "Secondi") {
+      const shareables = available.filter((d) => d._shareable);
+      if (shareables.length > 0) {
+        // Prefer Classica = cheapest shareable, Indulgente = priciest.
+        const sorted = [...shareables].sort((a, b) => a._price - b._price);
+        const chosen = style === "indulgente" ? sorted[sorted.length - 1] : sorted[0];
+        picks.push({ cat, dish: chosen, reasoning: reasoningFor(cat, chosen, style) });
+        spent += chosen._price;
+        continue;
+      }
+    }
+
     // For remaining courses, compute min spend so we don't blow the ceiling.
     let minFuture = 0;
     for (let j = i + 1; j < flow.length; j++) {
