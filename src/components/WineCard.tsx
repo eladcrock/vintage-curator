@@ -4,11 +4,10 @@ import { GlossaryText } from "@/components/GlossaryText";
 import { WINE_PRODUCER_LOOKUP } from "@/data/wine-producers";
 import { WINE_VINTAGE_LOOKUP } from "@/data/wine-vintages";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 const TYPE_COLORS: Record<Wine["type"], string> = {
   Red: "bg-[oklch(0.32_0.08_25)] text-[oklch(0.95_0.02_30)]",
@@ -30,25 +29,26 @@ export function WineCard({ wine }: { wine: Wine }) {
             {wine.type}
           </span>
           {vintageNote ? (
-            <TooltipProvider delayDuration={120}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <span
-                    tabIndex={0}
-                    onClick={(e) => e.stopPropagation()}
-                    className="cursor-help tabular-nums text-primary decoration-primary/40 decoration-dotted underline-offset-4 hover:underline focus:underline focus:outline-none"
-                  >
-                    {wine.vintage}
-                  </span>
-                </TooltipTrigger>
-                <TooltipContent
-                  side="top"
-                  className="max-w-xs border border-border bg-popover text-popover-foreground shadow-md"
+            <Popover>
+              <PopoverTrigger asChild>
+                <span
+                  tabIndex={0}
+                  onClick={(e) => e.stopPropagation()}
+                  className="cursor-help tabular-nums text-primary decoration-primary/40 decoration-dotted underline-offset-4 hover:underline focus:underline focus:outline-none"
                 >
-                  {vintageNote}
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+                  {wine.vintage}
+                </span>
+              </PopoverTrigger>
+              <PopoverContent
+                side="top"
+                align="start"
+                collisionPadding={12}
+                className="w-72 max-w-[min(18rem,calc(100vw-2rem))] border border-border bg-popover p-3 text-sm leading-snug text-popover-foreground shadow-md"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {vintageNote}
+              </PopoverContent>
+            </Popover>
           ) : (
             <span className="tabular-nums text-primary">{wine.vintage}</span>
           )}
