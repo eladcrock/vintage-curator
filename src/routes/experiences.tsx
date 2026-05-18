@@ -1,5 +1,5 @@
 /**
- * Experiences tab — deterministic chef's tasting menus (no AI).
+ * Experiences tab - deterministic chef's tasting menus (no AI).
  *
  * Logic:     src/lib/curator.ts
  * Tunables:  src/data/experiences.ts

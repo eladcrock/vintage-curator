@@ -1,7 +1,7 @@
 /**
  * Bar Program tab.
  *
- * Single search bar — queries across name, menu description, ingredients,
+ * Single search bar - queries across name, menu description, ingredients,
  * dietary tags, garnish, character, story, etc. (see searchHaystack in
  * src/lib/cocktails.ts). Multi-word queries are AND-matched.
  *
@@ -106,7 +106,7 @@ function BarProgramPage() {
         {tagSuggestions.length > 0 && (
           <div className="mt-3">
             <div className="mb-1 flex items-center justify-between gap-2 text-[10px] uppercase tracking-wider text-muted-foreground">
-              <span>Allergens — tap to require, tap again to exclude</span>
+              <span>Allergens - tap to require, tap again to exclude</span>
               {Object.keys(tagStates).length > 0 && (
                 <button
                   type="button"

@@ -37,7 +37,7 @@ export function winesForRegion(region: Region): Wine[] {
   });
 }
 
-/** Emoji icon based on wine type — small visual cue beside each listing. */
+/** Emoji icon based on wine type - small visual cue beside each listing. */
 export function wineEmoji(w: Wine): string {
   switch (w.type) {
     case "Sparkling": return "🥂";

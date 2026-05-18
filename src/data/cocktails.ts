@@ -1,5 +1,5 @@
 /**
- * Bottega cocktail spec data — source of truth for the Bar Program tab.
+ * Bottega cocktail spec data - source of truth for the Bar Program tab.
  *
  * Hand-edit this file freely. Schema is defined in `src/lib/cocktails.ts`
  * (`Cocktail` type). Each entry must have a unique `id` (kebab-case slug).
@@ -50,7 +50,7 @@ export const COCKTAILS: Cocktail[] = [
       },
     ],
     story:
-      "Casa Obsidiana encapsulates a lot of the culture we have in Northern California and Napa — mixed cultures meeting wine country roots. Amaro Nonino was Chef MC's favorite amaro; built in his honor.",
+      "Casa Obsidiana encapsulates a lot of the culture we have in Northern California and Napa - mixed cultures meeting wine country roots. Amaro Nonino was Chef MC's favorite amaro; built in his honor.",
     garnish: "Gold Glitter",
     dietaryRestrictions: [],
     modifications: "Can be served on a large rock.",
@@ -91,7 +91,7 @@ export const COCKTAILS: Cocktail[] = [
     ingredients: [],
     garnish: "Dehydrated Lime Wheel & Mint Sprig",
     dietaryRestrictions: ["Citrus", "Ginger"],
-    modifications: "Flexible cocktail — Acid/Sugar Balance. Base Spirit.",
+    modifications: "Flexible cocktail - Acid/Sugar Balance. Base Spirit.",
     price: 19,
     tags: ["Mezcal", "Highball", "Refreshing"],
   },
@@ -188,7 +188,7 @@ export const COCKTAILS: Cocktail[] = [
       },
     ],
     story:
-      "'Maravilla' means 'Wonder' or 'Marvel' in both Spanish and Italian. Inspired by the melting pot of the Bay Area — spirits and ingredients from many cultures, built to inspire awe whether the guest is from California or Italia.",
+      "'Maravilla' means 'Wonder' or 'Marvel' in both Spanish and Italian. Inspired by the melting pot of the Bay Area - spirits and ingredients from many cultures, built to inspire awe whether the guest is from California or Italia.",
     garnish: "Marigold flower & black salt rim",
     dietaryRestrictions: ["Passionfruit", "Citrus"],
     modifications: "Sugar/Acid Balance.",
@@ -212,7 +212,7 @@ export const COCKTAILS: Cocktail[] = [
     ingredients: [
       {
         name: "Kiwi & Basil",
-        note: "Puree (not fresh kiwi) lets us control freshness, acid, and sugar. Kiwi peaks in January despite its tropical reputation — high in vitamin K, potassium, antioxidants. Basil is anti-inflammatory and high in fiber.",
+        note: "Puree (not fresh kiwi) lets us control freshness, acid, and sugar. Kiwi peaks in January despite its tropical reputation - high in vitamin K, potassium, antioxidants. Basil is anti-inflammatory and high in fiber.",
       },
     ],
     garnish: "Basil leaf. Gets a straw.",
@@ -227,7 +227,7 @@ export const COCKTAILS: Cocktail[] = [
     menuDescription:
       "Malfy Italian Gin, Campari-Amari (Campari + Winestillery Sweet Vermouth + Winestillery Tuscan Bitter + Amaro Nonino + Amaro Margerum + Tomato Water), Rosso Vermouth",
     character:
-      "Traditional Negroni with more complexity around the Campari. 'BTG' is short for 'Bottega' — our house Negroni.",
+      "Traditional Negroni with more complexity around the Campari. 'BTG' is short for 'Bottega' - our house Negroni.",
     aLaMinute: [
       "1.25 Malfy Italian Gin",
       "1.00 Campari-Amari",
@@ -309,7 +309,7 @@ export const COCKTAILS: Cocktail[] = [
     garnish: "Three espresso beans: health, wealth, prosperity.",
     dietaryRestrictions: ["Coffee"],
     modifications:
-      "Traditional espresso martini, tequila espresso martini, classic Bottega raspberry espresso martini. Can be sweeter. Can add Bailey's cream. Changing the base vodka means the bar team can't use the batch — slower service, no significant change to the drink or price.",
+      "Traditional espresso martini, tequila espresso martini, classic Bottega raspberry espresso martini. Can be sweeter. Can add Bailey's cream. Changing the base vodka means the bar team can't use the batch - slower service, no significant change to the drink or price.",
     price: 19,
     tags: ["Vodka", "Espresso Martini", "Coffee"],
   },

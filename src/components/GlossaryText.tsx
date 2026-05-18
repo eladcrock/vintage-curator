@@ -1,6 +1,6 @@
 /**
  * Renders text with hover tooltips for any known glossary term.
- * Used on cocktail menu descriptions. Pure presentation — terms come from
+ * Used on cocktail menu descriptions. Pure presentation - terms come from
  * src/data/cocktail-glossary.ts.
  *
  * Matching is case-insensitive, longest-first, non-overlapping.

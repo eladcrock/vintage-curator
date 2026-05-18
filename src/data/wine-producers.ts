@@ -1,6 +1,6 @@
 /**
  * Producer-level glossary for the wine list. Renders as a hover blurb on the
- * producer name in WineCard. Producer-focused only — no grape/style/varietal
+ * producer name in WineCard. Producer-focused only - no grape/style/varietal
  * commentary (that lives elsewhere or on the bottle). Detail scales with
  * price tier. Top-tier entries are web-sourced from each producer's own
  * site, Wikipedia, Wine Spectator, Decanter, and Wine-Searcher.
@@ -15,12 +15,12 @@ export const WINE_PRODUCERS: ProducerEntry[] = [
   {
     match: "Domaine de la Romanee-Conti",
     blurb:
-      "DRC. Monopole owner of the Romanée-Conti and La Tâche Grand Cru vineyards in Vosne-Romanée, plus holdings in Richebourg, Romanée-Saint-Vivant, Échezeaux, Grands-Échezeaux, Corton, and a sliver of Le Montrachet. Co-managed for decades by Aubert de Villaine (stepped down in 2022) and the Leroy/Roch family. Allocation-only — no commercial sales channel.",
+      "DRC. Monopole owner of the Romanée-Conti and La Tâche Grand Cru vineyards in Vosne-Romanée, plus holdings in Richebourg, Romanée-Saint-Vivant, Échezeaux, Grands-Échezeaux, Corton, and a sliver of Le Montrachet. Co-managed for decades by Aubert de Villaine (stepped down in 2022) and the Leroy/Roch family. Allocation-only - no commercial sales channel.",
   },
   {
     match: "Château Petrus",
     blurb:
-      "Pomerol's reference estate, just over 11 hectares on the appellation's blue-clay plateau, owned by the Moueix family. Famously no second wine and no formal classification — Pomerol has none. Tiny annual production, hand-harvested in a single pass.",
+      "Pomerol's reference estate, just over 11 hectares on the appellation's blue-clay plateau, owned by the Moueix family. Famously no second wine and no formal classification - Pomerol has none. Tiny annual production, hand-harvested in a single pass.",
   },
   {
     match: "Château Haut-Brion",
@@ -55,7 +55,7 @@ export const WINE_PRODUCERS: ProducerEntry[] = [
   {
     match: "Château Latour",
     blurb:
-      "Pauillac First-Growth on a gravel mound at the southern edge of the commune, overlooking the Gironde. Owned by François Pinault's Artémis group since 1993. Withdrew from the en primeur system in 2012 — now released only when the estate decides the vintage is ready to drink.",
+      "Pauillac First-Growth on a gravel mound at the southern edge of the commune, overlooking the Gironde. Owned by François Pinault's Artémis group since 1993. Withdrew from the en primeur system in 2012 - now released only when the estate decides the vintage is ready to drink.",
   },
   {
     match: "Schrader",
@@ -90,7 +90,7 @@ export const WINE_PRODUCERS: ProducerEntry[] = [
   {
     match: "Bond",
     blurb:
-      "Founded 1996 by Bill Harlan and Bob Levy of Harlan Estate; first commercial release 1999. Five Napa hillside 'crus' (Melbury, St. Eden, Vecina, Pluribus, Quella), each bottled separately. BOND doesn't own the vineyards — long-term evergreen contracts with five sites selected from 100+ candidates. Run by Will Harlan since 2020.",
+      "Founded 1996 by Bill Harlan and Bob Levy of Harlan Estate; first commercial release 1999. Five Napa hillside 'crus' (Melbury, St. Eden, Vecina, Pluribus, Quella), each bottled separately. BOND doesn't own the vineyards - long-term evergreen contracts with five sites selected from 100+ candidates. Run by Will Harlan since 2020.",
   },
   {
     match: "Château La Mission Haut-Brion",
@@ -120,7 +120,7 @@ export const WINE_PRODUCERS: ProducerEntry[] = [
   {
     match: "La Mission Haut-Brion",
     blurb:
-      "Older library vintages of Château La Mission Haut-Brion in Pessac-Léognan — Dillon-owned since 1983, run as Haut-Brion's sister estate across the road.",
+      "Older library vintages of Château La Mission Haut-Brion in Pessac-Léognan - Dillon-owned since 1983, run as Haut-Brion's sister estate across the road.",
   },
   {
     match: "DANA Estates",
@@ -135,7 +135,7 @@ export const WINE_PRODUCERS: ProducerEntry[] = [
   {
     match: "Salon",
     blurb:
-      "Champagne house founded by Eugène-Aimé Salon in Le Mesnil-sur-Oger; first commercial vintage 1921. Single grape (Chardonnay), single village (Le Mesnil), and only declared in vintages Salon deems exceptional — roughly four per decade. Part of the Laurent-Perrier group since 1989.",
+      "Champagne house founded by Eugène-Aimé Salon in Le Mesnil-sur-Oger; first commercial vintage 1921. Single grape (Chardonnay), single village (Le Mesnil), and only declared in vintages Salon deems exceptional - roughly four per decade. Part of the Laurent-Perrier group since 1989.",
   },
   {
     match: "Domaine du Clos de Tart",
@@ -145,7 +145,7 @@ export const WINE_PRODUCERS: ProducerEntry[] = [
   {
     match: "Château Mouton-Rothschild",
     blurb:
-      "Pauillac estate owned by the Rothschild family since 1853, promoted to First Growth in 1973 — the only revision to the 1855 Médoc classification. Famous for commissioning a different artist for each vintage label since 1945 (Picasso, Bacon, Warhol, Koons, et al.).",
+      "Pauillac estate owned by the Rothschild family since 1853, promoted to First Growth in 1973 - the only revision to the 1855 Médoc classification. Famous for commissioning a different artist for each vintage label since 1945 (Picasso, Bacon, Warhol, Koons, et al.).",
   },
   {
     match: "Château Margaux",
@@ -165,7 +165,7 @@ export const WINE_PRODUCERS: ProducerEntry[] = [
   {
     match: "Domaine Coche-Dury",
     blurb:
-      "Meursault domaine — Jean-François Coche took over from his father Léon in 1972 and built the modern reputation; the estate has been run by his son Raphaël Coche since the 2010s. Tiny production, allocation-only.",
+      "Meursault domaine - Jean-François Coche took over from his father Léon in 1972 and built the modern reputation; the estate has been run by his son Raphaël Coche since the 2010s. Tiny production, allocation-only.",
   },
   {
     match: "Fonseca",
@@ -185,7 +185,7 @@ export const WINE_PRODUCERS: ProducerEntry[] = [
   {
     match: "Dom Pérignon",
     blurb:
-      "Prestige cuvée of Moët & Chandon (Champagne, LVMH). Vintage-only — Moët declares Dom Pérignon only in years deemed worthy, roughly four per decade. P2 designates an extended second-plenitude release, aged longer on lees before disgorgement.",
+      "Prestige cuvée of Moët & Chandon (Champagne, LVMH). Vintage-only - Moët declares Dom Pérignon only in years deemed worthy, roughly four per decade. P2 designates an extended second-plenitude release, aged longer on lees before disgorgement.",
   },
   {
     match: "Freemark Abbey",
@@ -205,7 +205,7 @@ export const WINE_PRODUCERS: ProducerEntry[] = [
   {
     match: "Biondi-Santi",
     blurb:
-      "Montalcino estate credited with inventing the modern Brunello category — Ferruccio Biondi-Santi bottled the first single-variety Sangiovese Grosso here in 1888. Acquired by France's EPI group (Charles Heidsieck, Piper-Heidsieck) in 2017.",
+      "Montalcino estate credited with inventing the modern Brunello category - Ferruccio Biondi-Santi bottled the first single-variety Sangiovese Grosso here in 1888. Acquired by France's EPI group (Charles Heidsieck, Piper-Heidsieck) in 2017.",
   },
   {
     match: "Tenuta San Guido",
@@ -222,7 +222,7 @@ export const WINE_PRODUCERS: ProducerEntry[] = [
   {
     match: "Gaja",
     blurb:
-      "Piedmontese estate, fifth-generation, run since the 1960s by Angelo Gaja — credited with modernizing Barbaresco, introducing French oak and single-vineyard bottlings to the region, and adding holdings in Brunello (Pieve Santa Restituta) and Bolgheri (Ca' Marcanda). Now led by daughters Gaia and Rossana.",
+      "Piedmontese estate, fifth-generation, run since the 1960s by Angelo Gaja - credited with modernizing Barbaresco, introducing French oak and single-vineyard bottlings to the region, and adding holdings in Brunello (Pieve Santa Restituta) and Bolgheri (Ca' Marcanda). Now led by daughters Gaia and Rossana.",
   },
   {
     match: "Château Palmer",
@@ -232,7 +232,7 @@ export const WINE_PRODUCERS: ProducerEntry[] = [
   {
     match: "Penfolds",
     blurb:
-      "South Australian house founded 1844 by Dr. Christopher Penfold. Owned by Treasury Wine Estates. Max Schubert created the first Grange (then 'Grange Hermitage') in 1951 — now Australia's most collected wine.",
+      "South Australian house founded 1844 by Dr. Christopher Penfold. Owned by Treasury Wine Estates. Max Schubert created the first Grange (then 'Grange Hermitage') in 1951 - now Australia's most collected wine.",
   },
   {
     match: "Dalla Valle",
@@ -277,7 +277,7 @@ export const WINE_PRODUCERS: ProducerEntry[] = [
   {
     match: "Diamond Creek",
     blurb:
-      "Founded 1968 by Al and Boots Brounstein on Diamond Mountain — the first Napa winery to bottle hillside parcels separately (Volcanic Hill, Red Rock Terrace, Gravelly Meadow, Lake). Family-run; now led by daughter-in-law Phil Steinschriber's successor team.",
+      "Founded 1968 by Al and Boots Brounstein on Diamond Mountain - the first Napa winery to bottle hillside parcels separately (Volcanic Hill, Red Rock Terrace, Gravelly Meadow, Lake). Family-run; now led by daughter-in-law Phil Steinschriber's successor team.",
   },
   {
     match: "Château Lynch-Bages",
@@ -317,7 +317,7 @@ export const WINE_PRODUCERS: ProducerEntry[] = [
   {
     match: "The Maiden",
     blurb:
-      "Second wine of Harlan Estate — declassified barrels from the Oakville hillside estate, made by the Harlan team and released under a separate label.",
+      "Second wine of Harlan Estate - declassified barrels from the Oakville hillside estate, made by the Harlan team and released under a separate label.",
   },
   {
     match: "Château Pichon-Longueville Comtesse de Lalande",
@@ -327,12 +327,12 @@ export const WINE_PRODUCERS: ProducerEntry[] = [
   {
     match: "Joseph Phelps",
     blurb:
-      "Napa pioneer founded 1973 by Joe Phelps. Created Insignia in 1974 — California's first proprietary Bordeaux-style blend. Acquired by LVMH's Moët Hennessy in 2022.",
+      "Napa pioneer founded 1973 by Joe Phelps. Created Insignia in 1974 - California's first proprietary Bordeaux-style blend. Acquired by LVMH's Moët Hennessy in 2022.",
   },
   {
     match: "Guiseppe Quintarelli",
     blurb:
-      "(Variant spelling of Giuseppe Quintarelli.) Cult Valpolicella estate in Negrar — Giuseppe Quintarelli ran the estate until his death in 2012; now led by his children and grandchildren. Releases delayed by a decade or more.",
+      "(Variant spelling of Giuseppe Quintarelli.) Cult Valpolicella estate in Negrar - Giuseppe Quintarelli ran the estate until his death in 2012; now led by his children and grandchildren. Releases delayed by a decade or more.",
   },
   {
     match: "Domaine Anne Gros",
@@ -347,7 +347,7 @@ export const WINE_PRODUCERS: ProducerEntry[] = [
   {
     match: "Cardinale",
     blurb:
-      "Jackson Family Wines project (since 1982) — a single annual Napa Cabernet blended from estate fruit across multiple mountain sites in Howell, Veeder, Diamond, and Spring Mountain.",
+      "Jackson Family Wines project (since 1982) - a single annual Napa Cabernet blended from estate fruit across multiple mountain sites in Howell, Veeder, Diamond, and Spring Mountain.",
   },
   {
     match: "Edmond Vatan",
@@ -377,12 +377,12 @@ export const WINE_PRODUCERS: ProducerEntry[] = [
   {
     match: "Lokoya",
     blurb:
-      "Jackson Family Wines mountain-only project — separate single-mountain Cabernet bottlings from Mt. Howell, Mt. Veeder, Diamond Mountain, and Spring Mountain.",
+      "Jackson Family Wines mountain-only project - separate single-mountain Cabernet bottlings from Mt. Howell, Mt. Veeder, Diamond Mountain, and Spring Mountain.",
   },
   {
     match: "MacDonald",
     blurb:
-      "Family-farmed Cabernet from the MacDonald brothers' single estate parcel inside the historic To Kalon vineyard in Oakville — vines planted by their grandfather in 1954. Microscopic production.",
+      "Family-farmed Cabernet from the MacDonald brothers' single estate parcel inside the historic To Kalon vineyard in Oakville - vines planted by their grandfather in 1954. Microscopic production.",
   },
   {
     match: "Tenuta di Trinoro",
@@ -419,7 +419,7 @@ export const WINE_PRODUCERS: ProducerEntry[] = [
   {
     match: "Philip Togni",
     blurb:
-      "Spring Mountain estate run by Philip Togni since 1983 — a veteran winemaker who also worked at Mayacamas, Chappellet, Cuvaison, and Chalone. Daughter Lisa Togni now runs day-to-day operations.",
+      "Spring Mountain estate run by Philip Togni since 1983 - a veteran winemaker who also worked at Mayacamas, Chappellet, Cuvaison, and Chalone. Daughter Lisa Togni now runs day-to-day operations.",
   },
   {
     match: "Giuseppe Mascarello",
@@ -444,7 +444,7 @@ export const WINE_PRODUCERS: ProducerEntry[] = [
   {
     match: "Marcassin. Marcassin Vineyard",
     blurb:
-      "(Same as Marcassin — Helen Turley and John Wetlaufer's Sonoma Coast estate. Allocation only.)",
+      "(Same as Marcassin - Helen Turley and John Wetlaufer's Sonoma Coast estate. Allocation only.)",
   },
   {
     match: "Continuum",
@@ -514,7 +514,7 @@ export const WINE_PRODUCERS: ProducerEntry[] = [
   {
     match: "The Mascot",
     blurb:
-      "Personal project of Will Harlan (Bill Harlan's son) — declassified barrels from the Harlan, Bond, and Promontory vineyards, blended into a single Napa Cabernet released under its own label.",
+      "Personal project of Will Harlan (Bill Harlan's son) - declassified barrels from the Harlan, Bond, and Promontory vineyards, blended into a single Napa Cabernet released under its own label.",
   },
   {
     match: "Antica Terra",
@@ -529,7 +529,7 @@ export const WINE_PRODUCERS: ProducerEntry[] = [
   {
     match: "Armand de Brignac",
     blurb:
-      "The 'Ace of Spades' Champagne — produced by the Cattier family in Chigny-les-Roses. A 50/50 stake was acquired by Jay-Z in 2014; in 2021 LVMH bought a 50% stake from him, and the brand is now jointly held.",
+      "The 'Ace of Spades' Champagne - produced by the Cattier family in Chigny-les-Roses. A 50/50 stake was acquired by Jay-Z in 2014; in 2021 LVMH bought a 50% stake from him, and the brand is now jointly held.",
   },
   {
     match: "Paul Hobbs",
@@ -579,7 +579,7 @@ export const WINE_PRODUCERS: ProducerEntry[] = [
   {
     match: "Haynes Vineyard",
     blurb:
-      "Historic Coombsville vineyard planted in 1966 by Duncan Haynes — long a fruit source for top California Chardonnay programs. The Haynes family bottles a small estate label.",
+      "Historic Coombsville vineyard planted in 1966 by Duncan Haynes - long a fruit source for top California Chardonnay programs. The Haynes family bottles a small estate label.",
   },
   {
     match: "Bergman",
@@ -645,33 +645,33 @@ export const WINE_PRODUCERS: ProducerEntry[] = [
   { match: "Ad Vivum", blurb: "Tiny boutique Napa Cabernet project. Allocation only." },
   { match: "Siro Pacenti", blurb: "Montalcino estate run by Giancarlo Pacenti since the late 1980s." },
   { match: "Paolo Bea", blurb: "Umbrian estate in Montefalco run by the Bea family since the 1500s; modern bottlings led by Giampiero Bea. Natural-wine reference for Sagrantino." },
-  { match: "Oasi delgi Angeli", blurb: "(Spelling variant of Oasi degli Angeli — Marche estate of Marco Casolanetti and Eleonora Rossi, makers of Kurni.)" },
+  { match: "Oasi delgi Angeli", blurb: "(Spelling variant of Oasi degli Angeli - Marche estate of Marco Casolanetti and Eleonora Rossi, makers of Kurni.)" },
   { match: "Tenuta delle Terre Nere", blurb: "Etna estate founded 2002 by Marc de Grazia (a major Italian wine importer); single-contrada bottlings across the volcano's north slope." },
   { match: "Domaine Roulot", blurb: "Meursault domaine led since the 1990s by Jean-Marc Roulot (a working actor who also runs the family estate). Reference for precise lieu-dit-specific Meursault." },
   { match: "Château Smith Haut Lafitte", blurb: "Pessac-Léognan estate owned by the Cathiard family (former Olympic skiers) since 1990; also runs the Les Sources de Caudalie hotel and Caudalíe skincare. Certified organic." },
   { match: "Laurent-Perrier", blurb: "Tours-sur-Marne Champagne house founded 1812; controlled by the Nonancourt family since 1939. Also owns Champagne Salon and Champagne Delamotte." },
   { match: "Morlet", blurb: "Sonoma-based estate founded 2006 by Burgundy-born Luc Morlet (a former winemaker at Newton and Peter Michael) and his wife Jodie." },
-  { match: "Domaine Albert Grivault", blurb: "Meursault family estate founded by Albert Grivault in 1879 — celebrated its 140th anniversary in 2019, four generations of continuous family ownership. Monopole owner of Clos des Perrières, a walled parcel inside Premier Cru Perrières that Alexis Lichine famously ranked alongside Montrachet." },
+  { match: "Domaine Albert Grivault", blurb: "Meursault family estate founded by Albert Grivault in 1879 - celebrated its 140th anniversary in 2019, four generations of continuous family ownership. Monopole owner of Clos des Perrières, a walled parcel inside Premier Cru Perrières that Alexis Lichine famously ranked alongside Montrachet." },
   { match: "David Arthur", blurb: "Pritchard Hill estate founded 1985 by David Arthur Long; his son David Jr. now runs it. Elevation Eleven Eleven is the flagship Cabernet (named for the vineyard's 1,111-ft elevation)." },
   { match: "Fontodi", blurb: "Panzano (Chianti Classico) estate owned by the Manetti family since 1968. Certified organic; Flaccianello is the flagship Sangiovese." },
-  { match: "Bouchard Père & Fils", blurb: "Beaune négociant-and-domaine founded 1731 — one of the largest landowners on the Côte d'Or with 130 hectares including 12 ha of Grand Cru. Owned by Champagne Henriot from 1995 until Artémis (François Pinault) acquired Henriot's wine division in 2022." },
+  { match: "Bouchard Père & Fils", blurb: "Beaune négociant-and-domaine founded 1731 - one of the largest landowners on the Côte d'Or with 130 hectares including 12 ha of Grand Cru. Owned by Champagne Henriot from 1995 until Artémis (François Pinault) acquired Henriot's wine division in 2022." },
   { match: "Fantesca", blurb: "Spring Mountain estate owned by Susan and Duane Hoff (former Best Buy executive). Also bottles a Russian River Chardonnay program." },
   { match: "Au Bon Climat", blurb: "Santa Maria Valley pioneer founded 1982 by Jim Clendenen (d. 2021). Family continues the estate." },
   { match: "Paradigm", blurb: "Oakville estate founded 1976 by Ren and Marilyn Harris; Heidi Barrett has been the winemaker since 1991." },
-  { match: "Didier Dagueneau", blurb: "Pouilly-Fumé estate founded by Didier Dagueneau in 1982 — he transformed how Sauvignon Blanc was taken seriously. After his death in a plane crash in 2008, his son Louis-Benjamin took over the domaine." },
+  { match: "Didier Dagueneau", blurb: "Pouilly-Fumé estate founded by Didier Dagueneau in 1982 - he transformed how Sauvignon Blanc was taken seriously. After his death in a plane crash in 2008, his son Louis-Benjamin took over the domaine." },
   { match: "Kistler", blurb: "Sonoma estate founded 1978 by Steve Kistler and Mark Bixler. Acquired by Bill Price (also of Three Sticks and Durell Vineyard) in 2008; Steve Kistler departed in 2017." },
   { match: "Secret Door", blurb: "Boutique Napa Cabernet project. Allocation only." },
   { match: "Cavallotto", blurb: "Castiglione Falletto traditionalist family estate. The Bricco Boschis monopole has been farmed by the family since 1928." },
   { match: "Caparzo", blurb: "Montalcino estate founded 1965; owned by Elisabetta Gnudi Angelini since 1998. La Casa is the flagship single-vineyard Brunello." },
   { match: "Bibi Graetz", blurb: "Florence-born artist-turned-winemaker. Started bottling under his own name in 2000; works with old-vine Sangiovese from around Fiesole and on the island of Giglio." },
-  { match: "Château Leoville-Barton", blurb: "Saint-Julien Second-Growth, owned by the Anglo-Irish Barton family since 1826 — one of the longest continuous family ownerships in Bordeaux." },
+  { match: "Château Leoville-Barton", blurb: "Saint-Julien Second-Growth, owned by the Anglo-Irish Barton family since 1826 - one of the longest continuous family ownerships in Bordeaux." },
   { match: "Château d’Yquem", blurb: "The only estate classified Premier Cru Supérieur in Sauternes (1855). Owned by the Lur-Saluces family for centuries; majority-acquired by LVMH in 1999." },
   { match: "Graham’s", blurb: "Douro Vintage Port house founded 1820 by William and John Graham. Owned by the Symington family (Dow's, Warre's, Cockburn's) since 1970." },
   { match: "Peay", blurb: "Extreme-west Sonoma Coast estate founded 1998 by brothers Andy and Nick Peay with winemaker Vanessa Wong (Nick's wife, formerly of Peter Michael)." },
   { match: "Leonetti Cellar", blurb: "Walla Walla's first commercial winery (1977), founded by Gary Figgins. Still run by the Figgins family." },
   { match: "San Polo", blurb: "Montalcino estate, part of the Allegrini portfolio (Valpolicella) since 2007." },
   { match: "Domaine Genot-Boulanger", blurb: "Meursault-based Côte de Beaune domaine with holdings across Pommard, Volnay, Beaune, and Mercurey." },
-  { match: "Benanti", blurb: "Etna estate founded 1988 by Giuseppe Benanti — credited as one of the producers who revived high-altitude Etna viticulture. Now run by sons Antonio and Salvino." },
+  { match: "Benanti", blurb: "Etna estate founded 1988 by Giuseppe Benanti - credited as one of the producers who revived high-altitude Etna viticulture. Now run by sons Antonio and Salvino." },
   { match: "A. Rafanelli", blurb: "Dry Creek Valley estate dating to 1911; the Rafanelli family farms about 50 acres of estate vineyard. Wines sold mostly direct from the winery." },
   { match: "Kenzo", blurb: "Mountainous Napa estate owned by Capcom video-game co-founder Kenzo Tsujimoto; David Abreu farming, Heidi Barrett winemaking from launch." },
   { match: "Mowe", blurb: "Boutique Napa Cabernet project, mailing list only." },
@@ -683,7 +683,7 @@ export const WINE_PRODUCERS: ProducerEntry[] = [
   { match: "Stonestreet", blurb: "Alexander Valley estate within Jackson Family Wines. High-elevation mountain blocks farmed for Chardonnay and Cabernet." },
   { match: "Kongsgaard", blurb: "Napa estate of John and Maggy Kongsgaard, founded 1996. John was previously winemaker at Newton. Family-farmed hillside fruit; tiny production." },
   { match: "TOR", blurb: "Napa label founded by Tor Kenward in 2001 after decades at Beringer. Single-vineyard Chardonnay and Cabernet from Beckstoffer To Kalon, Beresini, Hyde, and other top sites." },
-  { match: "La Jota", blurb: "(Same as La Jota Vineyard — Howell Mountain estate dating to 1898, now Jackson Family Wines.)" },
+  { match: "La Jota", blurb: "(Same as La Jota Vineyard - Howell Mountain estate dating to 1898, now Jackson Family Wines.)" },
 ];
 
 export const WINE_PRODUCER_LOOKUP = WINE_PRODUCERS.map((p) => ({

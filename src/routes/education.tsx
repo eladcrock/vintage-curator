@@ -1,5 +1,5 @@
 /**
- * Education — region-coded mindmap.
+ * Education - region-coded mindmap.
  *
  * Layout: country map (left) acts as a visual index. Region nodes (right) are
  * grouped by zone and color-coded. Click any node to expand inline drop-downs
@@ -20,9 +20,9 @@ export const Route = createFileRoute("/education")({
   head: () => ({
     meta: [
       { title: "Bottega Pro · Education" },
-      { name: "description", content: "Region-coded wine mindmap — Bottega Wine Class #1–#5, cross-referenced with our list." },
+      { name: "description", content: "Region-coded wine mindmap - Bottega Wine Class #1–#5, cross-referenced with our list." },
       { property: "og:title", content: "Bottega Pro · Education" },
-      { property: "og:description", content: "Where knowledge meets service — a region-coded wine mindmap." },
+      { property: "og:description", content: "Where knowledge meets service - a region-coded wine mindmap." },
     ],
   }),
   component: EducationPage,
@@ -32,7 +32,7 @@ const KIND_EMOJI: Record<string, string> = {
   red: "🍷", white: "🥂", sparkling: "🍾", dessert: "🍯", rose: "🌸",
 };
 
-// Visual color-coding for wine types — keeps red vs white instantly scannable.
+// Visual color-coding for wine types - keeps red vs white instantly scannable.
 const TYPE_STYLE: Record<string, { bar: string; chip: string; label: string }> = {
   Red:       { bar: "oklch(0.42 0.16 18)",  chip: "bg-[oklch(0.42_0.16_18)] text-white",        label: "Red" },
   White:     { bar: "oklch(0.80 0.12 70)",  chip: "bg-[oklch(0.92_0.09_70)] text-[oklch(0.32_0.08_55)]", label: "White" },
@@ -41,7 +41,7 @@ const TYPE_STYLE: Record<string, { bar: string; chip: string; label: string }> =
   Orange:    { bar: "oklch(0.70 0.16 60)",  chip: "bg-[oklch(0.88_0.10_60)] text-[oklch(0.35_0.10_50)]", label: "Orange" },
   Dessert:   { bar: "oklch(0.70 0.14 85)",  chip: "bg-[oklch(0.90_0.10_85)] text-[oklch(0.35_0.08_70)]", label: "Dessert" },
 };
-const DEFAULT_TYPE = { bar: "oklch(0.6 0 0)", chip: "bg-muted text-foreground", label: "—" };
+const DEFAULT_TYPE = { bar: "oklch(0.6 0 0)", chip: "bg-muted text-foreground", label: "-" };
 
 // Grape-kind tinting for the Grapes drop-down.
 const KIND_TINT: Record<string, string> = {
@@ -56,11 +56,11 @@ function priceLabel(w: Wine): string {
   const parts: string[] = [];
   if (w.priceGlass != null) parts.push(`gl $${w.priceGlass}`);
   if (w.priceBottle != null) parts.push(`btl $${w.priceBottle}`);
-  return parts.join(" · ") || "—";
+  return parts.join(" · ") || "-";
 }
 
 function wineName(w: Wine): string {
-  // Name only — producer + cuvee fallbacks.
+  // Name only - producer + cuvee fallbacks.
   if (w.cuvee && w.producer) return `${w.producer} · ${w.cuvee}`;
   return w.cuvee || w.producer || w.varietal || "Untitled";
 }
@@ -339,7 +339,7 @@ function RegionNode({
               ) : (
                 <div className="space-y-2">
                   <p className="italic text-muted-foreground">
-                    Signature profile distilled from this region's grapes — extended service notes coming from Wine Class materials.
+                    Signature profile distilled from this region's grapes - extended service notes coming from Wine Class materials.
                   </p>
                   <ul className="space-y-1">
                     {region.grapes.slice(0, 4).map((g) => (
@@ -358,7 +358,7 @@ function RegionNode({
                 <p className="text-foreground/90 whitespace-pre-line">{region.history}</p>
               ) : (
                 <p className="italic text-muted-foreground">
-                  Historical context for {region.name} — to be parsed from Wine Class #{region.classRef} materials.
+                  Historical context for {region.name} - to be parsed from Wine Class #{region.classRef} materials.
                 </p>
               )}
             </TabsContent>
@@ -467,7 +467,7 @@ function ClassReadDialog({ classId, onClose }: { classId: 1 | 2 | 3 | 4 | 5 | nu
                         {r.grapes.map((g) => (
                           <li key={g.name} className="text-foreground/90">
                             <span className="font-semibold">{g.name}</span>
-                            <span className="text-muted-foreground"> — {g.notes}</span>
+                            <span className="text-muted-foreground"> - {g.notes}</span>
                           </li>
                         ))}
                       </ul>

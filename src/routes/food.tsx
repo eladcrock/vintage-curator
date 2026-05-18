@@ -1,7 +1,7 @@
 /**
  * Food tab.
  *
- * Single search bar — AND-matches across name, description, preparation,
+ * Single search bar - AND-matches across name, description, preparation,
  * ingredients, allergens, info (see searchHaystack in src/lib/food.ts).
  * Dishes are grouped by category (Antipasti → Pasta → Secondi → Contorni →
  * Dolci → Lunch Only).
@@ -114,7 +114,7 @@ function FoodPage() {
         {tagSuggestions.length > 0 && (
           <div className="mt-3">
             <div className="mb-1 flex items-center justify-between gap-2 text-[10px] uppercase tracking-wider text-muted-foreground">
-              <span>Allergens — tap to require, tap again to exclude</span>
+              <span>Allergens - tap to require, tap again to exclude</span>
               {Object.keys(tagStates).length > 0 && (
                 <button
                   type="button"

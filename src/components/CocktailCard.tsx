@@ -4,7 +4,7 @@
  * Expanded view: character, builds (a la minute / batched), ingredient notes,
  * garnish, modifications, story.
  *
- * State is local — each card manages its own open/closed flag.
+ * State is local - each card manages its own open/closed flag.
  */
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
