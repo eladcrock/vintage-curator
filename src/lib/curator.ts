@@ -142,10 +142,18 @@ function buildMenu(
   exclude: Set<string>,
   pushSteaks: boolean,
 ): Pick[] | null {
-  // Aim near the upper portion of the range - give the guest value.
+  // When no max is set we anchor the target to the max-spend menu so
+  // the algorithm still has a finite number to aim at.
+  const maxSpendCeiling = Number.isFinite(budgetMax)
+    ? budgetMax
+    : flow.reduce(
+        (s, c) => s + Math.max(...((byCat.get(c) ?? []).map((d) => d._price)), 0),
+        0,
+      );
+  const effectiveMax = Number.isFinite(budgetMax) ? budgetMax : maxSpendCeiling;
   const target = style === "indulgente"
-    ? budgetMin + (budgetMax - budgetMin) * 0.85
-    : budgetMin + (budgetMax - budgetMin) * 0.55;
+    ? budgetMin + (effectiveMax - budgetMin) * 0.85
+    : budgetMin + (effectiveMax - budgetMin) * 0.55;
 
   const picks: Pick[] = [];
   let spent = 0;
@@ -163,7 +171,9 @@ function buildMenu(
       const opts = (byCat.get(fcat) ?? []).filter((d) => !exclude.has(d.id));
       minFuture += Math.min(...(opts.length ? opts.map((d) => d._price) : [0]));
     }
-    const maxAllowedHere = budgetMax - spent - minFuture;
+    const maxAllowedHere = Number.isFinite(budgetMax)
+      ? budgetMax - spent - minFuture
+      : Number.POSITIVE_INFINITY;
 
     // Per-course target = remaining budget split across remaining courses,
     // weighted by style.
@@ -198,12 +208,14 @@ function buildMenu(
   }
 
   // Final budget check (with tolerance).
-  if (spent < budgetMin - 1 || spent > budgetMax + 1) {
+  if (spent < budgetMin - 1 || (Number.isFinite(budgetMax) && spent > budgetMax + 1)) {
     // If under budget, try to upgrade the most flexible course.
     if (spent < budgetMin - 1) {
       for (let i = picks.length - 1; i >= 0; i--) {
         const p = picks[i];
-        const room = budgetMax - (spent - p.dish._price);
+        const room = Number.isFinite(budgetMax)
+          ? budgetMax - (spent - p.dish._price)
+          : Number.POSITIVE_INFINITY;
         const upgrade = (byCat.get(p.cat) ?? [])
           .filter((d) => !exclude.has(d.id) && d._price > p.dish._price && d._price <= room)
           .sort((a, b) => b._price - a._price)[0];
@@ -317,9 +329,13 @@ function picksToOption(
 
 function buildRationale(perPerson: number, req: ExperienceRequest, picks: Pick[]): string {
   const courseList = picks.map((p) => p.cat).join(" → ");
+  const capped = Number.isFinite(req.budgetMax);
+  const rangeLabel = capped
+    ? `$${req.budgetMin}–$${req.budgetMax}`
+    : `$${req.budgetMin}+ (no cap)`;
   const within =
-    perPerson >= req.budgetMin && perPerson <= req.budgetMax
-      ? `lands at $${perPerson}/person, inside your $${req.budgetMin}–$${req.budgetMax} range`
+    perPerson >= req.budgetMin && (!capped || perPerson <= req.budgetMax)
+      ? `lands at $${perPerson}/person, inside your ${rangeLabel} range`
       : `targets $${perPerson}/person`;
   return `${courseList}. ${within}. Total for ${req.guests} ${req.guests === 1 ? "guest" : "guests"}: $${perPerson * req.guests}.`;
 }
