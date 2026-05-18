@@ -16,7 +16,7 @@ import type { ExperienceRequest, MenuOption } from "@/lib/experiences";
 export const Route = createFileRoute("/experiences")({
   head: () => ({
     meta: [
-      { title: "Bottega Pro · Experiences" },
+      { title: "Bottega Pro · Show Time" },
       {
         name: "description",
         content: "AI-curated chef's tasting menus by budget and dietary needs.",
@@ -45,7 +45,7 @@ function ExperiencesPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SiteNav title="Bottega Pro" subtitle="Experiences" />
+      <SiteNav title="Bottega Pro" subtitle="Show Time" />
       <main className="mx-auto max-w-3xl px-4 py-5">
         <div className="mb-4">
           <h2 className="text-lg font-semibold">Experience curator</h2>
