@@ -69,6 +69,11 @@ export const COCKTAIL_GLOSSARY: GlossaryEntry[] = [
       "Cult Black Forest gin built on 47 botanicals (including cranberry). Distiller's Select adds extra botanical depth.",
   },
   {
+    term: "2022 Monkey 47 Distiller's Select",
+    blurb:
+      "A single-vintage 2022 release of Monkey 47's Distiller's Select — bottled from one harvest of Black Forest botanicals, so the cranberry, spruce, and lingonberry character is locked to that year. Richer and more concentrated than the standard bottling.",
+  },
+  {
     term: "Yellow Chartreuse",
     blurb:
       "Softer, honeyed sibling of Green Chartreuse — still made by Carthusian monks from 130 herbs. Lower proof, sweeter, more saffron.",
@@ -165,6 +170,77 @@ export const COCKTAIL_GLOSSARY: GlossaryEntry[] = [
     term: "Molasses",
     blurb:
       "Pressed-sugarcane byproduct — bittersweet, mineral, faintly smoky. Adds backbone and color where plain sugar would fall flat.",
+  },
+  // — Per-ingredient flavor descriptors —
+  {
+    term: "Alloro",
+    blurb:
+      "Italian for bay laurel — the same leaf used in slow-cooked ragù. Here it's infused into the drink to add a savory, resinous, faintly menthol-pine note that ties the basil and chaparral together.",
+  },
+  {
+    term: "Toasted White Sesame",
+    blurb:
+      "House-toasted white sesame infused into the build. Toasting flips the seed from grassy to deeply nutty, almost tahini-like, and lends a round oily texture that softens the bourbon's edges.",
+  },
+  {
+    term: "Fennel Frond Ice",
+    blurb:
+      "A custom ice block frozen with fresh fennel fronds suspended inside. As it melts it slowly releases a cool anise-and-dill perfume — a built-in dilution that gets more herbaceous the longer you sip.",
+  },
+  {
+    term: "Thai Tea",
+    blurb:
+      "Black Ceylon tea steeped with star anise, cardamom, and vanilla. Adds tannic grip, warm baking-spice depth, and a creamy vanilla lift that bridges the reposado and passionfruit.",
+  },
+  {
+    term: "Prickly Pear",
+    blurb:
+      "Magenta cactus fruit — gentle melon-and-watermelon sweetness with faint floral bitterness. Brings color and unctuous body without overpowering acidity.",
+  },
+  {
+    term: "Spring Peas",
+    blurb:
+      "Fresh-shucked English peas pressed into the build — bright, grassy, almost-sweet vegetal note that reads as 'garden in a glass.'",
+  },
+  {
+    term: "Passion Fruit",
+    blurb:
+      "Tropical fruit with searing natural acidity and floral musk — pulls the drink toward bright tartness and aromatic lift.",
+  },
+  {
+    term: "Tarragon",
+    blurb:
+      "Soft anise-licorice herb. Adds a sweet green perfume that mellows the rye's spice and lifts the citrus.",
+  },
+  {
+    term: "Ginger Beer",
+    blurb:
+      "Spicy fermented ginger soda — adds heat, effervescence, and length to the highball.",
+  },
+  {
+    term: "Lime Oil",
+    blurb:
+      "Expressed lime peel oil (not juice) — pure aromatic citrus over the top with no added acid, so it perfumes the nose without thinning the drink.",
+  },
+  {
+    term: "Montenegro Reduction",
+    blurb:
+      "Amaro Montenegro cooked down to a syrup — concentrates its orange-vanilla and gentian bitterness into a sweetener that doubles as a flavoring agent.",
+  },
+  {
+    term: "23K Ice",
+    blurb:
+      "A clear ice cube finished with 23-karat edible gold leaf. Pure theater — slow-melting and visually nuts in a luxury build.",
+  },
+  {
+    term: "Chartreuse Blend",
+    blurb:
+      "House blend of Green and Yellow Chartreuse — bold monastic herbs from the Green softened by Yellow's honeyed saffron sweetness.",
+  },
+  {
+    term: "Tarragon",
+    blurb:
+      "Soft anise-licorice herb. Adds a sweet green perfume that mellows the rye's spice and lifts the citrus.",
   },
 ];
 
