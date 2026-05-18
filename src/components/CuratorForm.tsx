@@ -23,9 +23,11 @@ const ADDON_COURSES: (FoodCategory | "Any")[] = [
 
 export function CuratorForm({
   onSubmit,
+  onReset,
   loading,
 }: {
   onSubmit: (req: ExperienceRequest) => void;
+  onReset?: () => void;
   loading: boolean;
 }) {
   const [guests, setGuests] = useState(2);
@@ -134,6 +136,7 @@ export function CuratorForm({
           <span className="mb-1 block font-medium text-muted-foreground">Guests</span>
           <Input
             type="number"
+            inputMode="numeric"
             min={1}
             max={40}
             value={guests}
@@ -147,6 +150,7 @@ export function CuratorForm({
           </span>
           <Input
             type="number"
+            inputMode="numeric"
             min={1}
             value={budgetMin || ""}
             onChange={(e) => setBudgetMin(parseInt(e.target.value) || 0)}
@@ -159,6 +163,7 @@ export function CuratorForm({
           </span>
           <Input
             type="number"
+            inputMode="numeric"
             min={1}
             value={budgetMax || ""}
             onChange={(e) => setBudgetMax(parseInt(e.target.value) || 0)}
@@ -207,10 +212,11 @@ export function CuratorForm({
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
           {aqDishes.map((d) => (
             <label key={d.id} className="flex items-center gap-2 text-xs">
-              <span className="flex-1 truncate text-muted-foreground">{d.name}</span>
+              <span className="min-w-0 flex-1 truncate text-muted-foreground">{d.name}</span>
               <span className="text-muted-foreground">$</span>
               <Input
                 type="number"
+                inputMode="decimal"
                 min={0}
                 value={priceOverrides[d.id] ?? ""}
                 onChange={(e) =>
@@ -219,7 +225,8 @@ export function CuratorForm({
                     [d.id]: parseFloat(e.target.value) || 0,
                   }))
                 }
-                className="h-8 w-20"
+                onFocus={(e) => e.target.select()}
+                className="h-9 w-24 shrink-0"
               />
             </label>
           ))}
@@ -281,11 +288,13 @@ export function CuratorForm({
                 $
                 <Input
                   type="number"
+                  inputMode="decimal"
                   min={0}
                   value={crudoPrice}
                   onChange={(e) => setCrudoPrice(parseFloat(e.target.value) || 0)}
                   onClick={(e) => e.stopPropagation()}
-                  className="h-6 w-16"
+                  onFocus={(e) => e.target.select()}
+                  className="h-8 w-20"
                 />
                 <span className="text-[10px]">/pp</span>
               </span>
@@ -309,11 +318,13 @@ export function CuratorForm({
                 $
                 <Input
                   type="number"
+                  inputMode="decimal"
                   min={0}
                   value={caviarPrice}
                   onChange={(e) => setCaviarPrice(parseFloat(e.target.value) || 0)}
                   onClick={(e) => e.stopPropagation()}
-                  className="h-6 w-20"
+                  onFocus={(e) => e.target.select()}
+                  className="h-8 w-24"
                 />
                 <span className="text-[10px]">/table</span>
               </span>
@@ -374,15 +385,17 @@ export function CuratorForm({
             ))}
           </ul>
         )}
-        <div className="grid grid-cols-[1fr_70px_100px_auto] gap-2">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-[1fr_80px_110px_auto]">
           <Input
             value={addName}
             onChange={(e) => setAddName(e.target.value)}
             placeholder="e.g. shaved truffles or roasted chicken"
             maxLength={60}
+            className="col-span-2 sm:col-span-1"
           />
           <Input
             type="number"
+            inputMode="decimal"
             min={1}
             value={addPrice}
             onChange={(e) => setAddPrice(e.target.value)}
@@ -391,7 +404,7 @@ export function CuratorForm({
           <select
             value={addCourse}
             onChange={(e) => setAddCourse(e.target.value as FoodCategory | "Any")}
-            className="rounded-md border border-input bg-background px-2 text-xs"
+            className="h-9 rounded-md border border-input bg-background px-2 text-xs"
           >
             {ADDON_COURSES.map((c) => (
               <option key={c} value={c}>
@@ -399,7 +412,7 @@ export function CuratorForm({
               </option>
             ))}
           </select>
-          <Button type="button" variant="secondary" onClick={addAddOn}>
+          <Button type="button" variant="secondary" onClick={addAddOn} className="col-span-2 sm:col-span-1">
             Add
           </Button>
         </div>
@@ -445,7 +458,35 @@ export function CuratorForm({
         </div>
       </div>
 
-      <div className="mt-4 flex justify-end">
+      <div className="mt-4 flex justify-end gap-2">
+        <Button
+          type="button"
+          variant="ghost"
+          onClick={() => {
+            setGuests(2);
+            setBudgetMin(120);
+            setBudgetMax(140);
+            setRestrictions([]);
+            setNotes("");
+            setAddOns([]);
+            setAddName("");
+            setAddPrice("");
+            setAddCourse("Pasta");
+            setAddKind("upgrade");
+            setAddScope("person");
+            setPriceOverrides({ ...AQ_PRICE_DEFAULTS });
+            setPastaDuo(false);
+            setPushSteaks(false);
+            setPushCrudo(false);
+            setCrudoPrice(CRUDO_DEFAULT_PRICE);
+            setPushCaviar(false);
+            setCaviarPrice(CAVIAR_DEFAULT_PRICE);
+            hasCuratedRef.current = false;
+            onReset?.();
+          }}
+        >
+          Reset
+        </Button>
         <Button type="submit" disabled={loading}>
           {loading ? "Curating…" : "Curate menus"}
         </Button>
