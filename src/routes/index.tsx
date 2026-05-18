@@ -122,6 +122,20 @@ function priceOf(w: (typeof ALL_WINES)[number]): number {
 function Index() {
   const { state, update, reset } = useUrlFilters();
 
+  // Local, immediate value for the search input so typing stays snappy.
+  // The expensive filter/URL update runs on a debounce.
+  const [qInput, setQInput] = useState(state.q);
+  useEffect(() => {
+    // Stay in sync when URL/state changes from elsewhere (reset, popstate).
+    setQInput(state.q);
+  }, [state.q]);
+  useEffect(() => {
+    if (qInput === state.q) return;
+    const t = setTimeout(() => update({ q: qInput }), 180);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [qInput]);
+
   const filtered = useMemo(() => {
     const q = state.q.trim().toLowerCase();
     const qYear = /^\d{4}$/.test(q) ? parseInt(q, 10) : null;
@@ -225,14 +239,14 @@ function Index() {
         <div className="relative">
           <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
-            value={state.q}
-            onChange={(e) => update({ q: e.target.value })}
+            value={qInput}
+            onChange={(e) => setQInput(e.target.value)}
             placeholder="Search vintage (e.g. 2018), producer, region, varietal, bin…"
             className="h-11 pl-10 text-base"
           />
-          {state.q && (
+          {qInput && (
             <button
-              onClick={() => update({ q: "" })}
+              onClick={() => { setQInput(""); update({ q: "" }); }}
               className="absolute right-2 top-1/2 -translate-y-1/2 rounded p-1 text-muted-foreground hover:text-foreground"
               aria-label="Clear search"
             >
