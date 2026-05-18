@@ -12,7 +12,7 @@ export default defineConfig({
       target: "react",
       routesDirectory: "./src/routes",
       generatedRouteTree: "./src/routeTree.gen.ts",
-      autoCodeSplitting: false,
+      autoCodeSplitting: true,
     }),
     tailwindcss(),
     tsconfigPaths(),
@@ -34,5 +34,18 @@ export default defineConfig({
   build: {
     outDir: "dist/client",
     emptyOutDir: true,
+    target: "es2022",
+    cssCodeSplit: true,
+    sourcemap: false,
+    chunkSizeWarningLimit: 1200,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          "react-vendor": ["react", "react-dom", "react/jsx-runtime"],
+          "router": ["@tanstack/react-router"],
+          "query": ["@tanstack/react-query"],
+        },
+      },
+    },
   },
 });

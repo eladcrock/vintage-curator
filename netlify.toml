@@ -13,3 +13,14 @@
 
 [build.environment]
   NODE_VERSION = "20"
+
+# Cache hashed build assets forever; HTML always revalidated.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
