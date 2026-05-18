@@ -73,6 +73,7 @@ function EducationPage() {
   const [openClassId, setOpenClassId] = useState<number | null>(null);
   const [readClassId, setReadClassId] = useState<1 | 2 | 3 | 4 | 5 | null>(null);
   const [onlyOnList, setOnlyOnList] = useState(false);
+  const [openZone, setOpenZone] = useState<string | null>(null);
   const selectedId = openId;
 
   const toggle = (id: string) => {
@@ -81,6 +82,8 @@ function EducationPage() {
 
   const onMapSelect = (id: string) => {
     setOpenId(id);
+    const region = REGIONS.find((r) => r.id === id);
+    if (region) setOpenZone(region.zone || "Other");
     // Scroll to node
     requestAnimationFrame(() => {
       const el = document.getElementById(`region-${id}`);
@@ -213,7 +216,14 @@ function EducationPage() {
             </div>
 
             <div className="rounded-lg border border-border bg-card p-3">
-              <h3 className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Wine classes</h3>
+              <h3 className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                Wine classes
+                {openClassId !== null && (
+                  <span className="ml-1 normal-case tracking-normal text-muted-foreground/70">
+                    <span className="opacity-60">›</span> #{openClassId}
+                  </span>
+                )}
+              </h3>
               <ul className="space-y-1">
                 {CLASSES.map((c) => (
                   <li key={c.id}>
@@ -257,14 +267,28 @@ function EducationPage() {
             )}
             {zones.map(([zone, regions]) => {
               const color = zoneColor(zone);
+              const isOpen = openZone === zone;
               return (
-                <div key={zone}>
-                  <div className="mb-2 flex items-center gap-2">
-                    <span aria-hidden className="inline-block h-3 w-3 rounded-full" style={{ background: color }} />
-                    <h3 className="text-xs font-semibold uppercase tracking-wider">{zone}</h3>
-                    <span className="text-[10px] text-muted-foreground">· {regions.length}</span>
-                  </div>
-                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                <div key={zone} className="rounded-lg border border-border bg-card/40">
+                  <button
+                    onClick={() => setOpenZone((p) => (p === zone ? null : zone))}
+                    aria-expanded={isOpen}
+                    className="flex w-full items-center justify-between gap-2 px-3 py-2 text-left"
+                  >
+                    <div className="flex items-center gap-2">
+                      <span aria-hidden className="inline-block h-3 w-3 rounded-full" style={{ background: color }} />
+                      {isOpen && (
+                        <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                          {country} <span className="opacity-60">›</span>{" "}
+                        </span>
+                      )}
+                      <h3 className="text-xs font-semibold uppercase tracking-wider">{zone}</h3>
+                      <span className="text-[10px] text-muted-foreground">· {regions.length}</span>
+                    </div>
+                    <span aria-hidden className="text-muted-foreground text-xs">{isOpen ? "−" : "+"}</span>
+                  </button>
+                  {isOpen && (
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 px-3 pb-3">
                     {regions.map((r) => (
                       <RegionNode
                         key={r.id}
@@ -276,6 +300,7 @@ function EducationPage() {
                       />
                     ))}
                   </div>
+                  )}
                 </div>
               );
             })}
