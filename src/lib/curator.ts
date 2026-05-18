@@ -329,9 +329,13 @@ function picksToOption(
 
 function buildRationale(perPerson: number, req: ExperienceRequest, picks: Pick[]): string {
   const courseList = picks.map((p) => p.cat).join(" → ");
+  const capped = Number.isFinite(req.budgetMax);
+  const rangeLabel = capped
+    ? `$${req.budgetMin}–$${req.budgetMax}`
+    : `$${req.budgetMin}+ (no cap)`;
   const within =
-    perPerson >= req.budgetMin && perPerson <= req.budgetMax
-      ? `lands at $${perPerson}/person, inside your $${req.budgetMin}–$${req.budgetMax} range`
+    perPerson >= req.budgetMin && (!capped || perPerson <= req.budgetMax)
+      ? `lands at $${perPerson}/person, inside your ${rangeLabel} range`
       : `targets $${perPerson}/person`;
   return `${courseList}. ${within}. Total for ${req.guests} ${req.guests === 1 ? "guest" : "guests"}: $${perPerson * req.guests}.`;
 }
