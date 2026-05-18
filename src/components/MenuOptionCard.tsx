@@ -14,7 +14,6 @@ export function MenuOptionCard({
     <article className="flex flex-col rounded-lg border border-border bg-card p-4 shadow-sm">
       <header className="mb-3 border-b border-border pb-3">
         <h3 className="text-base font-semibold">{option.title}</h3>
-        <p className="mt-0.5 text-xs italic text-muted-foreground">{option.style}</p>
       </header>
 
       <ol className="space-y-3">
@@ -50,26 +49,6 @@ export function MenuOptionCard({
                   )}
                 </span>
               </div>
-              {dish?.description && (
-                <p className="mt-0.5 text-xs text-muted-foreground">{dish.description}</p>
-              )}
-              {c.reasoning && (
-                <p className="mt-1 text-[11px] italic text-foreground/70">
-                  - {c.reasoning}
-                </p>
-              )}
-              {dish && dish.dietaryRestrictions.length > 0 && (
-                <div className="mt-1 flex flex-wrap gap-1">
-                  {dish.dietaryRestrictions.map((d) => (
-                    <span
-                      key={d}
-                      className="rounded-sm bg-muted px-1.5 py-0.5 text-[10px] text-muted-foreground"
-                    >
-                      {d}
-                    </span>
-                  ))}
-                </div>
-              )}
               {courseAddOns.length > 0 && (
                 <ul className="mt-1.5 space-y-0.5">
                   {courseAddOns.map((a, k) => (
