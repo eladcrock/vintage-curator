@@ -205,7 +205,7 @@ export function CuratorForm({
             <span className="block font-medium text-foreground">Pasta duo (half / half)</span>
             <span className="block text-[11px] text-muted-foreground">
               {duoEligible
-                ? "Two pastas split across the table. Price = average of both."
+                ? "One of each pasta per 2 guests, split across the table."
                 : "Available only with an even number of guests (2, 4, 6…)."}
             </span>
           </span>
