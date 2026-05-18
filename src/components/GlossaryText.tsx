@@ -5,7 +5,7 @@
  *
  * Matching is case-insensitive, longest-first, non-overlapping.
  */
-import { GLOSSARY_LOOKUP } from "@/data/cocktail-glossary";
+import { GLOSSARY_LOOKUP as COCKTAIL_LOOKUP } from "@/data/cocktail-glossary";
 import {
   Tooltip,
   TooltipContent,
@@ -21,12 +21,14 @@ function escapeRe(s: string) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-function segment(text: string): Segment[] {
+export type GlossaryLookup = { match: string; entry: { blurb: string } }[];
+
+function segment(text: string, lookup: GlossaryLookup): Segment[] {
   // Mark consumed character ranges so longer matches block shorter ones.
   const claimed = new Array(text.length).fill(false);
   const hits: { start: number; end: number; blurb: string }[] = [];
 
-  for (const { match, entry } of GLOSSARY_LOOKUP) {
+  for (const { match, entry } of lookup) {
     const re = new RegExp(escapeRe(match), "gi");
     let m: RegExpExecArray | null;
     while ((m = re.exec(text)) !== null) {
@@ -62,8 +64,14 @@ function segment(text: string): Segment[] {
   return out;
 }
 
-export function GlossaryText({ text }: { text: string }) {
-  const segs = segment(text);
+export function GlossaryText({
+  text,
+  lookup = COCKTAIL_LOOKUP,
+}: {
+  text: string;
+  lookup?: GlossaryLookup;
+}) {
+  const segs = segment(text, lookup);
   if (segs.every((s) => s.kind === "text")) return <>{text}</>;
 
   return (
@@ -74,17 +82,17 @@ export function GlossaryText({ text }: { text: string }) {
         ) : (
           <Tooltip key={i}>
             <TooltipTrigger asChild>
-              <button
-                type="button"
+              <span
+                tabIndex={0}
                 onClick={(e) => e.stopPropagation()}
-                className="cursor-help rounded-sm bg-primary/10 px-0.5 text-foreground underline decoration-primary/50 decoration-dotted underline-offset-2 transition-colors hover:bg-primary/20"
+                className="cursor-help text-foreground decoration-primary/40 decoration-dotted underline-offset-4 transition-colors hover:underline focus:underline focus:outline-none"
               >
                 {s.text}
-              </button>
+              </span>
             </TooltipTrigger>
             <TooltipContent
               side="top"
-              className="max-w-xs bg-popover text-popover-foreground border border-border shadow-md"
+              className="max-w-xs border border-border bg-popover text-popover-foreground shadow-md"
             >
               {s.blurb}
             </TooltipContent>
