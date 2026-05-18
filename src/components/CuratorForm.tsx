@@ -219,7 +219,7 @@ export function CuratorForm({
           />
           <span>
             <span className="block font-medium text-foreground">
-              Guests are drinking good wine — push the steaks
+              Time for the steaks
             </span>
             <span className="block text-[11px] text-muted-foreground">
               Prefers Porterhouse / Tomahawk shared across the table. Longer service = more wine.
