@@ -23,9 +23,11 @@ const ADDON_COURSES: (FoodCategory | "Any")[] = [
 
 export function CuratorForm({
   onSubmit,
+  onReset,
   loading,
 }: {
   onSubmit: (req: ExperienceRequest) => void;
+  onReset?: () => void;
   loading: boolean;
 }) {
   const [guests, setGuests] = useState(2);
@@ -480,6 +482,7 @@ export function CuratorForm({
             setPushCaviar(false);
             setCaviarPrice(CAVIAR_DEFAULT_PRICE);
             hasCuratedRef.current = false;
+            onReset?.();
           }}
         >
           Reset
