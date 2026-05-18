@@ -456,7 +456,34 @@ export function CuratorForm({
         </div>
       </div>
 
-      <div className="mt-4 flex justify-end">
+      <div className="mt-4 flex justify-end gap-2">
+        <Button
+          type="button"
+          variant="ghost"
+          onClick={() => {
+            setGuests(2);
+            setBudgetMin(120);
+            setBudgetMax(140);
+            setRestrictions([]);
+            setNotes("");
+            setAddOns([]);
+            setAddName("");
+            setAddPrice("");
+            setAddCourse("Pasta");
+            setAddKind("upgrade");
+            setAddScope("person");
+            setPriceOverrides({ ...AQ_PRICE_DEFAULTS });
+            setPastaDuo(false);
+            setPushSteaks(false);
+            setPushCrudo(false);
+            setCrudoPrice(CRUDO_DEFAULT_PRICE);
+            setPushCaviar(false);
+            setCaviarPrice(CAVIAR_DEFAULT_PRICE);
+            hasCuratedRef.current = false;
+          }}
+        >
+          Reset
+        </Button>
         <Button type="submit" disabled={loading}>
           {loading ? "Curating…" : "Curate menus"}
         </Button>
