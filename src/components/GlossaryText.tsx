@@ -5,6 +5,7 @@
  *
  * Matching is case-insensitive, longest-first, non-overlapping.
  */
+import { useMemo } from "react";
 import { GLOSSARY_LOOKUP as COCKTAIL_LOOKUP } from "@/data/cocktail-glossary";
 import {
   Popover,
@@ -22,12 +23,31 @@ function escapeRe(s: string) {
 
 export type GlossaryLookup = { match: string; entry: { blurb: string } }[];
 
+// Cache segmentations per (lookup, text) so re-renders are free.
+const segmentCache = new WeakMap<GlossaryLookup, Map<string, Segment[]>>();
+
+function segmentCached(text: string, lookup: GlossaryLookup): Segment[] {
+  let perLookup = segmentCache.get(lookup);
+  if (!perLookup) {
+    perLookup = new Map();
+    segmentCache.set(lookup, perLookup);
+  }
+  const hit = perLookup.get(text);
+  if (hit) return hit;
+  const segs = segment(text, lookup);
+  perLookup.set(text, segs);
+  return segs;
+}
+
 function segment(text: string, lookup: GlossaryLookup): Segment[] {
   // Mark consumed character ranges so longer matches block shorter ones.
   const claimed = new Array(text.length).fill(false);
   const hits: { start: number; end: number; blurb: string }[] = [];
 
   for (const { match, entry } of lookup) {
+    // Quick reject: case-insensitive substring presence before running regex.
+    if (text.length < match.length) continue;
+    if (!text.toLowerCase().includes(match.toLowerCase())) continue;
     const re = new RegExp(escapeRe(match), "gi");
     let m: RegExpExecArray | null;
     while ((m = re.exec(text)) !== null) {
@@ -70,7 +90,7 @@ export function GlossaryText({
   text: string;
   lookup?: GlossaryLookup;
 }) {
-  const segs = segment(text, lookup);
+  const segs = useMemo(() => segmentCached(text, lookup), [text, lookup]);
   if (segs.every((s) => s.kind === "text")) return <>{text}</>;
 
   return (
