@@ -10,10 +10,12 @@
  */
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { Search, X, Check, Ban, GraduationCap } from "lucide-react";
+import { Search, X, Check, Ban, GraduationCap, ChevronDown } from "lucide-react";
 import { SiteNav } from "@/components/SiteNav";
 import { CocktailCard } from "@/components/CocktailCard";
 import { ALL_COCKTAILS, filterCocktails, allDietaryTags } from "@/lib/cocktails";
+import { RARE_CATEGORIES } from "@/data/rare-spirits";
+import { BEERS } from "@/data/beers";
 import { Input } from "@/components/ui/input";
 
 export const Route = createFileRoute("/bar")({
@@ -160,6 +162,9 @@ function BarProgramPage() {
 
         <div className="mt-5 flex items-center justify-between border-b border-border pb-2">
           <div className="text-sm text-muted-foreground">
+            <h2 className="mb-1 text-xs font-semibold uppercase tracking-wider text-foreground">
+              Specialty Cocktails
+            </h2>
             <span className="font-semibold tabular-nums text-foreground">
               {filtered.length}
             </span>{" "}
@@ -196,7 +201,113 @@ function BarProgramPage() {
             ))
           )}
         </div>
+
+        <RareAndLimitedSection />
+        <BeerSection />
       </main>
     </div>
+  );
+}
+
+function RareAndLimitedSection() {
+  const [openId, setOpenId] = useState<string | null>(null);
+  const total = RARE_CATEGORIES.reduce((n, c) => n + c.pours.length, 0);
+  return (
+    <section className="mt-12">
+      <div className="mb-3 border-b border-border pb-2">
+        <h2 className="text-xs font-semibold uppercase tracking-wider text-foreground">
+          Rare &amp; Limited
+        </h2>
+        <p className="mt-1 text-xs text-muted-foreground">
+          {total} pours · priced per 1oz / 2oz · tap for the story
+        </p>
+      </div>
+      <div className="space-y-6">
+        {RARE_CATEGORIES.map((cat) => (
+          <div key={cat.id}>
+            <h3 className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+              {cat.label}
+            </h3>
+            <div className="grid gap-2">
+              {cat.pours.map((p) => {
+                const open = openId === p.id;
+                return (
+                  <article
+                    key={p.id}
+                    className={`rounded-lg border bg-card transition-colors ${
+                      open ? "border-primary/50" : "border-border hover:border-primary/40"
+                    }`}
+                  >
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setOpenId((cur) => (cur === p.id ? null : p.id))
+                      }
+                      aria-expanded={open}
+                      className="flex w-full items-start gap-3 px-4 py-3 text-left"
+                    >
+                      <div className="min-w-0 flex-1">
+                        <h4 className="text-sm font-semibold leading-snug text-foreground">
+                          {p.name}
+                        </h4>
+                      </div>
+                      <div className="shrink-0 text-right text-sm tabular-nums text-primary">
+                        ${p.oneOz} <span className="text-muted-foreground">/</span> ${p.twoOz}
+                      </div>
+                      <ChevronDown
+                        className={`mt-0.5 h-4 w-4 shrink-0 text-muted-foreground transition-transform ${
+                          open ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+                    {open && (
+                      <div className="border-t border-border px-4 py-3 text-sm text-muted-foreground">
+                        {p.note}
+                      </div>
+                    )}
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function BeerSection() {
+  return (
+    <section className="mt-12">
+      <div className="mb-3 border-b border-border pb-2">
+        <h2 className="text-xs font-semibold uppercase tracking-wider text-foreground">
+          Beer
+        </h2>
+        <p className="mt-1 text-xs text-muted-foreground">
+          {BEERS.length} bottles &amp; cans
+        </p>
+      </div>
+      <div className="grid gap-2">
+        {BEERS.map((b) => (
+          <article
+            key={b.id}
+            className="rounded-lg border border-border bg-card px-4 py-3"
+          >
+            <div className="flex items-baseline justify-between gap-3">
+              <h4 className="text-sm font-semibold text-foreground">{b.name}</h4>
+              <span className="shrink-0 text-sm tabular-nums text-primary">
+                ${b.price}
+              </span>
+            </div>
+            <p className="mt-0.5 text-xs text-muted-foreground">
+              {b.style} · {b.origin} · {b.format}
+            </p>
+            {b.note && (
+              <p className="mt-1 text-xs text-foreground/80">{b.note}</p>
+            )}
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
