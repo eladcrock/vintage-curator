@@ -6,8 +6,9 @@
  * for: Overview · Terroir · Grapes · On our list. Wine refs are name +
  * vintage + price only.
  */
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
+import { GraduationCap } from "lucide-react";
 import { SiteNav } from "@/components/SiteNav";
 import { RegionMap } from "@/components/RegionMap";
 import { CLASSES, REGIONS, type Country, type Region } from "@/data/education";
@@ -122,10 +123,20 @@ function EducationPage() {
       <SiteNav title="Bottega Pro" subtitle="Education" />
       <main className="mx-auto max-w-6xl px-4 py-5">
         <div className="mb-4">
-          <h2 className="text-lg font-semibold">Wine atlas &amp; study guide</h2>
-          <p className="text-xs text-muted-foreground">
-            Bottega Wine Class #1–#5, mapped. Tap a region on the map or in the list to read terroir, history, grapes, and the bottles we pour.
-          </p>
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <h2 className="text-lg font-semibold">Wine atlas &amp; study guide</h2>
+              <p className="text-xs text-muted-foreground">
+                Bottega Wine Class #1–#5, mapped. Tap a region on the map or in the list to read terroir, history, grapes, and the bottles we pour.
+              </p>
+            </div>
+            <Link
+              to="/education/study"
+              className="shrink-0 inline-flex items-center gap-1.5 rounded-md border border-primary/40 bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary transition-colors hover:bg-primary/20"
+            >
+              <GraduationCap className="h-3.5 w-3.5" /> Region quiz
+            </Link>
+          </div>
         </div>
 
         {/* Country tabs + search */}
