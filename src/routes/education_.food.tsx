@@ -21,7 +21,7 @@ export const Route = createFileRoute("/education_/food")({
       {
         name: "description",
         content:
-          "Sourcing & purveyor knowledge for Bottega's menu — Senku Wagyu, Creekstone Farms, Anson Mills, Gioia Burrata, Gragnano pasta, and the Chiarello signatures.",
+          "Sourcing & purveyor knowledge for Bottega's menu — Senku Wagyu, Creekstone Farms, Anson Mills, Gioia Burrata, Gragnano pasta, and the house signatures under Chef Alex Espinosa.",
       },
     ],
   }),
@@ -58,7 +58,7 @@ function FoodEducationPage() {
             </div>
             <h2 className="text-lg font-semibold">Sourcing &amp; signatures</h2>
             <p className="text-xs text-muted-foreground">
-              Who supplies our ingredients, why it matters, and the Chiarello signatures behind the menu.
+              Who supplies our ingredients, why it matters, and the house signatures behind the menu.
             </p>
           </div>
           <Link
