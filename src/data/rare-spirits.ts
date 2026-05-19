@@ -1,5 +1,5 @@
 /**
- * Rare & Limited spirits pour list - shown below the cocktail menu on /bar.
+ * Rare & Limited spirits pour list, shown below the cocktail menu on /bar.
  * Each item is priced per 1oz / 2oz pour and carries a note explaining what
  * makes the bottle exclusive, rare, or luxurious. Hand-edit freely.
  */
@@ -36,7 +36,7 @@ export const RARE_CATEGORIES: RareCategory[] = [
         name: "1970's Amaro DieSus",
         oneOz: 45,
         twoOz: 90,
-        note: "Discontinued monastic amaro - production ended decades ago. Heavy on bitter root and sweet myrrh; bottles only surface through estate sales.",
+        note: "Discontinued monastic amaro, production ended decades ago. Heavy on bitter root and sweet myrrh; bottles only surface through estate sales.",
       },
       {
         id: "punt-e-mes-70s",
@@ -64,28 +64,28 @@ export const RARE_CATEGORIES: RareCategory[] = [
         name: "1960's Martini & Rossi Rosso",
         oneOz: 55,
         twoOz: 110,
-        note: "The original Rosso recipe, sourced from old-stock European cellars. Vermouth aged this long is incredibly rare - the botanicals have softened into a single, integrated voice.",
+        note: "The original Rosso recipe, sourced from old-stock European cellars. Vermouth aged this long is incredibly rare, the botanicals have softened into a single, integrated voice.",
       },
       {
         id: "chartreuse-mof-yellow-2023",
         name: "2023 Chartreuse, MOF Yellow",
         oneOz: 20,
         twoOz: 40,
-        note: "Released only to Meilleurs Ouvriers de France - master craftsmen. A few bottles allocated to Bottega; not available at retail anywhere.",
+        note: "Released only to Meilleurs Ouvriers de France, master craftsmen. A few bottles allocated to Bottega; not available at retail anywhere.",
       },
       {
         id: "chartreuse-vep-green-2024",
         name: "2024 Chartreuse, VEP Green",
         oneOz: 30,
         twoOz: 60,
-        note: "Vieillissement Exceptionnellement Prolongé - the Carthusian monks' extended-aged Green Chartreuse. Strict global allocation; current US allotment is a fraction of demand.",
+        note: "Vieillissement Exceptionnellement Prolongé, the Carthusian monks' extended-aged Green Chartreuse. Strict global allocation; current US allotment is a fraction of demand.",
       },
       {
         id: "chartreuse-vep-yellow-2024",
         name: "2024 Chartreuse, VEP Yellow",
         oneOz: 25,
         twoOz: 50,
-        note: "The mellower VEP cousin - extra cellar age softens the saffron-honey core. Same monk-imposed allocation cap as the Green.",
+        note: "The mellower VEP cousin, extra cellar age softens the saffron-honey core. Same monk-imposed allocation cap as the Green.",
       },
     ],
   },
@@ -98,7 +98,7 @@ export const RARE_CATEGORIES: RareCategory[] = [
         name: "Hennessy XO",
         oneOz: 30,
         twoOz: 60,
-        note: "The original XO - Maurice Hennessy created the category in 1870 for his personal circle. A blend of up to 100 eaux-de-vie aged in tight-grain Limousin oak.",
+        note: "The original XO, Maurice Hennessy created the category in 1870 for his personal circle. A blend of up to 100 eaux-de-vie aged in tight-grain Limousin oak.",
       },
       {
         id: "hennessy-paradis",
@@ -138,7 +138,7 @@ export const RARE_CATEGORIES: RareCategory[] = [
         name: "Casa Obsidiana Reposado",
         oneOz: 25,
         twoOz: 50,
-        note: "Same juice as the Blanco, rested in ex-Napa chardonnay barrels. The wine influence is the spine of our Sunstone cocktail - one of the few tequilas finished this way.",
+        note: "Same juice as the Blanco, rested in ex-Napa chardonnay barrels. The wine influence is the spine of our Sunstone cocktail, one of the few tequilas finished this way.",
       },
       {
         id: "obsidiana-anejo",
@@ -158,7 +158,7 @@ export const RARE_CATEGORIES: RareCategory[] = [
         name: "The Macallan Rare Cask",
         oneOz: 36,
         twoOz: 72,
-        note: "Hand-picked from fewer than 1% of Macallan's casks - master whisky maker Sarah Burgess selects only first-fill sherry-seasoned Spanish oak. Dried fruit, clove, and chocolate.",
+        note: "Hand-picked from fewer than 1% of Macallan's casks, master whisky maker Sarah Burgess selects only first-fill sherry-seasoned Spanish oak. Dried fruit, clove, and chocolate.",
       },
     ],
   },
@@ -178,7 +178,7 @@ export const RARE_CATEGORIES: RareCategory[] = [
         name: "Bardstown Discovery Series #9",
         oneOz: 20,
         twoOz: 40,
-        note: "One-time blend of Tennessee and Kentucky bourbons up to 16 years old. Each Discovery release is a single batch - when it's gone, it's gone.",
+        note: "One-time blend of Tennessee and Kentucky bourbons up to 16 years old. Each Discovery release is a single batch, when it's gone, it's gone.",
       },
       {
         id: "heaven-hill-90",
@@ -192,7 +192,7 @@ export const RARE_CATEGORIES: RareCategory[] = [
         name: "High West 'A Midwinter Night's Dram'",
         oneOz: 20,
         twoOz: 40,
-        note: "Rye whiskey finished in French oak port and sauternes casks - released as a numbered 'Act / Scene' winter allocation each year.",
+        note: "Rye whiskey finished in French oak port and sauternes casks, released as a numbered 'Act / Scene' winter allocation each year.",
       },
       {
         id: "old-fitz-11",
@@ -220,7 +220,7 @@ export const RARE_CATEGORIES: RareCategory[] = [
         name: "WhistlePig 25yr Single Malt 'Badonkadonk'",
         oneOz: 250,
         twoOz: 500,
-        note: "A 25-year single malt rye - a category of one. Vanishingly small bottling; getting an allocation at all is essentially a relationship pour.",
+        note: "A 25-year single malt rye, a category of one. Vanishingly small bottling; getting an allocation at all is essentially a relationship pour.",
       },
     ],
   },

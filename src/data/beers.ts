@@ -20,7 +20,7 @@ export const BEERS: Beer[] = [
     style: "Haná Pilsner-Style Lager",
     origin: "Napa Valley",
     format: "500ml Bottle",
-    note: "A Napa Valley winemaker's lager project from Nick Gislason - director of winemaking at Screaming Eagle - and partners. Brewed almost exclusively from Haná, the heirloom Moravian barley Josef Groll used to create the world's first Pilsner in Pilsen in 1842. The grain was nearly extinct until a small Norfolk, England farm revived it; Hanabi is one of the only breweries on earth using it regularly. Decoction-mashed, long lager-aged, and treated with a winemaker's eye for terroir.",
+    note: "A Napa Valley winemaker's lager project from Nick Gislason, director of winemaking at Screaming Eagle, and partners. Brewed almost exclusively from Haná, the heirloom Moravian barley Josef Groll used to create the world's first Pilsner in Pilsen in 1842. The grain was nearly extinct until a small Norfolk, England farm revived it; Hanabi is one of the only breweries on earth using it regularly. Decoction-mashed, long lager-aged, and treated with a winemaker's eye for terroir.",
   },
   {
     id: "almanac-love",
@@ -29,7 +29,7 @@ export const BEERS: Beer[] = [
     style: "Hazy IPA",
     origin: "California",
     format: "480ml Can",
-    note: "Bay Area cult brewery; juicy, soft, and balanced - the IPA pick.",
+    note: "Bay Area cult brewery; juicy, soft, and balanced, the IPA pick.",
   },
   {
     id: "baladin-super",
@@ -38,7 +38,7 @@ export const BEERS: Beer[] = [
     style: "Strong Amber Ale",
     origin: "Italy",
     format: "330ml Bottle",
-    note: "Teo Musso's flagship from Piozzo - the beer that helped launch Italian craft brewing.",
+    note: "Teo Musso's flagship from Piozzo, the beer that helped launch Italian craft brewing.",
   },
   {
     id: "birra-friuli",
@@ -47,7 +47,7 @@ export const BEERS: Beer[] = [
     style: "Blonde Lager",
     origin: "Italy",
     format: "330ml Bottle",
-    note: "Crisp Friulian lager - the easy-drinking Italian option.",
+    note: "Crisp Friulian lager, the easy-drinking Italian option.",
   },
   {
     id: "bavik-super-pils",
