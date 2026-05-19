@@ -11,6 +11,7 @@ import { useMemo, useState } from "react";
 import { GraduationCap } from "lucide-react";
 import { SiteNav } from "@/components/SiteNav";
 import { RegionMap } from "@/components/RegionMap";
+import { EducationToggle } from "@/components/EducationToggle";
 import { CLASSES, REGIONS, type Country, type Region } from "@/data/education";
 import { winesForRegion, zoneColor } from "@/lib/education";
 import type { Wine } from "@/lib/wines";
@@ -125,6 +126,9 @@ function EducationPage() {
         <div className="mb-4">
           <div className="flex items-start justify-between gap-3">
             <div>
+              <div className="mb-2">
+                <EducationToggle active="wine" />
+              </div>
               <h2 className="text-lg font-semibold">Wine atlas &amp; study guide</h2>
               <p className="text-xs text-muted-foreground">
                 Bottega Wine Class #1–#5, mapped. Tap a region on the map or in the list to read terroir, history, grapes, and the bottles we pour.

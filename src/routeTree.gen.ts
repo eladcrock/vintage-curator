@@ -17,7 +17,9 @@ import { Route as BarRouteImport } from './routes/bar'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FoodStudyRouteImport } from './routes/food.study'
 import { Route as EducationStudyRouteImport } from './routes/education.study'
+import { Route as EducationFoodRouteImport } from './routes/education.food'
 import { Route as BarStudyRouteImport } from './routes/bar.study'
+import { Route as EducationFoodStudyRouteImport } from './routes/education.food.study'
 
 const StudyRoute = StudyRouteImport.update({
   id: '/study',
@@ -59,10 +61,20 @@ const EducationStudyRoute = EducationStudyRouteImport.update({
   path: '/study',
   getParentRoute: () => EducationRoute,
 } as any)
+const EducationFoodRoute = EducationFoodRouteImport.update({
+  id: '/food',
+  path: '/food',
+  getParentRoute: () => EducationRoute,
+} as any)
 const BarStudyRoute = BarStudyRouteImport.update({
   id: '/study',
   path: '/study',
   getParentRoute: () => BarRoute,
+} as any)
+const EducationFoodStudyRoute = EducationFoodStudyRouteImport.update({
+  id: '/study',
+  path: '/study',
+  getParentRoute: () => EducationFoodRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -73,8 +85,10 @@ export interface FileRoutesByFullPath {
   '/food': typeof FoodRouteWithChildren
   '/study': typeof StudyRoute
   '/bar/study': typeof BarStudyRoute
+  '/education/food': typeof EducationFoodRouteWithChildren
   '/education/study': typeof EducationStudyRoute
   '/food/study': typeof FoodStudyRoute
+  '/education/food/study': typeof EducationFoodStudyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -84,8 +98,10 @@ export interface FileRoutesByTo {
   '/food': typeof FoodRouteWithChildren
   '/study': typeof StudyRoute
   '/bar/study': typeof BarStudyRoute
+  '/education/food': typeof EducationFoodRouteWithChildren
   '/education/study': typeof EducationStudyRoute
   '/food/study': typeof FoodStudyRoute
+  '/education/food/study': typeof EducationFoodStudyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -96,8 +112,10 @@ export interface FileRoutesById {
   '/food': typeof FoodRouteWithChildren
   '/study': typeof StudyRoute
   '/bar/study': typeof BarStudyRoute
+  '/education/food': typeof EducationFoodRouteWithChildren
   '/education/study': typeof EducationStudyRoute
   '/food/study': typeof FoodStudyRoute
+  '/education/food/study': typeof EducationFoodStudyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -109,8 +127,10 @@ export interface FileRouteTypes {
     | '/food'
     | '/study'
     | '/bar/study'
+    | '/education/food'
     | '/education/study'
     | '/food/study'
+    | '/education/food/study'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -120,8 +140,10 @@ export interface FileRouteTypes {
     | '/food'
     | '/study'
     | '/bar/study'
+    | '/education/food'
     | '/education/study'
     | '/food/study'
+    | '/education/food/study'
   id:
     | '__root__'
     | '/'
@@ -131,8 +153,10 @@ export interface FileRouteTypes {
     | '/food'
     | '/study'
     | '/bar/study'
+    | '/education/food'
     | '/education/study'
     | '/food/study'
+    | '/education/food/study'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -202,12 +226,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EducationStudyRouteImport
       parentRoute: typeof EducationRoute
     }
+    '/education/food': {
+      id: '/education/food'
+      path: '/food'
+      fullPath: '/education/food'
+      preLoaderRoute: typeof EducationFoodRouteImport
+      parentRoute: typeof EducationRoute
+    }
     '/bar/study': {
       id: '/bar/study'
       path: '/study'
       fullPath: '/bar/study'
       preLoaderRoute: typeof BarStudyRouteImport
       parentRoute: typeof BarRoute
+    }
+    '/education/food/study': {
+      id: '/education/food/study'
+      path: '/study'
+      fullPath: '/education/food/study'
+      preLoaderRoute: typeof EducationFoodStudyRouteImport
+      parentRoute: typeof EducationFoodRoute
     }
   }
 }
@@ -222,11 +260,25 @@ const BarRouteChildren: BarRouteChildren = {
 
 const BarRouteWithChildren = BarRoute._addFileChildren(BarRouteChildren)
 
+interface EducationFoodRouteChildren {
+  EducationFoodStudyRoute: typeof EducationFoodStudyRoute
+}
+
+const EducationFoodRouteChildren: EducationFoodRouteChildren = {
+  EducationFoodStudyRoute: EducationFoodStudyRoute,
+}
+
+const EducationFoodRouteWithChildren = EducationFoodRoute._addFileChildren(
+  EducationFoodRouteChildren,
+)
+
 interface EducationRouteChildren {
+  EducationFoodRoute: typeof EducationFoodRouteWithChildren
   EducationStudyRoute: typeof EducationStudyRoute
 }
 
 const EducationRouteChildren: EducationRouteChildren = {
+  EducationFoodRoute: EducationFoodRouteWithChildren,
   EducationStudyRoute: EducationStudyRoute,
 }
 
