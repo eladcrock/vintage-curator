@@ -50,7 +50,7 @@ function FoodEduStudyPage() {
             <div>
               <h2 className="text-lg font-semibold">Sourcing study</h2>
               <p className="text-sm text-muted-foreground">
-                Pick a drill. Drawn from {FOOD_EDUCATION.length} purveyors, provenances, and Chiarello signatures.
+                Pick a drill. Drawn from {FOOD_EDUCATION.length} purveyors, provenances, and house signatures.
               </p>
             </div>
             <div className="grid gap-2 sm:grid-cols-2">
