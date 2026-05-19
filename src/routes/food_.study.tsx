@@ -1,23 +1,23 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteNav } from "@/components/SiteNav";
 import { StudySession } from "@/components/StudySession";
-import { getBarStudyItems } from "@/lib/study";
+import { getFoodStudyItems } from "@/lib/study";
 
-export const Route = createFileRoute("/bar/study")({
-  component: BarStudyPage,
+export const Route = createFileRoute("/food_/study")({
+  component: FoodStudyPage,
 });
 
-function BarStudyPage() {
-  const items = getBarStudyItems();
+function FoodStudyPage() {
+  const items = getFoodStudyItems();
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SiteNav title="Bottega Pro · Bar" subtitle="Study mode" />
+      <SiteNav title="Bottega Pro · Food" subtitle="Study mode" />
       <main className="mx-auto max-w-2xl px-4 pb-24 pt-4">
         <StudySession
           items={items}
-          backTo="/bar"
+          backTo="/food"
           backLabel="Back to menu"
-          noun="cocktail"
+          noun="dish"
         />
       </main>
     </div>
