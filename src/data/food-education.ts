@@ -32,10 +32,10 @@ export const FOOD_EDUCATION: FoodEduEntry[] = [
     id: "senku-wagyu",
     title: "Senku Australian Wagyu",
     category: "Purveyor",
-    tagline: "Our wagyu purveyor — Chef Chiarello is a Senku program ambassador.",
+    tagline: "Our wagyu purveyor — Chef Alex Espinosa is a Senku program ambassador.",
     body: [
       "Senku is a full-blood Australian Wagyu program raised on family-owned pasture stations. Cattle are slow-finished on a long-grain ration that builds the dense, evenly distributed marbling you see when we cut the tomahawk tableside.",
-      "Chef Chiarello is a recognized ambassador for the Senku program — meaning Bottega is one of a small number of restaurants chosen to represent the brand. The 42 oz Senku Tomahawk on our menu is sourced directly through that relationship; ground trim from the program goes into our Wagyu Polpette (short-rib meatballs).",
+      "Chef Alex Espinosa is a recognized ambassador for the Senku program — meaning Bottega is one of a small number of restaurants chosen to represent the brand. The 42 oz Senku Tomahawk on our menu is sourced directly through that relationship; ground trim from the program goes into our Wagyu Polpette (short-rib meatballs).",
       "When guests ask 'why wagyu here and not Japanese A5?' — the answer is the steak format. A5 is best as a small seared portion; Senku full-blood wagyu has the structure to be grilled at tomahawk size and shared, which is the experience we're after.",
     ],
     dishes: ["Wagyu Tomahawk alla Griglia (42oz)", "Wagyu Polpette"],
@@ -45,10 +45,10 @@ export const FOOD_EDUCATION: FoodEduEntry[] = [
     id: "creekstone-farms",
     title: "Creekstone Farms",
     category: "Purveyor",
-    tagline: "Open-choice Black Angus — Chef Chiarello signature since Tra Vigne.",
+    tagline: "Open-choice Black Angus — a house signature carried forward from Tra Vigne.",
     body: [
-      "Creekstone Farms is a Kansas-based program known for tightly graded, hormone-free Black Angus. They run their own processing facility, which lets them maintain the consistency Chef relies on for the short rib braise and bone-in ribeye.",
-      "The short-rib braise has been on Chef Chiarello's menus since his Tra Vigne days — Bottega's version is a direct continuation of that signature. The bone-in ribeye on the menu is also a Creekstone cut.",
+      "Creekstone Farms is a Kansas-based program known for tightly graded, hormone-free Black Angus. They run their own processing facility, which lets them maintain the consistency the kitchen relies on for the short rib braise and bone-in ribeye.",
+      "The short-rib braise traces back to the Tra Vigne years and has been a continuous house signature ever since. Bottega's version is a direct continuation. The bone-in ribeye on the menu is also a Creekstone cut.",
       "When we butcher the rack, the meat from the shorter rib bones is ground for our burger mix — nothing from the Creekstone program is wasted.",
     ],
     dishes: ["Short Rib Braise", "Bone-in Ribeye", "Bottega Burger"],
@@ -61,7 +61,7 @@ export const FOOD_EDUCATION: FoodEduEntry[] = [
     tagline: "Pre-industrial corn & grain from North Carolina, special-ordered.",
     body: [
       "Anson Mills, in Columbia, South Carolina, was founded by Glenn Roberts to recover pre-industrial Southern grain varieties — heirloom corn, rice, and wheat that were nearly extinct. They cold-mill in small batches to preserve aromatics that commercial milling destroys.",
-      "Our polenta and the corn for our creamed corn / corn-based sides are special-ordered from Anson Mills — unmodified, unpreserved. Chef Chiarello verified the preparation method personally with the mill, because heirloom corn behaves nothing like commodity polenta and needs longer hydration and a gentler cook.",
+      "Our polenta and the corn for our creamed corn / corn-based sides are special-ordered from Anson Mills — unmodified, unpreserved. The preparation method was verified directly with the mill, because heirloom corn behaves nothing like commodity polenta and needs longer hydration and a gentler cook.",
       "If a guest asks why our polenta tastes 'sweeter and more like corn' than anywhere else — this is why.",
     ],
     dishes: ["Polenta dishes", "Creamed Corn"],
@@ -74,7 +74,7 @@ export const FOOD_EDUCATION: FoodEduEntry[] = [
     tagline: "Imported from Sophia Loren's hometown — Pasta IGP status.",
     body: [
       "Gragnano, just outside Naples, is the historic capital of Italian dry pasta. Its pasta carries IGP (Indicazione Geografica Protetta) status — it must be made there, from durum semolina, extruded through bronze dies, and air-dried slowly in the town's distinctive microclimate. The bronze extrusion is what gives the rough surface that grips sauce.",
-      "Our Sophia Loren–named pasta dish was created by Chef Chiarello for Sophia Loren's 80th birthday. The pasta itself is imported from Gragnano, her hometown — the personal connection is the entire reason for the dish.",
+      "Our Sophia Loren–named pasta dish was originally created for Sophia Loren's 80th birthday. The pasta itself is imported from Gragnano, her hometown — the personal connection is the entire reason for the dish.",
       "When you drop the plate, the story is the dish. Lead with the birthday gift, then the Gragnano provenance.",
     ],
     dishes: ["Pasta dedicated to Sophia Loren"],
@@ -170,13 +170,13 @@ export const FOOD_EDUCATION: FoodEduEntry[] = [
     id: "tra-vigne-lineage",
     title: "Tra Vigne Lineage",
     category: "Chef Signature",
-    tagline: "Dishes carried forward from Chef Chiarello's Tra Vigne years.",
+    tagline: "Dishes carried forward from the Tra Vigne years, now under Chef Alex Espinosa.",
     body: [
-      "Tra Vigne, the Napa Valley restaurant Chef Chiarello opened in 1987, is where many of Bottega's signature plates were originally developed. The Creekstone short rib braise, the polenta program with Anson Mills, and a number of the antipasti techniques all trace back to that kitchen.",
-      "When guests ask 'is this a new dish or a Chiarello classic?' — the answer for the short rib, the polenta, and the burrata-with-fruit format is: classic. The sourcing has been refined; the idea is the same one Chef has been cooking for nearly forty years.",
+      "Tra Vigne, the Napa Valley restaurant opened in 1987, is where many of Bottega's signature plates were originally developed. The Creekstone short rib braise, the polenta program with Anson Mills, and a number of the antipasti techniques all trace back to that kitchen.",
+      "When guests ask whether a dish is new or a house classic, the answer for the short rib, the polenta, and the burrata-with-fruit format is: classic. Chef Alex Espinosa runs the kitchen today, refining the sourcing while keeping the original ideas intact.",
     ],
     dishes: ["Short Rib Braise", "Polenta dishes", "Burrata"],
-    tags: ["chiarello", "tra vigne", "napa", "history", "signature"],
+    tags: ["espinosa", "tra vigne", "napa", "history", "signature"],
   },
 ];
 
