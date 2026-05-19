@@ -15,7 +15,7 @@ import { SiteNav } from "@/components/SiteNav";
 import { Button } from "@/components/ui/button";
 import { CLASSES, REGIONS, type Region, type Country } from "@/data/education";
 
-export const Route = createFileRoute("/education/study")({
+export const Route = createFileRoute("/education_/study")({
   component: RegionQuizPage,
 });
 
