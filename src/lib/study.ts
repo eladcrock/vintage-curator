@@ -36,11 +36,22 @@ export type StudyItem = {
 };
 
 function dishToStudyItem(d: Dish): StudyItem {
+  // Parse the actual atomic ingredients out of each sub-recipe note so
+  // "missing ingredient" can quiz things like "Anchovies" / "Black Garlic"
+  // / "Sherry Vinegar" - shared across many dishes - instead of unique
+  // sub-recipe titles like "Pistachio Pesto" that give the answer away.
+  const subRecipeNames = d.ingredients.map((i) => i.name);
+  const parsedIngredients = uniqueByLower(
+    d.ingredients.flatMap((i) => parseIngredientList(i.note)),
+  );
+  // Use parsed ingredients when we have enough variety; otherwise fall back
+  // to the sub-recipe names so a dish with a single note still works.
+  const components = parsedIngredients.length >= 4 ? parsedIngredients : subRecipeNames;
   return {
     id: d.id,
     name: d.name,
     blurb: d.description,
-    components: d.ingredients.map((i) => i.name),
+    components,
     allergens: d.dietaryRestrictions,
     extra: [
       d.preparation && `Prep: ${d.preparation}`,
@@ -48,7 +59,12 @@ function dishToStudyItem(d: Dish): StudyItem {
       `Price: ${d.price}`,
     ].filter(Boolean) as string[],
     category: d.category,
-    descriptors: [d.description, d.info ?? ""].filter((s) => s && s.trim().length > 20),
+    // Preparation prose is the hardest descriptor (no menu wording to lean
+    // on); info adds sourcing/story context. Skip the menu description -
+    // it literally lists the dish components.
+    descriptors: [d.preparation, d.info ?? ""]
+      .filter((s) => s && s.trim().length > 20)
+      .map((s) => redactTerms(s, subRecipeNames)),
   };
 }
 
@@ -258,6 +274,41 @@ function uniqueBy<T>(arr: T[], key: (t: T) => string): T[] {
     if (seen.has(k)) continue;
     seen.add(k);
     out.push(x);
+  }
+  return out;
+}
+
+function uniqueByLower(arr: string[]): string[] {
+  return uniqueBy(arr, (s) => s.toLowerCase());
+}
+
+/**
+ * Split a free-text ingredient note like
+ *   "Egg yolks, Garlic, Black Garlic, Dijon Mustard, Lemon Juice."
+ * into discrete ingredient tokens. Strips trailing punctuation and parenthetical
+ * notes, drops very short tokens, and titles each entry.
+ */
+function parseIngredientList(note: string): string[] {
+  return note
+    .replace(/\([^)]*\)/g, " ")
+    .split(/[,.;]|\sand\s|\swith\s|\splus\s|\&/i)
+    .map((s) => s.replace(/^\s*[-•]\s*/, "").trim())
+    .filter((s) => s.length >= 3 && s.length <= 40)
+    // Drop verb-y fragments (cooked, mixed, etc.) — keep noun-ish entries.
+    .filter((s) => !/^(then|finished|served|cooked|mixed|heated|dripped|pureed|tossed|made|grated|sieved|cleaned)\b/i.test(s));
+}
+
+/**
+ * Redact a list of terms from a text blob with "___" - case-insensitive,
+ * whole-phrase match. Used to scrub sub-recipe names out of "from description"
+ * prompts so the user can't reverse-engineer the dish from a unique component.
+ */
+function redactTerms(text: string, terms: string[]): string {
+  let out = text;
+  for (const t of terms) {
+    const trimmed = t.trim();
+    if (trimmed.length < 4) continue;
+    out = out.replace(new RegExp(escapeRegExp(trimmed), "gi"), "___");
   }
   return out;
 }
