@@ -1,6 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { Search, X, Eye, EyeOff } from "lucide-react";
+import { Search, X, Eye, EyeOff, GraduationCap } from "lucide-react";
 import {
   ALL_WINES,
   WINE_TYPES,
@@ -235,6 +235,14 @@ function Index() {
       />
 
       <main className="mx-auto max-w-3xl px-4 pb-24 pt-4">
+        <div className="mb-3 flex justify-end">
+          <Link
+            to="/study"
+            className="inline-flex items-center gap-1.5 rounded-md border border-primary/40 bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary transition-colors hover:bg-primary/20"
+          >
+            <GraduationCap className="h-3.5 w-3.5" /> Vocab study
+          </Link>
+        </div>
         {/* Search */}
         <div className="relative">
           <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
