@@ -184,7 +184,7 @@ function FoodPage() {
               type="button"
               onClick={() => setShowLunch((v) => !v)}
               aria-pressed={showLunch}
-              title={showLunch ? "Hide lunch-only dishes" : "Show lunch-only dishes"}
+              title={showLunch ? "Hide lunch" : "Show lunch"}
               className={`ml-2 inline-flex items-center gap-1 rounded-md border px-2 py-1 text-xs transition-colors ${
                 showLunch
                   ? "border-primary bg-primary/15 text-primary"
@@ -192,7 +192,7 @@ function FoodPage() {
               }`}
             >
               {showLunch ? <Eye className="h-3.5 w-3.5" /> : <EyeOff className="h-3.5 w-3.5" />}
-              {showLunch ? "Hide lunch only" : "Show lunch only"}
+              {showLunch ? "Hide lunch" : "Show lunch"}
             </button>
           </div>
         </div>
