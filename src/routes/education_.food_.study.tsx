@@ -13,7 +13,7 @@ import { SiteNav } from "@/components/SiteNav";
 import { Button } from "@/components/ui/button";
 import { FOOD_EDUCATION } from "@/data/food-education";
 
-export const Route = createFileRoute("/education/food_/study")({
+export const Route = createFileRoute("/education_/food_/study")({
   component: FoodEduStudyPage,
 });
 
