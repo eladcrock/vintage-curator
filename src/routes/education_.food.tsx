@@ -21,7 +21,7 @@ export const Route = createFileRoute("/education_/food")({
       {
         name: "description",
         content:
-          "Sourcing & purveyor knowledge for Bottega's menu — Senku Wagyu, Creekstone Farms, Anson Mills, Gioia Burrata, Gragnano pasta, and the house signatures under Chef Alex Espinosa.",
+          "Sourcing & purveyor knowledge for Bottega's menu, Senku Wagyu, Creekstone Farms, Anson Mills, Gioia Burrata, Gragnano pasta, and the house signatures under Chef Alex Espinosa.",
       },
     ],
   }),

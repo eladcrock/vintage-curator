@@ -569,7 +569,7 @@ export const WINE_PRODUCERS: ProducerEntry[] = [
   {
     match: "La Closerie",
     blurb:
-      "Jérôme Prévost's single wine, from his 2.2-hectare Les Béguines parcel in Gueux (Petite Montagne de Reims) — almost entirely old-vine Pinot Meunier on sandy soils. Mentored by Anselme Selosse, who pushed him to bottle his own fruit starting with the 1998 vintage. Vinified in old Burgundy barrels, single vintage but undeclared, very low dosage. Hand-numbered cases, a few hundred made; one of the most allocation-only labels in grower Champagne.",
+      "Jérôme Prévost's single wine, from his 2.2-hectare Les Béguines parcel in Gueux (Petite Montagne de Reims), almost entirely old-vine Pinot Meunier on sandy soils. Mentored by Anselme Selosse, who pushed him to bottle his own fruit starting with the 1998 vintage. Vinified in old Burgundy barrels, single vintage but undeclared, very low dosage. Hand-numbered cases, a few hundred made; one of the most allocation-only labels in grower Champagne.",
   },
   {
     match: "Krug",
