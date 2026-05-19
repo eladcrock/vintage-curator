@@ -9,7 +9,7 @@
  * Deliberately excludes WINE_GLOSSARY one-liners (grape/region definitions).
  */
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, Check, X, Shuffle } from "lucide-react";
 import { SiteNav } from "@/components/SiteNav";
 import { Button } from "@/components/ui/button";
@@ -64,8 +64,12 @@ function shuffle<T>(arr: T[]): T[] {
 
 function WineVocabStudy() {
   const pool = useMemo(buildKnowledgePool, []);
-  const initial = useMemo(() => shuffle(pool), [pool]);
-  const [deck, setDeck] = useState(initial);
+  // Start with pool in stable order so SSR + first client render match,
+  // then shuffle on mount to avoid hydration mismatch.
+  const [deck, setDeck] = useState(pool);
+  useEffect(() => {
+    setDeck(shuffle(pool));
+  }, [pool]);
   const [idx, setIdx] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [seen, setSeen] = useState(0);
