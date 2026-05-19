@@ -240,7 +240,7 @@ function Index() {
             to="/study"
             className="inline-flex items-center gap-1.5 rounded-md border border-primary/40 bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary transition-colors hover:bg-primary/20"
           >
-            <GraduationCap className="h-3.5 w-3.5" /> Vocab study
+            <GraduationCap className="h-3.5 w-3.5" /> Knowledge study
           </Link>
         </div>
         {/* Search */}
