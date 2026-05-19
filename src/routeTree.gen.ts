@@ -14,6 +14,8 @@ import { Route as ExperiencesRouteImport } from './routes/experiences'
 import { Route as EducationRouteImport } from './routes/education'
 import { Route as BarRouteImport } from './routes/bar'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FoodStudyRouteImport } from './routes/food.study'
+import { Route as BarStudyRouteImport } from './routes/bar.study'
 
 const FoodRoute = FoodRouteImport.update({
   id: '/food',
@@ -40,43 +42,81 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FoodStudyRoute = FoodStudyRouteImport.update({
+  id: '/study',
+  path: '/study',
+  getParentRoute: () => FoodRoute,
+} as any)
+const BarStudyRoute = BarStudyRouteImport.update({
+  id: '/study',
+  path: '/study',
+  getParentRoute: () => BarRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/bar': typeof BarRoute
+  '/bar': typeof BarRouteWithChildren
   '/education': typeof EducationRoute
   '/experiences': typeof ExperiencesRoute
-  '/food': typeof FoodRoute
+  '/food': typeof FoodRouteWithChildren
+  '/bar/study': typeof BarStudyRoute
+  '/food/study': typeof FoodStudyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/bar': typeof BarRoute
+  '/bar': typeof BarRouteWithChildren
   '/education': typeof EducationRoute
   '/experiences': typeof ExperiencesRoute
-  '/food': typeof FoodRoute
+  '/food': typeof FoodRouteWithChildren
+  '/bar/study': typeof BarStudyRoute
+  '/food/study': typeof FoodStudyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/bar': typeof BarRoute
+  '/bar': typeof BarRouteWithChildren
   '/education': typeof EducationRoute
   '/experiences': typeof ExperiencesRoute
-  '/food': typeof FoodRoute
+  '/food': typeof FoodRouteWithChildren
+  '/bar/study': typeof BarStudyRoute
+  '/food/study': typeof FoodStudyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/bar' | '/education' | '/experiences' | '/food'
+  fullPaths:
+    | '/'
+    | '/bar'
+    | '/education'
+    | '/experiences'
+    | '/food'
+    | '/bar/study'
+    | '/food/study'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/bar' | '/education' | '/experiences' | '/food'
-  id: '__root__' | '/' | '/bar' | '/education' | '/experiences' | '/food'
+  to:
+    | '/'
+    | '/bar'
+    | '/education'
+    | '/experiences'
+    | '/food'
+    | '/bar/study'
+    | '/food/study'
+  id:
+    | '__root__'
+    | '/'
+    | '/bar'
+    | '/education'
+    | '/experiences'
+    | '/food'
+    | '/bar/study'
+    | '/food/study'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  BarRoute: typeof BarRoute
+  BarRoute: typeof BarRouteWithChildren
   EducationRoute: typeof EducationRoute
   ExperiencesRoute: typeof ExperiencesRoute
-  FoodRoute: typeof FoodRoute
+  FoodRoute: typeof FoodRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -116,26 +156,50 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/food/study': {
+      id: '/food/study'
+      path: '/study'
+      fullPath: '/food/study'
+      preLoaderRoute: typeof FoodStudyRouteImport
+      parentRoute: typeof FoodRoute
+    }
+    '/bar/study': {
+      id: '/bar/study'
+      path: '/study'
+      fullPath: '/bar/study'
+      preLoaderRoute: typeof BarStudyRouteImport
+      parentRoute: typeof BarRoute
+    }
   }
 }
 
+interface BarRouteChildren {
+  BarStudyRoute: typeof BarStudyRoute
+}
+
+const BarRouteChildren: BarRouteChildren = {
+  BarStudyRoute: BarStudyRoute,
+}
+
+const BarRouteWithChildren = BarRoute._addFileChildren(BarRouteChildren)
+
+interface FoodRouteChildren {
+  FoodStudyRoute: typeof FoodStudyRoute
+}
+
+const FoodRouteChildren: FoodRouteChildren = {
+  FoodStudyRoute: FoodStudyRoute,
+}
+
+const FoodRouteWithChildren = FoodRoute._addFileChildren(FoodRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  BarRoute: BarRoute,
+  BarRoute: BarRouteWithChildren,
   EducationRoute: EducationRoute,
   ExperiencesRoute: ExperiencesRoute,
-  FoodRoute: FoodRoute,
+  FoodRoute: FoodRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
