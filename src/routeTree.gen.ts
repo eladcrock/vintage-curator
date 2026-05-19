@@ -17,9 +17,9 @@ import { Route as BarRouteImport } from './routes/bar'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FoodStudyRouteImport } from './routes/food_.study'
 import { Route as EducationStudyRouteImport } from './routes/education_.study'
-import { Route as EducationFoodRouteImport } from './routes/education.food'
+import { Route as EducationFoodRouteImport } from './routes/education_.food'
 import { Route as BarStudyRouteImport } from './routes/bar_.study'
-import { Route as EducationFoodStudyRouteImport } from './routes/education.food_.study'
+import { Route as EducationFoodStudyRouteImport } from './routes/education_.food_.study'
 
 const StudyRoute = StudyRouteImport.update({
   id: '/study',
@@ -62,9 +62,9 @@ const EducationStudyRoute = EducationStudyRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const EducationFoodRoute = EducationFoodRouteImport.update({
-  id: '/food',
-  path: '/food',
-  getParentRoute: () => EducationRoute,
+  id: '/education_/food',
+  path: '/education/food',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const BarStudyRoute = BarStudyRouteImport.update({
   id: '/bar_/study',
@@ -72,15 +72,15 @@ const BarStudyRoute = BarStudyRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const EducationFoodStudyRoute = EducationFoodStudyRouteImport.update({
-  id: '/food_/study',
-  path: '/food/study',
-  getParentRoute: () => EducationRoute,
+  id: '/education_/food_/study',
+  path: '/education/food/study',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bar': typeof BarRoute
-  '/education': typeof EducationRouteWithChildren
+  '/education': typeof EducationRoute
   '/experiences': typeof ExperiencesRoute
   '/food': typeof FoodRoute
   '/study': typeof StudyRoute
@@ -93,7 +93,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/bar': typeof BarRoute
-  '/education': typeof EducationRouteWithChildren
+  '/education': typeof EducationRoute
   '/experiences': typeof ExperiencesRoute
   '/food': typeof FoodRoute
   '/study': typeof StudyRoute
@@ -107,15 +107,15 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/bar': typeof BarRoute
-  '/education': typeof EducationRouteWithChildren
+  '/education': typeof EducationRoute
   '/experiences': typeof ExperiencesRoute
   '/food': typeof FoodRoute
   '/study': typeof StudyRoute
   '/bar_/study': typeof BarStudyRoute
-  '/education/food': typeof EducationFoodRoute
+  '/education_/food': typeof EducationFoodRoute
   '/education_/study': typeof EducationStudyRoute
   '/food_/study': typeof FoodStudyRoute
-  '/education/food_/study': typeof EducationFoodStudyRoute
+  '/education_/food_/study': typeof EducationFoodStudyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -153,22 +153,24 @@ export interface FileRouteTypes {
     | '/food'
     | '/study'
     | '/bar_/study'
-    | '/education/food'
+    | '/education_/food'
     | '/education_/study'
     | '/food_/study'
-    | '/education/food_/study'
+    | '/education_/food_/study'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BarRoute: typeof BarRoute
-  EducationRoute: typeof EducationRouteWithChildren
+  EducationRoute: typeof EducationRoute
   ExperiencesRoute: typeof ExperiencesRoute
   FoodRoute: typeof FoodRoute
   StudyRoute: typeof StudyRoute
   BarStudyRoute: typeof BarStudyRoute
+  EducationFoodRoute: typeof EducationFoodRoute
   EducationStudyRoute: typeof EducationStudyRoute
   FoodStudyRoute: typeof FoodStudyRoute
+  EducationFoodStudyRoute: typeof EducationFoodStudyRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -229,12 +231,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EducationStudyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/education/food': {
-      id: '/education/food'
-      path: '/food'
+    '/education_/food': {
+      id: '/education_/food'
+      path: '/education/food'
       fullPath: '/education/food'
       preLoaderRoute: typeof EducationFoodRouteImport
-      parentRoute: typeof EducationRoute
+      parentRoute: typeof rootRouteImport
     }
     '/bar_/study': {
       id: '/bar_/study'
@@ -243,40 +245,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BarStudyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/education/food_/study': {
-      id: '/education/food_/study'
-      path: '/food/study'
+    '/education_/food_/study': {
+      id: '/education_/food_/study'
+      path: '/education/food/study'
       fullPath: '/education/food/study'
       preLoaderRoute: typeof EducationFoodStudyRouteImport
-      parentRoute: typeof EducationRoute
+      parentRoute: typeof rootRouteImport
     }
   }
 }
 
-interface EducationRouteChildren {
-  EducationFoodRoute: typeof EducationFoodRoute
-  EducationFoodStudyRoute: typeof EducationFoodStudyRoute
-}
-
-const EducationRouteChildren: EducationRouteChildren = {
-  EducationFoodRoute: EducationFoodRoute,
-  EducationFoodStudyRoute: EducationFoodStudyRoute,
-}
-
-const EducationRouteWithChildren = EducationRoute._addFileChildren(
-  EducationRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BarRoute: BarRoute,
-  EducationRoute: EducationRouteWithChildren,
+  EducationRoute: EducationRoute,
   ExperiencesRoute: ExperiencesRoute,
   FoodRoute: FoodRoute,
   StudyRoute: StudyRoute,
   BarStudyRoute: BarStudyRoute,
+  EducationFoodRoute: EducationFoodRoute,
   EducationStudyRoute: EducationStudyRoute,
   FoodStudyRoute: FoodStudyRoute,
+  EducationFoodStudyRoute: EducationFoodStudyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

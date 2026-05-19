@@ -14,7 +14,7 @@ import {
 } from "@/data/food-education";
 import { Input } from "@/components/ui/input";
 
-export const Route = createFileRoute("/education/food")({
+export const Route = createFileRoute("/education_/food")({
   head: () => ({
     meta: [
       { title: "Bottega Pro · Food Education" },
