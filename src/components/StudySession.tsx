@@ -148,14 +148,14 @@ export function StudySession({
         {q.mode === "flashcards" && (
           <FlashcardCard q={q} answered={!!answered} onRate={recordAndAdvance} />
         )}
-        {q.mode === "name" && (
-          <NameCard q={q} answered={answered} onAnswer={recordAndAdvance} />
+        {q.mode === "missing" && (
+          <MissingCard q={q} answered={answered} onAnswer={recordAndAdvance} />
         )}
         {q.mode === "allergens" && (
           <AllergenCard q={q} answered={answered} onAnswer={recordAndAdvance} />
         )}
-        {q.mode === "components" && (
-          <ComponentsCard q={q} answered={answered} onAnswer={recordAndAdvance} />
+        {q.mode === "description" && (
+          <DescriptionCard q={q} answered={answered} onAnswer={recordAndAdvance} />
         )}
       </div>
 
@@ -290,24 +290,29 @@ function ChoiceList({
   );
 }
 
-function NameCard({
+function MissingCard({
   q,
   answered,
   onAnswer,
 }: {
-  q: Extract<Question, { mode: "name" }>;
+  q: Extract<Question, { mode: "missing" }>;
   answered: null | { correct: boolean };
   onAnswer: (correct: boolean) => void;
 }) {
   return (
     <div>
       <div className="text-xs uppercase tracking-wider text-muted-foreground">
-        Name that item
+        Missing ingredient
       </div>
-      <div className="mt-2 text-sm text-muted-foreground">From these components:</div>
-      <ul className="mt-1 list-disc space-y-0.5 pl-5 text-sm">
-        {q.item.promptLines.map((line, i) => (
-          <li key={i}>{line}</li>
+      <div className="mt-1 text-xl font-semibold">{q.item.name}</div>
+      <div className="mt-3 text-sm text-muted-foreground">
+        One ingredient is blanked out. Pick the missing one.
+      </div>
+      <ul className="mt-2 list-disc space-y-0.5 pl-5 text-sm">
+        {q.shown.map((line, i) => (
+          <li key={i} className={line === null ? "text-primary font-semibold" : ""}>
+            {line ?? "_____________"}
+          </li>
         ))}
       </ul>
       <ChoiceList
@@ -369,24 +374,24 @@ function AllergenCard({
   );
 }
 
-function ComponentsCard({
+function DescriptionCard({
   q,
   answered,
   onAnswer,
 }: {
-  q: Extract<Question, { mode: "components" }>;
+  q: Extract<Question, { mode: "description" }>;
   answered: null | { correct: boolean };
   onAnswer: (correct: boolean) => void;
 }) {
   return (
     <div>
       <div className="text-xs uppercase tracking-wider text-muted-foreground">
-        Component quiz
+        From description
       </div>
-      <div className="mt-1 text-xl font-semibold">{q.item.name}</div>
-      <p className="mt-2 text-sm text-muted-foreground">
-        Which of these is in this item?
+      <p className="mt-2 text-sm italic leading-relaxed text-foreground/90">
+        &ldquo;{q.prompt}&rdquo;
       </p>
+      <p className="mt-3 text-sm text-muted-foreground">Which item is this?</p>
       <ChoiceList
         choices={q.choices}
         answer={q.answer}
@@ -397,7 +402,7 @@ function ComponentsCard({
         <div>
           <Verdict correct={answered.correct} />
           <p className="mt-2 text-xs text-muted-foreground">
-            All components: {q.item.components.join(", ")}
+            Answer: <span className="font-semibold text-foreground">{q.item.name}</span>
           </p>
         </div>
       )}
