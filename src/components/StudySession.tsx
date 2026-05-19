@@ -72,7 +72,7 @@ export function StudySession({
         <div>
           <h2 className="text-lg font-semibold">Study mode</h2>
           <p className="text-sm text-muted-foreground">
-            Pick a drill. {COUNT} questions per round, drawn at random from the full menu.
+            Pick a drill. Most rounds are {COUNT} questions; Allergen check covers every allergen on the menu.
           </p>
         </div>
         <div className="grid gap-2 sm:grid-cols-2">
