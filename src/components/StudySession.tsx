@@ -306,7 +306,7 @@ function NameCard({
       </div>
       <div className="mt-2 text-sm text-muted-foreground">From these components:</div>
       <ul className="mt-1 list-disc space-y-0.5 pl-5 text-sm">
-        {q.promptLinesView().map((line, i) => (
+        {q.item.promptLines.map((line, i) => (
           <li key={i}>{line}</li>
         ))}
       </ul>
