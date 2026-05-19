@@ -294,7 +294,7 @@ function parseIngredientList(note: string): string[] {
     .split(/[,.;]|\sand\s|\swith\s|\splus\s|\&/i)
     .map((s) => s.replace(/^\s*[-•]\s*/, "").trim())
     .filter((s) => s.length >= 3 && s.length <= 40)
-    // Drop verb-y fragments (cooked, mixed, etc.) — keep noun-ish entries.
+    // Drop verb-y fragments (cooked, mixed, etc.), keep noun-ish entries.
     .filter((s) => !/^(then|finished|served|cooked|mixed|heated|dripped|pureed|tossed|made|grated|sieved|cleaned)\b/i.test(s));
 }
 
