@@ -136,6 +136,28 @@ export function buildQuestions(
   const pool = shuffle(items);
   const allAllergens = Array.from(new Set(items.flatMap((i) => i.allergens))).filter(Boolean);
 
+  // Allergen mode: exhaustive coverage. One "yes" question for every
+  // (item, allergen-it-contains) pair, plus one balancing "no" question
+  // per item so every allergen on the menu shows up in both directions.
+  if (mode === "allergens") {
+    const out: Question[] = [];
+    for (const item of pool) {
+      for (const allergen of item.allergens) {
+        out.push({ mode: "allergens", item, allergen, answer: true });
+      }
+      const missing = allAllergens.filter((a) => !item.allergens.includes(a));
+      if (missing.length) {
+        out.push({
+          mode: "allergens",
+          item,
+          allergen: pick(missing),
+          answer: false,
+        });
+      }
+    }
+    return shuffle(out);
+  }
+
   const out: Question[] = [];
   for (const item of pool) {
     if (out.length >= count) break;
