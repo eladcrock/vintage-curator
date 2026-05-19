@@ -17,10 +17,10 @@ export const BEERS: Beer[] = [
     id: "hanabi",
     name: "Hanabi",
     price: 25,
-    style: "Specialty Lager",
+    style: "Haná Pilsner-Style Lager",
     origin: "Napa Valley",
     format: "500ml Bottle",
-    note: "Napa-brewed specialty lager - the splurge bottle of the list, meant for sharing.",
+    note: "A Napa Valley winemaker's lager project from Nick Gislason - director of winemaking at Screaming Eagle - and partners. Brewed almost exclusively from Haná, the heirloom Moravian barley Josef Groll used to create the world's first Pilsner in Pilsen in 1842. The grain was nearly extinct until a small Norfolk, England farm revived it; Hanabi is one of the only breweries on earth using it regularly. Decoction-mashed, long lager-aged, and treated with a winemaker's eye for terroir.",
   },
   {
     id: "almanac-love",
