@@ -727,18 +727,6 @@ export const DISHES: Dish[] = [
     price: "$16",
   },
   {
-    id: "patatine-tartufo-DUP-REMOVE",
-    name: "Patatine Fritte e Tartufo",
-    category: "Contorni",
-    description: "Truffle Fries topped with Parmigiano Reggiano and crispy sage.",
-    preparation: "Fried in peanut oil. Tossed in truffle oil, S&P, parsley. Topped with parmigiano and crispy sage.",
-    ingredients: [],
-    fireTime: "5 Minutes",
-    dietaryRestrictions: ["Dairy", "Nightshade", "Peanut"],
-    modifications: "Can be done plain (no dairy).",
-    price: "$16",
-  },
-  {
     id: "polenta-antica",
     name: "Polenta Antica",
     category: "Contorni",
