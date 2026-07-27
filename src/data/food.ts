@@ -710,6 +710,35 @@ export const DISHES: Dish[] = [
     price: "$16",
   },
   {
+    id: "romano-beans",
+    name: "Romano Beans",
+    category: "Contorni",
+    description:
+      "Fire roasted romano beans in olive oil, shaved parmesan, lemon juice, and gremolata.",
+    preparation:
+      "Romano beans fire roasted with olive oil, then topped with shaved parmesan, a squeeze of lemon juice, and a sprinkle of gremolata.",
+    ingredients: [
+      { name: "Gremolata", note: "Toasted bread blended with butter and parsley." },
+    ],
+    fireTime: "6 Minutes",
+    dietaryRestrictions: ["Gluten", "Allium", "Dairy"],
+    modifications: "No gluten (no gremolata), no dairy (no parmesan).",
+    mark: "F",
+    price: "$16",
+  },
+  {
+    id: "patatine-tartufo-DUP-REMOVE",
+    name: "Patatine Fritte e Tartufo",
+    category: "Contorni",
+    description: "Truffle Fries topped with Parmigiano Reggiano and crispy sage.",
+    preparation: "Fried in peanut oil. Tossed in truffle oil, S&P, parsley. Topped with parmigiano and crispy sage.",
+    ingredients: [],
+    fireTime: "5 Minutes",
+    dietaryRestrictions: ["Dairy", "Nightshade", "Peanut"],
+    modifications: "Can be done plain (no dairy).",
+    price: "$16",
+  },
+  {
     id: "polenta-antica",
     name: "Polenta Antica",
     category: "Contorni",
