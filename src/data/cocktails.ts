@@ -82,7 +82,6 @@ export const COCKTAILS: Cocktail[] = [
     tags: ["Gin", "Spirit-forward", "Luxury"],
   },
   {
-    id: "cervo",
     id: "bella-rosso",
     name: "Bella Rosso",
     menuDescription:
@@ -152,7 +151,6 @@ export const COCKTAILS: Cocktail[] = [
     tags: ["Vodka", "Garden", "Highball"],
   },
   {
-    id: "portico",
     id: "porch-punch",
     name: "Porch Punch",
     menuDescription:
