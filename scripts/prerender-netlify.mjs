@@ -20,9 +20,29 @@ const ROUTES = [
     description: "Cocktails, spirits, and bar program reference for Bottega.",
   },
   {
+    path: "/bar/study",
+    title: "Bottega Pro · Bar Study",
+    description: "Cocktail flashcards, missing ingredient drills, and bar study challenges.",
+  },
+  {
+    path: "/btg",
+    title: "Bottega Pro · BTG Wines",
+    description: "By-the-glass wine talking points and service notes.",
+  },
+  {
+    path: "/btg/study",
+    title: "Bottega Pro · BTG Study",
+    description: "Flashcards, fill-in-the-blank, and multiple choice drills for BTG wines.",
+  },
+  {
     path: "/food",
     title: "Bottega Pro · Food",
-    description: "The Bottega menu — pairings, ingredients, and service notes.",
+    description: "The Bottega menu, pairings, ingredients, and service notes.",
+  },
+  {
+    path: "/food/study",
+    title: "Bottega Pro · Food Study",
+    description: "Food menu flashcards, allergen checks, and ingredient study challenges.",
   },
   {
     path: "/experiences",
@@ -33,6 +53,26 @@ const ROUTES = [
     path: "/education",
     title: "Bottega Pro · Education",
     description: "Staff training reference for wine, food, and service.",
+  },
+  {
+    path: "/education/study",
+    title: "Bottega Pro · Wine Education Study",
+    description: "Wine region flashcards and quizzes for staff training.",
+  },
+  {
+    path: "/education/food",
+    title: "Bottega Pro · Food Education",
+    description: "Sourcing, purveyors, ingredient quality, and food education notes.",
+  },
+  {
+    path: "/education/food/study",
+    title: "Bottega Pro · Food Education Study",
+    description: "Flashcards and quizzes on sourcing, purveyors, and ingredient stories.",
+  },
+  {
+    path: "/study",
+    title: "Bottega Pro · Wine Study",
+    description: "Wine producer stories, glossary knowledge, and staff study cards.",
   },
 ];
 
