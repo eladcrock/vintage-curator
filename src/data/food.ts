@@ -76,24 +76,64 @@ export const DISHES: Dish[] = [
     id: "polpo",
     name: "Polpo alla Griglia",
     category: "Antipasti",
-    description: "Wood-grilled octopus, garbanzo puree, sun dried tomato.",
+    description:
+      "Wood fired octopus with corn puree, charred sungold tomatoes, Jimmy Nardello peppers, basil, parsley, basil oil.",
     preparation:
-      "Octopus is cooked on a wood grill. Garbanzo bean pureed, served with a sundried tomato, fennel and parsley salad.",
+      "Octopus is grilled on live fire, laid on top of corn puree, and garnished with a salad of sungold tomatoes, Jimmy Nardellos, basil, and parsley. Finished with basil oil.",
     ingredients: [
+      { name: "Octopus", note: "Steamed, then marinated in EVOO and paprika." },
       {
-        name: "Garbanzo Bean Puree",
-        note: "Garbanzo beans cooked down in chicken stock with shallots, pureed then finished with lemon juice.",
+        name: "Corn Puree",
+        note: "Corn, EVOO, butter, shallot, garlic, heavy cream, corn stock, champagne vinegar, mascarpone, white pepper.",
       },
-      {
-        name: "Fennel Salad",
-        note: "Shaved Fennel, sundried tomatoes, parsley, sherry vinegar, EVOO.",
-      },
+      { name: "Basil Oil", note: "Basil, tiger oil." },
     ],
     fireTime: "8 Minutes",
-    dietaryRestrictions: ["Nightshade", "Shellfish", "Allium"],
-    modifications: "No Puree (Allium), No Salad (Nightshade).",
+    dietaryRestrictions: ["Shellfish", "Nightshade", "Dairy", "Allium"],
+    modifications: "No nightshade (no peppers/tomatoes). No dairy (no corn puree).",
     mark: "F/K",
-    price: "$23",
+    price: "$26",
+  },
+  {
+    id: "wagyu-carpaccio",
+    name: "Wagyu Carpaccio",
+    category: "Antipasti",
+    description:
+      "Thinly sliced Wagyu eye of round, romesco, micro arugula, Grove 45 EVOO, shaved parmesan, crispy capers, focaccia croutons.",
+    preparation:
+      "Eye of round sliced thinly on the slicer, garnished with romesco, micro arugula, Grove 45 EVOO, shaved parmesan, and crispy capers. Served with focaccia croutons.",
+    ingredients: [
+      {
+        name: "Romesco",
+        note: "Roasted bell peppers, almonds, hazelnuts, garlic, sherry vinegar, smoked paprika, red pepper flakes, EVOO.",
+      },
+    ],
+    fireTime: "5 Minutes",
+    dietaryRestrictions: ["Allium", "Dairy", "Nuts", "Nightshade", "Gluten"],
+    modifications: "No dairy (no parm), no allium, no nuts, no nightshade, no gluten (no croutons).",
+    mark: "F/K",
+    price: "$25",
+  },
+  {
+    id: "bruschetta",
+    name: "Bruschetta",
+    category: "Antipasti",
+    description:
+      "Wood fired Panorama bread, heirloom tomatoes, buffalo mozzarella, balsamic caviar, basil oil.",
+    preparation:
+      "Panorama bread is grilled, layered with heirloom tomatoes and sliced buffalo mozzarella, topped with balsamic pearls. Finished with a drizzle of balsamic and basil oil.",
+    ingredients: [
+      {
+        name: "Balsamic Caviar",
+        note: "Gelatin (pork) mixed with balsamic vinegar, heated, and dripped into chilled olive oil to form spheres.",
+      },
+      { name: "Basil Oil", note: "Basil, tiger oil." },
+    ],
+    fireTime: "6 Minutes",
+    dietaryRestrictions: ["Gluten", "Dairy", "Nightshade", "Pork"],
+    modifications: "No gluten (no bread), no dairy (no mozzarella), no nightshade (no tomatoes).",
+    mark: "F/K",
+    price: "$22",
   },
   {
     id: "calamari",
@@ -303,17 +343,62 @@ export const DISHES: Dish[] = [
     description:
       "Maccheroncini, carbonara crema, crispy guanciale, Parmesan frico with activated charcoal.",
     preparation:
-      "Maccheroncini cooked to order in salted water. Tossed in pan with carbonara crema and crispy guanciale. Plated with pecorino and charcoal parm frico on top.",
+      "Maccheroncini cooked to order in salted water. Tossed in pan with carbonara crema, crispy guanciale, and reduced chicken stock. Plated with pecorino and charcoal parm frico on top.",
     ingredients: [
       { name: "Carbonara Crema", note: "Egg yolk, pecorino, heavy cream, guanciale fat." },
       { name: "Parmesan Tuile", note: "Activated charcoal, parmesan." },
       { name: "Maccheroncini Pasta", note: "Egg, flour, water." },
     ],
     fireTime: "12–15 Minutes",
-    dietaryRestrictions: ["Gluten", "Egg", "Pork", "Dairy"],
-    modifications: "N/A",
+    dietaryRestrictions: ["Gluten", "Egg", "Pork", "Dairy", "Chicken"],
+    modifications: "No pork; GF pasta; no chicken stock.",
     mark: "F/K/S",
     price: "$30",
+  },
+  {
+    id: "lobster-chitarra",
+    name: "Lobster Chitarra",
+    category: "Pasta",
+    description: "Saffron infused chitarra pasta with lobster tail, white wine and Fresno chili pan sauce.",
+    preparation:
+      "Chitarra cooked for 4 minutes, tossed with white wine and Fresno chili pan sauce. Served with a lobster tail on top.",
+    ingredients: [
+      {
+        name: "Pan Sauce",
+        note: "EVOO, slivered garlic, julienned Fresno chilis, white wine, lobster stock.",
+      },
+      { name: "Chitarra Pasta", note: "Egg, flour, semolina, saffron." },
+    ],
+    fireTime: "8 Minutes",
+    dietaryRestrictions: ["Allium", "Shellfish", "Gluten", "Nightshade", "Alcohol", "Egg"],
+    modifications: "No alcohol, no Fresno.",
+    mark: "F/K",
+    price: "$65",
+  },
+  {
+    id: "orecchiette-vongole",
+    name: "Orecchiette con Vongole",
+    category: "Pasta",
+    description:
+      "Littleneck clams, Calabrian Italian sausage, Grove 45 EVOO, shaved garlic, lobster stock, white wine, basil, parsley, butter, gremolata, bottarga.",
+    preparation:
+      "Littleneck clams steamed in white wine, lobster stock, and shaved garlic. Calabrian sausage quickly sauteed and married with the clams, finished with herbs and butter. Garnished with gremolata and bottarga.",
+    ingredients: [
+      {
+        name: "Pan Sauce",
+        note: "White wine, lobster stock, shaved garlic, basil, parsley.",
+      },
+      { name: "Gremolata", note: "Toasted bread blended with butter and parsley." },
+      {
+        name: "Calabrian Sausage",
+        note: "Pork fat, salt, fennel, Calabrian chili, allspice, garlic.",
+      },
+    ],
+    fireTime: "6 Minutes",
+    dietaryRestrictions: ["Allium", "Dairy", "Pork", "Shellfish", "Gluten", "Alcohol", "Fish"],
+    modifications: "No dairy, no pork.",
+    mark: "F/K",
+    price: "$65",
   },
   {
     id: "rigatoni-coniglio",
@@ -458,24 +543,47 @@ export const DISHES: Dish[] = [
     id: "branzino",
     name: "Branzino alla Griglia",
     category: "Secondi",
-    description: "Wood grilled Branzino and lemon preserved sauce, roasted artichokes and olives.",
+    description: "Wood fired branzino served with an heirloom tomato panzanella.",
     preparation:
-      "Fish is butterflied, mostly deboned. S&P, OO. Wood grilled on both sides. Served with roasted artichokes and olives.",
+      "Branzino is grilled on live wood fire, then topped with an heirloom tomato panzanella.",
     ingredients: [
+      { name: "Croutons", note: "Herbed brown butter, rustic bread." },
       {
-        name: "Artichokes & Olives",
-        note: "Roasted, tossed in preserved lemon sauce.",
+        name: "Panzanella",
+        note: "Heirloom tomatoes, red onions, torn basil, EVOO, tomato vinaigrette.",
       },
       {
-        name: "Fish Sauce",
-        note: "Meyer lemon conserva, shallots, capers, boquerones.",
+        name: "Tomato Vinaigrette",
+        note: "Heirloom tomatoes, shallots, basil, sherry vinegar, EVOO.",
       },
     ],
-    fireTime: "5–8 Minutes",
-    dietaryRestrictions: ["Allium", "Fish"],
-    modifications: "Allium Free (No Sauce).",
+    fireTime: "10 Minutes",
+    dietaryRestrictions: ["Fish", "Gluten", "Allium", "Nightshade"],
+    modifications: "No gluten (no bread), no allium (no shallots), no nightshade (no tomatoes).",
     mark: "F/K",
-    price: "$40",
+    price: "$42",
+  },
+  {
+    id: "rack-of-lamb",
+    name: "Rack of Lamb",
+    category: "Secondi",
+    description:
+      "Rack of lamb with lamb jus and fig-tarragon preserve, scalloped potatoes with fontina.",
+    preparation:
+      "Rack of lamb grilled over live fire and finished with a tablespoon of fig-tarragon preserve. Scalloped potatoes heated to order alongside.",
+    ingredients: [
+      {
+        name: "Scalloped Potatoes",
+        note: "Yukon gold potatoes, heavy cream, thyme, minced garlic, fontina cheese, parmesan.",
+      },
+      { name: "Fig-Tarragon Preserve", note: "Fig, tarragon." },
+      { name: "Lamb Jus", note: "Mirepoix, reduced lamb stock." },
+    ],
+    fireTime: "10 Minutes",
+    dietaryRestrictions: ["Allium", "Dairy", "Meat"],
+    modifications: "No dairy (no scalloped potatoes). No allium (no lamb jus).",
+    mark: "F/K",
+    price: "$65",
   },
   {
     id: "anatra",
