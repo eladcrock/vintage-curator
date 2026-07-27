@@ -337,7 +337,7 @@ export const BTG_WINES: BTGWine[] = [
     category: "Red",
     bullets: [
       "The estate began in 1524 in Greve-in-Chianti",
-      "Owned by Florentine Capponi family for over 500 years",
+      "Owned by the Florentine Capponi family for over 500 years",
       "All organic grapes and sustainable farming",
       "Rustic, soft tannin, bright acidity",
     ],
@@ -372,7 +372,7 @@ export const BTG_WINES: BTGWine[] = [
     bullets: [
       "The winery was founded in the 1970's",
       "Pioneers for high-quality Moscato",
-      "Located in Langhe Hills of Piedmont",
+      "Located in the Langhe Hills of Piedmont",
       "Energetic, delicate bubbles, sweet aromatics",
     ],
     tasting: "Juicy white peach, sliced lemon, elderflower",
@@ -440,7 +440,7 @@ export const BTG_WINES: BTGWine[] = [
     bullets: [
       "One of the benchmark village-level Etna Rosso's",
       "A Rina is the Italian name for 'sand' which refers to the volcanic sand that covers Mount Etna",
-      "Fruit is sourced from 3 single-contrada's: San Lorenzo, Feudo, Feudo di Mezzo, and Calderara Sottana",
+      "Fruit is sourced from 3 single-contrada's: San Lorenzo, Feudo di Mezzo, and Calderara Sottana",
       "Distinct smoky minerality, fine tannin, vibrant acidity",
     ],
     tasting: "Wild strawberries, burnt orange peel, smoke and ash",
@@ -523,7 +523,7 @@ export const BTG_WINES: BTGWine[] = [
     country: "USA",
     category: "Red",
     bullets: [
-      "Founded in 2002 by Hiedi Barrett and John Schwartz",
+      "Founded in 2002 by Heidi Barrett and John Schwartz",
       "Amuse Bouche is a Pomerol-inspired Merlot blend featuring roughly 8% Cabernet Franc",
       "Every vintage features different original artwork on the label",
       "Rich, polished, and silky",
@@ -559,7 +559,7 @@ export const BTG_WINES: BTGWine[] = [
     bullets: [
       "Angelo Gaja is one of Italy's most iconic and influential winemakers",
       "100% Nebbiolo sourced from multiple vineyard parcels throughout the Barbaresco zone",
-      "Angelo Gaja pioneered single-vineyard Barbaresco such as Sori San Lorenzen, Sori Tildin, and Costa Russi",
+      "Angelo Gaja pioneered single-vineyard Barbaresco such as Sori San Lorenzo, Sori Tildin, and Costa Russi",
       "Powerful, layered, structured",
     ],
     tasting: "Wild strawberry, dried rose petal, crushed stone",
@@ -574,7 +574,7 @@ export const BTG_WINES: BTGWine[] = [
     country: "France",
     category: "Dessert",
     bullets: [
-      "80% Semillon, 20% Sauvignon Blanc, Noble Rot",
+      "80% Semillon, 20% Sauvignon Blanc, affected by Noble Rot",
       "The Nectar of the Gods. Chateau d'Yquem is the greatest dessert wine in the world",
       "The only Chateau classified as a Premier Cru Superieur",
       "Rich and viscous with precision and tension",
@@ -591,9 +591,9 @@ export const BTG_WINES: BTGWine[] = [
     country: "France",
     category: "Dessert",
     bullets: [
-      "Produced in the foothills of Pyrenees Mountains from 100% Petit Manseng",
+      "Produced in the foothills of the Pyrenees Mountains from 100% Petit Manseng",
       "One of the most distinctive sweet wines in France from an elite producer",
-      "Think German Ausele Riesling meets Vouvray Moelleux",
+      "Think German Auslese Riesling meets Vouvray Moelleux",
       "Off-dry, high acidity, biodynamically farmed with extremely low yields",
     ],
     tasting: "Crushed rock minerality, quince, mango, saffron",
@@ -617,11 +617,11 @@ export const BTG_WINES: BTGWine[] = [
   },
   {
     id: "broadbent-vintage-port-2015",
-    name: "2015 Broadbent, Vintage Port, Duoro Valley",
+    name: "2015 Broadbent, Vintage Port, Douro Valley",
     vintage: "2015",
     producer: "Broadbent",
     appellation: "Vintage Port",
-    region: "Duoro Valley",
+    region: "Douro Valley",
     country: "Portugal",
     category: "Fortified",
     bullets: [
@@ -634,11 +634,11 @@ export const BTG_WINES: BTGWine[] = [
   },
   {
     id: "sandeman-20yr-tawny",
-    name: "NV Sandeman, 20-Year Tawny Port, Duoro Valley",
+    name: "NV Sandeman, 20-Year Tawny Port, Douro Valley",
     vintage: "NV",
     producer: "Sandeman",
     appellation: "Tawny Port",
-    region: "Duoro Valley",
+    region: "Douro Valley",
     country: "Portugal",
     category: "Fortified",
     bullets: [
@@ -679,7 +679,7 @@ export const BTG_WINES: BTGWine[] = [
       "A 50/50 blend of Trebbiano and Malvasia",
       "A serious Vin Santo from Chianti Classico using the appassimento method",
       "Monsanto is well known for emphasizing freshness and tension",
-      "Think fine Sherry or aged Madeira, oxidative depth, bright acidity",
+      "Think fine Sherry or aged Madeira, oxidative depth with bright acidity",
     ],
     tasting: "Roasted hazelnuts, sweet almond, caramelized citrus, nutty-oxidative complexity",
   },
