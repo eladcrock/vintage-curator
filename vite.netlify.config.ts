@@ -7,6 +7,8 @@ import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
+  root: "netlify-shell",
+  publicDir: fileURLToPath(new URL("./public", import.meta.url)),
   plugins: [
     tanstackRouter({
       target: "react",
@@ -32,7 +34,7 @@ export default defineConfig({
     ],
   },
   build: {
-    outDir: "dist/client",
+    outDir: fileURLToPath(new URL("./dist/client", import.meta.url)),
     emptyOutDir: true,
     target: "es2022",
     cssCodeSplit: true,
