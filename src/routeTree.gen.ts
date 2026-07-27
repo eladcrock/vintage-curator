@@ -13,6 +13,7 @@ import { Route as StudyRouteImport } from './routes/study'
 import { Route as FoodRouteImport } from './routes/food'
 import { Route as ExperiencesRouteImport } from './routes/experiences'
 import { Route as EducationRouteImport } from './routes/education'
+import { Route as BtgRouteImport } from './routes/btg'
 import { Route as BarRouteImport } from './routes/bar'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FoodStudyRouteImport } from './routes/food_.study'
@@ -39,6 +40,11 @@ const ExperiencesRoute = ExperiencesRouteImport.update({
 const EducationRoute = EducationRouteImport.update({
   id: '/education',
   path: '/education',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BtgRoute = BtgRouteImport.update({
+  id: '/btg',
+  path: '/btg',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BarRoute = BarRouteImport.update({
@@ -80,6 +86,7 @@ const EducationFoodStudyRoute = EducationFoodStudyRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bar': typeof BarRoute
+  '/btg': typeof BtgRoute
   '/education': typeof EducationRoute
   '/experiences': typeof ExperiencesRoute
   '/food': typeof FoodRoute
@@ -93,6 +100,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/bar': typeof BarRoute
+  '/btg': typeof BtgRoute
   '/education': typeof EducationRoute
   '/experiences': typeof ExperiencesRoute
   '/food': typeof FoodRoute
@@ -107,6 +115,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/bar': typeof BarRoute
+  '/btg': typeof BtgRoute
   '/education': typeof EducationRoute
   '/experiences': typeof ExperiencesRoute
   '/food': typeof FoodRoute
@@ -122,6 +131,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/bar'
+    | '/btg'
     | '/education'
     | '/experiences'
     | '/food'
@@ -135,6 +145,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/bar'
+    | '/btg'
     | '/education'
     | '/experiences'
     | '/food'
@@ -148,6 +159,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/bar'
+    | '/btg'
     | '/education'
     | '/experiences'
     | '/food'
@@ -162,6 +174,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BarRoute: typeof BarRoute
+  BtgRoute: typeof BtgRoute
   EducationRoute: typeof EducationRoute
   ExperiencesRoute: typeof ExperiencesRoute
   FoodRoute: typeof FoodRoute
@@ -201,6 +214,13 @@ declare module '@tanstack/react-router' {
       path: '/education'
       fullPath: '/education'
       preLoaderRoute: typeof EducationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/btg': {
+      id: '/btg'
+      path: '/btg'
+      fullPath: '/btg'
+      preLoaderRoute: typeof BtgRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bar': {
@@ -258,6 +278,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BarRoute: BarRoute,
+  BtgRoute: BtgRoute,
   EducationRoute: EducationRoute,
   ExperiencesRoute: ExperiencesRoute,
   FoodRoute: FoodRoute,
