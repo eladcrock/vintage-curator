@@ -19,6 +19,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as FoodStudyRouteImport } from './routes/food_.study'
 import { Route as EducationStudyRouteImport } from './routes/education_.study'
 import { Route as EducationFoodRouteImport } from './routes/education_.food'
+import { Route as BtgStudyRouteImport } from './routes/btg_.study'
 import { Route as BarStudyRouteImport } from './routes/bar_.study'
 import { Route as EducationFoodStudyRouteImport } from './routes/education_.food_.study'
 
@@ -72,6 +73,11 @@ const EducationFoodRoute = EducationFoodRouteImport.update({
   path: '/education/food',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BtgStudyRoute = BtgStudyRouteImport.update({
+  id: '/btg_/study',
+  path: '/btg/study',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BarStudyRoute = BarStudyRouteImport.update({
   id: '/bar_/study',
   path: '/bar/study',
@@ -92,6 +98,7 @@ export interface FileRoutesByFullPath {
   '/food': typeof FoodRoute
   '/study': typeof StudyRoute
   '/bar/study': typeof BarStudyRoute
+  '/btg/study': typeof BtgStudyRoute
   '/education/food': typeof EducationFoodRoute
   '/education/study': typeof EducationStudyRoute
   '/food/study': typeof FoodStudyRoute
@@ -106,6 +113,7 @@ export interface FileRoutesByTo {
   '/food': typeof FoodRoute
   '/study': typeof StudyRoute
   '/bar/study': typeof BarStudyRoute
+  '/btg/study': typeof BtgStudyRoute
   '/education/food': typeof EducationFoodRoute
   '/education/study': typeof EducationStudyRoute
   '/food/study': typeof FoodStudyRoute
@@ -121,6 +129,7 @@ export interface FileRoutesById {
   '/food': typeof FoodRoute
   '/study': typeof StudyRoute
   '/bar_/study': typeof BarStudyRoute
+  '/btg_/study': typeof BtgStudyRoute
   '/education_/food': typeof EducationFoodRoute
   '/education_/study': typeof EducationStudyRoute
   '/food_/study': typeof FoodStudyRoute
@@ -137,6 +146,7 @@ export interface FileRouteTypes {
     | '/food'
     | '/study'
     | '/bar/study'
+    | '/btg/study'
     | '/education/food'
     | '/education/study'
     | '/food/study'
@@ -151,6 +161,7 @@ export interface FileRouteTypes {
     | '/food'
     | '/study'
     | '/bar/study'
+    | '/btg/study'
     | '/education/food'
     | '/education/study'
     | '/food/study'
@@ -165,6 +176,7 @@ export interface FileRouteTypes {
     | '/food'
     | '/study'
     | '/bar_/study'
+    | '/btg_/study'
     | '/education_/food'
     | '/education_/study'
     | '/food_/study'
@@ -180,6 +192,7 @@ export interface RootRouteChildren {
   FoodRoute: typeof FoodRoute
   StudyRoute: typeof StudyRoute
   BarStudyRoute: typeof BarStudyRoute
+  BtgStudyRoute: typeof BtgStudyRoute
   EducationFoodRoute: typeof EducationFoodRoute
   EducationStudyRoute: typeof EducationStudyRoute
   FoodStudyRoute: typeof FoodStudyRoute
@@ -258,6 +271,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EducationFoodRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/btg_/study': {
+      id: '/btg_/study'
+      path: '/btg/study'
+      fullPath: '/btg/study'
+      preLoaderRoute: typeof BtgStudyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/bar_/study': {
       id: '/bar_/study'
       path: '/bar/study'
@@ -284,6 +304,7 @@ const rootRouteChildren: RootRouteChildren = {
   FoodRoute: FoodRoute,
   StudyRoute: StudyRoute,
   BarStudyRoute: BarStudyRoute,
+  BtgStudyRoute: BtgStudyRoute,
   EducationFoodRoute: EducationFoodRoute,
   EducationStudyRoute: EducationStudyRoute,
   FoodStudyRoute: FoodStudyRoute,
@@ -292,3 +313,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
