@@ -440,7 +440,7 @@ export const BTG_WINES: BTGWine[] = [
     bullets: [
       "One of the benchmark village-level Etna Rosso's",
       "A Rina is the Italian name for 'sand' which refers to the volcanic sand that covers Mount Etna",
-      "Fruit is sourced from 3 single-contrada's: San Lorenzo, Feudo di Mezzo, and Calderara Sottana",
+      "Fruit is sourced from 3 single-contrada's: San Lorenzo, Feudo, Feudo di Mezzo, and Calderara Sottana",
       "Distinct smoky minerality, fine tannin, vibrant acidity",
     ],
     tasting: "Wild strawberries, burnt orange peel, smoke and ash",
