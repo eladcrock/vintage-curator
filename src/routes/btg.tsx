@@ -12,6 +12,8 @@ export const Route = createFileRoute("/btg")({
       { name: "description", content: "By-the-glass wine talking points and study drills." },
       { property: "og:title", content: "BTG Wines - Bottega Pro" },
       { property: "og:description", content: "By-the-glass wine talking points and study drills." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: BtgPage,

@@ -15,6 +15,10 @@ export const Route = createFileRoute("/btg_/study")({
     meta: [
       { title: "BTG Wines Study - Bottega Pro" },
       { name: "description", content: "Flashcards, multiple choice, and fill-in-the-blank drills on the BTG wine list." },
+      { property: "og:title", content: "BTG Wines Study - Bottega Pro" },
+      { property: "og:description", content: "Flashcards, multiple choice, and fill-in-the-blank drills on the BTG wine list." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: BtgStudyPage,
