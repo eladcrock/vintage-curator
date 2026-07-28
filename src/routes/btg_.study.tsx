@@ -30,7 +30,7 @@ function BtgStudyPage() {
   const [mode, setMode] = useState<BTGStudyMode | null>(null);
   const [seed, setSeed] = useState(0);
   const questions = useMemo<BTGQuestion[]>(
-    () => (mode ? buildBtgQuestions(mode, COUNT) : []),
+    () => (mode ? buildBtgQuestions(mode, mode === "flashcards" ? Infinity : COUNT) : []),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [mode, seed],
   );
