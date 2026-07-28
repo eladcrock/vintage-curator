@@ -187,14 +187,21 @@ function Flashcard({
   q,
   answered,
   onRate,
+  onNext,
 }: {
   q: Extract<BTGQuestion, { mode: "flashcards" }>;
   answered: boolean;
   onRate: (correct: boolean) => void;
+  onNext: () => void;
 }) {
   const [showInfo, setShowInfo] = useState(false);
   const [showTasting, setShowTasting] = useState(false);
   const revealed = showInfo || showTasting;
+
+  useEffect(() => {
+    setShowInfo(false);
+    setShowTasting(false);
+  }, [q.wine.name]);
 
   return (
     <div>
@@ -230,12 +237,15 @@ function Flashcard({
       )}
 
       {revealed && !answered && (
-        <div className="flex gap-2 pt-3">
+        <div className="flex flex-wrap gap-2 pt-3">
           <Button onClick={() => onRate(true)}>
             <Check className="h-4 w-4" /> Knew it
           </Button>
           <Button onClick={() => onRate(false)} variant="outline">
             <X className="h-4 w-4" /> Missed
+          </Button>
+          <Button onClick={onNext} variant="ghost">
+            Next card
           </Button>
         </div>
       )}
