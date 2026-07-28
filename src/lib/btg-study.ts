@@ -146,5 +146,6 @@ export function buildBtgQuestions(mode: BTGStudyMode, count: number): BTGQuestio
       });
     }
   }
-  return out;
+
+  return shuffle(out);
 }
