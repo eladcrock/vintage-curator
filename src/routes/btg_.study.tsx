@@ -192,36 +192,51 @@ function Flashcard({
   answered: boolean;
   onRate: (correct: boolean) => void;
 }) {
-  const [flipped, setFlipped] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
+  const [showTasting, setShowTasting] = useState(false);
+  const revealed = showInfo || showTasting;
+
   return (
     <div>
       <div className="text-xs uppercase tracking-wider text-muted-foreground">Flashcard</div>
       <div className="mt-1 text-xl font-semibold leading-snug">{q.wine.name}</div>
-      {!flipped ? (
-        <Button className="mt-4" variant="outline" onClick={() => setFlipped(true)}>
-          Reveal talking points
-        </Button>
-      ) : (
-        <div className="mt-3 space-y-2">
-          <ul className="list-disc space-y-1 pl-5 text-sm text-foreground/90">
-            {q.wine.bullets.map((b, i) => (
-              <li key={i}>{b}</li>
-            ))}
-          </ul>
-          <p className="text-sm">
-            <span className="text-xs uppercase tracking-wider text-muted-foreground">Tasting · </span>
-            {q.wine.tasting}
-          </p>
-          {!answered && (
-            <div className="flex gap-2 pt-2">
-              <Button onClick={() => onRate(true)}>
-                <Check className="h-4 w-4" /> Knew it
-              </Button>
-              <Button onClick={() => onRate(false)} variant="outline">
-                <X className="h-4 w-4" /> Missed
-              </Button>
-            </div>
-          )}
+
+      <div className="mt-4 flex flex-wrap gap-2">
+        {!showInfo && (
+          <Button variant="outline" onClick={() => setShowInfo(true)}>
+            Reveal info
+          </Button>
+        )}
+        {!showTasting && (
+          <Button variant="outline" onClick={() => setShowTasting(true)}>
+            Reveal tasting
+          </Button>
+        )}
+      </div>
+
+      {showInfo && (
+        <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-foreground/90">
+          {q.wine.bullets.map((b, i) => (
+            <li key={i}>{b}</li>
+          ))}
+        </ul>
+      )}
+
+      {showTasting && (
+        <p className="mt-3 text-sm">
+          <span className="text-xs uppercase tracking-wider text-muted-foreground">Tasting · </span>
+          {q.wine.tasting}
+        </p>
+      )}
+
+      {revealed && !answered && (
+        <div className="flex gap-2 pt-3">
+          <Button onClick={() => onRate(true)}>
+            <Check className="h-4 w-4" /> Knew it
+          </Button>
+          <Button onClick={() => onRate(false)} variant="outline">
+            <X className="h-4 w-4" /> Missed
+          </Button>
         </div>
       )}
     </div>
