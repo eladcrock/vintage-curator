@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { ArrowLeft, Check, X, RefreshCw } from "lucide-react";
+import { ArrowLeft, Check, ChevronRight, X, RefreshCw } from "lucide-react";
 import { SiteNav } from "@/components/SiteNav";
 import { Button } from "@/components/ui/button";
 import {
@@ -237,16 +237,20 @@ function Flashcard({
       )}
 
       {revealed && !answered && (
-        <div className="flex flex-wrap gap-2 pt-3">
+        <div className="flex items-center gap-2 pt-3">
           <Button onClick={() => onRate(true)}>
             <Check className="h-4 w-4" /> Knew it
           </Button>
           <Button onClick={() => onRate(false)} variant="outline">
             <X className="h-4 w-4" /> Missed
           </Button>
-          <Button onClick={onNext} variant="ghost">
-            Next card
-          </Button>
+          <button
+            onClick={onNext}
+            className="ml-auto inline-flex h-8 w-8 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+            aria-label="Next card"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </button>
         </div>
       )}
     </div>
