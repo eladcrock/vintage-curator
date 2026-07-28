@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, Check, X, RefreshCw } from "lucide-react";
 import { SiteNav } from "@/components/SiteNav";
 import { Button } from "@/components/ui/button";
@@ -154,7 +154,7 @@ function QuestionView({
       </div>
 
       <div className="rounded-xl border border-border bg-card p-5">
-        {q.mode === "flashcards" && <Flashcard q={q} answered={!!answered} onRate={onAnswer} />}
+        {q.mode === "flashcards" && <Flashcard q={q} answered={!!answered} onRate={onAnswer} onNext={onNext} />}
         {q.mode === "producer" && <ChoiceQ label="Guess the producer" prompt={<><span className="text-sm text-muted-foreground">Talking point: </span><span className="italic">&ldquo;{q.prompt}&rdquo;</span></>} q={q} answered={answered} onAnswer={onAnswer} />}
         {q.mode === "region" && <ChoiceQ label="Where is it from?" prompt={<span className="text-base font-semibold">{q.wine.producer}, {q.wine.vintage !== "NV" && q.wine.vintage !== "MV" ? q.wine.vintage : ""} {q.wine.appellation}</span>} q={q} answered={answered} onAnswer={onAnswer} />}
         {q.mode === "tasting" && <ChoiceQ label="Match the tasting notes" prompt={<span className="italic text-sm">&ldquo;{q.wine.tasting}&rdquo;</span>} q={q} answered={answered} onAnswer={onAnswer} />}
